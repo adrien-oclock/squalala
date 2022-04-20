@@ -26,6 +26,13 @@
 | user | associer une description à un son | se rappeler le contenu du son |
 | user | organiser mes sons | personnaliser ma soundboard au niveau de l'ordre des sons |
 
+## Utilisateur
+| En tant que | Je veux | Afin de (si besoin/nécessaire) |
+|--|--|--|
+| visiteur | pouvoir m'inscrire | - |
+| user | pouvoir me connecter | accéder aux fonctionnalités avancées |
+| user | réinitialiser mon mot de passe | pouvoir récupérer les accès à mon compte |
+
 ## BackOffice
 
 | En tant que | Je veux | Afin de (si besoin/nécessaire) |
