@@ -1,0 +1,6 @@
+**utilisateur** (<ins>email</ins>, pseudo, mot de passe)  
+**étiquette** (<ins>code_e</ins>, titre_e)  
+**aime** (<ins>_email_</ins>, <ins>_code_sb_</ins>)  
+**soundboard** (<ins>code_sb</ins>, titre_sb, description_sb)  
+**décrit** (<ins>_code_e_</ins>, <ins>_code_sb_</ins>)  
+**son** (<ins>code_s</ins>, titre_s, description_s, _code_sb_)
