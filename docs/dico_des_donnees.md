@@ -5,7 +5,7 @@
 |Champ|Type|Spécificités|Description|
 |-|-|-|-|
 |id|INT|PRIMARY KEY, NOT NULL, UNSIGNED, AUTO_INCREMENT|L'identifiant de la soundboard|
-|titre|VARCHAR(128)|NOT NULL|Le titre de la soundboard|
+|title|VARCHAR(128)|NOT NULL|Le titre de la soundboard|
 |description|TINYTEXT|NOT NULL|La description de la soundboard|
 |created_at|TINYTEXT|NOT NULL, DEFAULT CURRENT_TIMESTAMP|La date de création de la soundboard|
 |updated_at|TINYTEXT|NOT NULL, DEFAULT CURRENT_TIMESTAMP|La date de dernière modification de la soundboard|
@@ -15,8 +15,9 @@
 |Champ|Type|Spécificités|Description|
 |-|-|-|-|
 |id|INT|PRIMARY KEY, NOT NULL, UNSIGNED, AUTO_INCREMENT|L'identifiant du son|
-|titre|VARCHAR(128)|NOT NULL|Le titre du son|
+|title|VARCHAR(128)|NOT NULL|Le titre du son|
 |description|TINYTEXT|DEFAULT NULL|La description du son|
+|order|INT|NOT NULL, UNSIGNED|L'ordre du son dans la soundboard|
 |soundboard_id|INT|PRIMARY KEY, NOT NULL|L'identifiant de la soundboard|
 |created_at|TINYTEXT|NOT NULL, DEFAULT CURRENT_TIMESTAMP|La date de création du son|
 |updated_at|TINYTEXT|NOT NULL, DEFAULT CURRENT_TIMESTAMP|La date de dernière modification du son|
@@ -26,7 +27,7 @@
 |Champ|Type|Spécificités|Description|
 |-|-|-|-|
 |id|INT|PRIMARY KEY, NOT NULL, UNSIGNED, AUTO_INCREMENT|L'identifiant du tag|
-|titre|VARCHAR(64)|NOT NULL|Le titre du tag|
+|title|VARCHAR(64)|NOT NULL|Le titre du tag|
 |created_at|TINYTEXT|NOT NULL, DEFAULT CURRENT_TIMESTAMP|La date de création du tag|
 |updated_at|TINYTEXT|NOT NULL, DEFAULT CURRENT_TIMESTAMP|La date de dernière modification du tag|
 
