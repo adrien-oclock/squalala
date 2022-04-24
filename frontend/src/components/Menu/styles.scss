@@ -1,0 +1,32 @@
+@use '../../styles/vars';
+
+ul {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 800;
+
+  li {
+    width: 100%;
+
+    a {
+      display:inline-block;
+      width: 100%;
+      border-bottom: 2mm solid vars.$fade-color;
+      transition: all ease-in-out 0.5s;
+      
+      &.active {
+        border-bottom: 2mm solid vars.$primary-color;
+        color: vars.$primary-color;
+      }
+  
+      &:hover {
+        color: vars.$primary-color;
+        border-bottom: 2mm solid vars.$primary-color;
+      }
+    }
+    
+  }
+  
+}

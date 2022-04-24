@@ -1,0 +1,32 @@
+@use '../../styles/vars';
+
+button {
+  border: 1px solid transparent;
+  border-top: none;
+  border-radius: .25rem;
+  background-clip: padding-box;
+  box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+  box-sizing: border-box;
+  font-weight: 600;
+  line-height: 1.25;
+  padding: 1em;
+  transition: all 250ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  width: auto;
+  background-color: vars.$primary-color;
+  color: vars.$text-color;
+
+  &:hover,
+  &:focus {
+    filter: brightness(85%);
+    box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+  }
+
+  &:active {
+    filter: brightness(50%);
+    box-shadow: rgba(0, 0, 0, .06) 0 2px 4px;
+  }
+}
