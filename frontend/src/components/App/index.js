@@ -1,4 +1,8 @@
+import { Routes, Route } from 'react-router-dom';
+
 import Header from '../Header';
+import Home from '../Home';
+import Error from '../Error';
 
 import './styles.scss';
 
@@ -6,6 +10,13 @@ import './styles.scss';
 const App = () => (
   <div className="app">
     <Header title="Squalala" />
+    <Routes>
+      <Route path="/" exact element={<Home />} />
+      {/* <Route path="/soundboard/:id">
+        <Soundboard />
+      </Route> */}
+      <Route path="*" element={<Error />} />
+    </Routes>
   </div>
 );
 

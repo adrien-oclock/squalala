@@ -13,9 +13,10 @@ ul {
     a {
       display:inline-block;
       width: 100%;
+      padding-bottom: 1em;
       border-bottom: 2mm solid vars.$fade-color;
       transition: all ease-in-out 0.5s;
-      
+
       &.active {
         border-bottom: 2mm solid vars.$primary-color;
         color: vars.$primary-color;

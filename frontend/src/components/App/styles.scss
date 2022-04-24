@@ -3,4 +3,6 @@
 .app {
   width: 100%;
   color: vars.$text-color; 
+  background-color: vars.$background-color;
+  min-height: 100vh;
 }
