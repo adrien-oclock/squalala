@@ -42,12 +42,13 @@
 |created_at|TINYTEXT|NOT NULL, DEFAULT CURRENT_TIMESTAMP|La date de création du son|
 |updated_at|TINYTEXT|NOT NULL, DEFAULT CURRENT_TIMESTAMP|La date de dernière modification du son|
 
-## Like - Association entre user et soundboard (optionnel)
+## Like - Association entre user et soundboard
 
 |Champ|Type|Spécificités|Description|
 |-|-|-|-|
 |id_user|ENTITY|PRIMARY KEY, NOT NULL|L'identifiant de l'utilisateur|
 |id_soundboard|ENTITY|PRIMARY KEY, NOT NULL|L'identifiant de la soundboard|
+|note|TINYINT|NOT NULL|La note attribuée à la soundboard|
 
 ## Association entre tag et soundboard (optionnel)
 
