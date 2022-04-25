@@ -1,32 +1,58 @@
 @use '../../styles/vars';
 
-button {
-  border: 1px solid transparent;
-  border-top: none;
-  border-radius: .25rem;
-  background-clip: padding-box;
-  box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
-  box-sizing: border-box;
-  font-weight: 600;
-  line-height: 1.25;
-  padding: 1em;
-  transition: all 250ms;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  vertical-align: baseline;
-  width: auto;
-  background-color: vars.$primary-color;
-  color: vars.$text-color;
+.modal {
+  display: flex;
+  background-color: vars.$fade-color;
+  flex-direction: column;
 
-  &:hover,
-  &:focus {
-    filter: brightness(85%);
-    box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+  .close {
+    width: 5%;
+    position: absolute;
+    top: 0;
+    right: 0;
   }
 
-  &:active {
-    filter: brightness(50%);
-    box-shadow: rgba(0, 0, 0, .06) 0 2px 4px;
+  .modalContainer {
+    display: flex;
+  
+    section {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .form-input-material {
+    margin: 15px 0;
+    font-size: 16px;
+    padding: 10px;
+    width: 250px;
+    border: 1px solid rgba(10, 180, 180, 1);
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    background: rgba(20, 20, 20, .2);
+    color: white;
+    outline: none;
+  }
+
+  button {
+    border: 1px solid rgba(10, 180, 180, 1);
+    background: rgba(20, 20, 20, .6);
+    font-size: 18px;
+    color: white;
+    margin-top: 20px;
+    padding: 10px 50px;
+    cursor: pointer;
+    transition: .4s;
+    &:hover {
+      background: rgba(20, 20, 20, .8);
+      padding: 10px 80px;
+    }
   }
 }
