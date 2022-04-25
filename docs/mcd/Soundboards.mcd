@@ -2,7 +2,7 @@ utilisateur: email, pseudo, mot de passe
 :
 étiquette : code_e, titre_e
 
-aime, 0N utilisateur, 0N soundboard
+aime, 0N utilisateur, 0N soundboard : note
 soundboard : code_sb, titre_sb, description_sb
 décrit, 0N étiquette, 0N soundboard
 
