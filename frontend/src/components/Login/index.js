@@ -17,37 +17,37 @@ const Login = () => {
         <section id="register-form">
           <h3>Inscription</h3>
           <form className="formContainer">
-            <div className="form-input-material">
-              <input type="text" name="username" id="register-username" placeholder=" " autoComplete="off" className="form-control-material" required />
+            <div className="inputContainer">
+              <input type="text" name="username" id="register-username" autoComplete="off" required />
               <label htmlFor="register-username">Pseudo</label>
             </div>
-            <div className="form-input-material">
-              <input type="email" name="email" id="register-email" placeholder=" " autoComplete="off" className="form-control-material" required />
+            <div className="inputContainer">
+              <input type="email" name="email" id="register-email" autoComplete="off" required />
               <label htmlFor="register-email">Email</label>
             </div>
-            <div className="form-input-material">
-              <input type="password" name="password" id="register-password" placeholder=" " autoComplete="off" className="form-control-material" required />
+            <div className="inputContainer">
+              <input type="password" name="password" id="register-password" autoComplete="off" required />
               <label htmlFor="register-password">Mot de passe</label>
             </div>
-            <div className="form-input-material">
-              <input type="password" name="password" id="register-password-confirm" placeholder=" " autoComplete="off" className="form-control-material" required />
+            <div className="inputContainer">
+              <input type="password" name="password" id="register-password-confirm" autoComplete="off" required />
               <label htmlFor="register-password-confirm">Renseigner le même mot de passe</label>
             </div>
-            <button type="submit" className="btn btn-primary btn-ghost">S'inscrire</button>
+            <button type="submit" className="btn btn-primary">S'inscrire</button>
           </form>
         </section>
         <section id="login-form">
           <h3>Connexion</h3>
           <form className="formContainer">
-            <div className="form-input-material">
-              <input type="email" name="email" id="login-email" placeholder=" " autoComplete="off" className="form-control-material" required />
+            <div className="inputContainer">
+              <input type="email" name="email" id="login-email" autoComplete="off" required />
               <label htmlFor="login-email">Email</label>
             </div>
-            <div className="form-input-material">
-              <input type="password" name="password" id="login-password" placeholder=" " autoComplete="off" className="form-control-material" required />
+            <div className="inputContainer">
+              <input type="password" name="password" id="login-password" autoComplete="off" required />
               <label htmlFor="login-password">Mot de passe</label>
             </div>
-            <button type="submit" className="btn btn-primary btn-ghost">Se connecter</button>
+            <button type="submit" className="btn btn-primary">Se connecter</button>
           </form>
         </section>
       </Popup>

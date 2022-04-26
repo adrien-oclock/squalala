@@ -25,7 +25,6 @@
 
   &:hover {
     transform: translateY(-1px);
-    filter: brightness(0.6);
   }
 }
 
@@ -34,11 +33,19 @@
   color: vars.$text-color;
   font-weight: 600;
   box-shadow: vars.$background-color 0 1px 3px 0;
+
+  &:hover {
+    filter: brightness(0.6);
+  }
 }
 
 .btn-secondary {
   background-color: vars.$background-color;
   color: vars.$text-color;
   font-weight: 400;
-  box-shadow: vars.$primary-color 0 1px 3px 0;
+  box-shadow: vars.$primary-color 0 0 3px 1px;
+
+  &:hover {
+    background-color: vars.$primary-color;
+  }
 }

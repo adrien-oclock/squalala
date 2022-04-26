@@ -1,58 +1,43 @@
 @use '../../styles/vars';
 
-.modal {
-  display: flex;
-  background-color: vars.$fade-color;
-  flex-direction: column;
-
-  .close {
-    width: 5%;
-    position: absolute;
-    top: 0;
-    right: 0;
-  }
-
-  .modalContainer {
-    display: flex;
-  
-    section {
-      display: flex;
-      flex-direction: column;
-    }
-  }
-}
-
 .formContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  .form-input-material {
-    margin: 15px 0;
-    font-size: 16px;
-    padding: 10px;
-    width: 250px;
-    border: 1px solid rgba(10, 180, 180, 1);
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    background: rgba(20, 20, 20, .2);
-    color: white;
-    outline: none;
-  }
+  .inputContainer {
+    position: relative;
+    width: 100%;
 
-  button {
-    border: 1px solid rgba(10, 180, 180, 1);
-    background: rgba(20, 20, 20, .6);
-    font-size: 18px;
-    color: white;
-    margin-top: 20px;
-    padding: 10px 50px;
-    cursor: pointer;
-    transition: .4s;
-    &:hover {
-      background: rgba(20, 20, 20, .8);
-      padding: 10px 80px;
+    input {
+      width: 100%;
+      padding: .5em 0;
+      font-size: 16px;
+      color: vars.$text-color;
+      margin-bottom: 2em;
+      border: none;
+      border-bottom: 1px solid vars.$text-color;
+      outline: none;
+      background: transparent;
+    }
+
+    label {
+      position: absolute;
+      top:0;
+      left: 0;
+      padding: .5em 0;
+      font-size: 16px;
+      color: vars.$text-color;
+      pointer-events: none;
+      transition: .5s;
+    }
+
+    input:focus ~ label,
+    input:valid ~ label {
+      top: -20px;
+      left: 0;
+      color: vars.$primary-color;
+      font-size: 12px;
     }
   }
 }

@@ -25,9 +25,9 @@ const Home = function () {
       <div className="carouselContainer">
         <h2>5 derniers soundboards</h2>
         <Slider {...settings}>
-          <Card key={1} title="tata" subtitle="Adrien" themes={themes} />
+          <Card key={1} title="tata" subtitle="Adrien" themes={themes} rating={4} />
           <Card key={2} title="tutu" subtitle="Squalala" themes={themes} rating={2} />
-          <Card key={3} title="titi" subtitle="Oclock" rating={1} />
+          <Card key={3} title="titi" subtitle="Oclock" themes={themes} rating={1} />
           <Card key={4} title="toto" subtitle="Michel" themes={themes} rating={5} />
           <Card key={5} title="tyty" subtitle="Torink" themes={themes} rating={3} />
         </Slider>

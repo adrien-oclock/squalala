@@ -21,8 +21,10 @@ h2 {
   width: 35%;
   padding: 1em;
   border: 1mm solid vars.$text-color;
+  border-radius: .25rem;
   color: vars.$background-color;
   background-color: vars.$fade-color;
+  box-shadow: white 0 0 3px 3px;
 }
 
 .slick-slider {
