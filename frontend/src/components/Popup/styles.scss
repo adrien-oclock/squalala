@@ -59,7 +59,7 @@
   visibility: hidden;
   box-shadow: 0 2px 10px rgba(#000, 0.1);
   backface-visibility: hidden;
-  transform: scale(1.2) translate(-75%, -75%);
+  transform: scale(1.2) translate(-50%, -50%);
   transition: all $speed $easing;
   
   .close-popup {
@@ -88,7 +88,7 @@
   &.active {
     visibility: visible;
     opacity: 1;
-    transform: scale(1);
+    transform: scale(1) translate(-50%, -50%);
     
     .popup-content {
       opacity: 1;
