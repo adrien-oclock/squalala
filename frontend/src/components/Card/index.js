@@ -27,7 +27,7 @@ const Card = function ({
         && (
         <ul className="theme">
           {themes.map((theme) => (
-            <li key={theme.id}><a href="#">{theme.name}</a></li>
+            <li key={theme.id} className="btn btn-secondary"><a href="#">{theme.name}</a></li>
           ))}
         </ul>
         )}

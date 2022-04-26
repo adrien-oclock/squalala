@@ -12,7 +12,7 @@ const Login = () => {
 
   return (
     <div>
-      <button onClick={() => setVisibility(!visibility)} type="button">Connexion</button>
+      <button className="btn btn-primary" onClick={() => setVisibility(!visibility)} type="button">Connexion</button>
       <Popup onClose={popupCloseHandler} show={visibility}>
         <section id="register-form">
           <h3>Inscription</h3>
