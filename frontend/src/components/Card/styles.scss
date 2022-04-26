@@ -1,0 +1,68 @@
+@use '../../styles/vars';
+
+.carouselElement {
+  height: 100%;
+  color: vars.$text-color;
+}
+
+.carouselContent {
+  height: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.theme {
+
+  display: flex;
+  width: 80%;
+  justify-content: space-evenly;
+
+  li {
+    align-items: center;
+    justify-content: center;
+    background-clip: padding-box;
+    background-color: vars.$primary-color;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+    box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+    box-sizing: border-box;
+    color: vars.$text-color;
+    cursor: pointer;
+    font-weight: 600;
+    margin: 0;
+    padding: calc(.875rem - 1px) calc(1.5rem - 1px);
+    transition: all 250ms;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: baseline;
+    width: auto;
+
+    a {
+      color: vars.$background-color;
+      display: block;
+
+      &:hover {
+        transform: translateY(-1px);
+        filter: brightness(0.6);
+      }
+    }
+  }
+}
+
+.rating {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 40%;
+
+  span {
+    display: block;
+  }
+
+  .checked {
+    color: vars.$primary-color;
+  }
+}

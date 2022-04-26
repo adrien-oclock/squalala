@@ -3,7 +3,7 @@ import React from 'react';
 import './styles.scss';
 
 const Menu = () => (
-  <nav>
+  <nav id="main-menu">
     <ul>
       <li><a href="#" className="active">Accueil</a></li>
       <li><a href="#">Soundboards</a></li>

@@ -21,37 +21,37 @@ const Login = () => {
           <section id="register-form">
             <h3>Inscription</h3>
             <form className="formContainer">
-              <div class="form-input-material">
-                <input type="text" name="username" id="register-username" placeholder=" " autocomplete="off" class="form-control-material" required />
-                <label for="register-username">Pseudo</label>
+              <div className="form-input-material">
+                <input type="text" name="username" id="register-username" placeholder=" " autoComplete="off" className="form-control-material" required />
+                <label htmlFor="register-username">Pseudo</label>
               </div>
-              <div class="form-input-material">
-                <input type="email" name="email" id="register-email" placeholder=" " autocomplete="off" class="form-control-material" required />
-                <label for="register-email">Email</label>
+              <div className="form-input-material">
+                <input type="email" name="email" id="register-email" placeholder=" " autoComplete="off" className="form-control-material" required />
+                <label htmlFor="register-email">Email</label>
               </div>
-              <div class="form-input-material">
-                <input type="password" name="password" id="register-password" placeholder=" " autocomplete="off" class="form-control-material" required />
-                <label for="register-password">Mot de passe</label>
+              <div className="form-input-material">
+                <input type="password" name="password" id="register-password" placeholder=" " autoComplete="off" className="form-control-material" required />
+                <label htmlFor="register-password">Mot de passe</label>
               </div>
-              <div class="form-input-material">
-                <input type="password" name="password" id="register-password-confirm" placeholder=" " autocomplete="off" class="form-control-material" required />
-                <label for="register-password-confirm">Renseigner le même mot de passe</label>
+              <div className="form-input-material">
+                <input type="password" name="password" id="register-password-confirm" placeholder=" " autoComplete="off" className="form-control-material" required />
+                <label htmlFor="register-password-confirm">Renseigner le même mot de passe</label>
               </div>
-              <button type="submit" class="btn btn-primary btn-ghost">S'inscrire</button>
+              <button type="submit" className="btn btn-primary btn-ghost">S'inscrire</button>
             </form>
           </section>
           <section id="login-form">
             <h3>Connexion</h3>
             <form className="formContainer">
-              <div class="form-input-material">
-                <input type="email" name="email" id="login-email" placeholder=" " autocomplete="off" class="form-control-material" required />
-                <label for="login-email">Email</label>
+              <div className="form-input-material">
+                <input type="email" name="email" id="login-email" placeholder=" " autoComplete="off" className="form-control-material" required />
+                <label htmlFor="login-email">Email</label>
               </div>
-              <div class="form-input-material">
-                <input type="password" name="password" id="login-password" placeholder=" " autocomplete="off" class="form-control-material" required />
-                <label for="login-password">Mot de passe</label>
+              <div className="form-input-material">
+                <input type="password" name="password" id="login-password" placeholder=" " autoComplete="off" className="form-control-material" required />
+                <label htmlFor="login-password">Mot de passe</label>
               </div>
-              <button type="submit" class="btn btn-primary btn-ghost">Se connecter</button>
+              <button type="submit" className="btn btn-primary btn-ghost">Se connecter</button>
             </form>
           </section>
         </div>

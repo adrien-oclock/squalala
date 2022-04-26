@@ -36,33 +36,3 @@ h2 {
 .slick-slide div {
   height: 100%;
 }
-
-.carouselElement {
-  height: 100%;
-  color: vars.$text-color;
-}
-
-.carouselContent {
-  height: 60%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-}
-
-.rating {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 40%;
-
-  span {
-    display: block;
-  }
-
-  .checked {
-    color: vars.$primary-color;
-  }
-}
-
-

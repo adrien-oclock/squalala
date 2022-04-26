@@ -1,33 +1,36 @@
 @use '../../styles/vars';
 
-ul {
-  display: flex;
-  justify-content: space-around;
-  text-align: center;
-  text-transform: uppercase;
-  font-weight: 800;
+#main-menu {
 
-  li {
-    width: 100%;
-
-    a {
-      display:inline-block;
-      width: 100%;
-      padding-bottom: 1em;
-      border-bottom: 2mm solid vars.$fade-color;
-      transition: all ease-in-out 0.5s;
-
-      &.active {
-        border-bottom: 2mm solid vars.$primary-color;
-        color: vars.$primary-color;
-      }
+  ul {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 800;
   
-      &:hover {
-        color: vars.$primary-color;
-        border-bottom: 2mm solid vars.$primary-color;
+    li {
+      width: 100%;
+  
+      a {
+        display:inline-block;
+        width: 100%;
+        padding-bottom: 1em;
+        border-bottom: 2mm solid vars.$fade-color;
+        transition: all ease-in-out 0.5s;
+  
+        &.active {
+          border-bottom: 2mm solid vars.$primary-color;
+          color: vars.$primary-color;
+        }
+    
+        &:hover {
+          color: vars.$primary-color;
+          border-bottom: 2mm solid vars.$primary-color;
+        }
       }
+      
     }
     
   }
-  
 }
