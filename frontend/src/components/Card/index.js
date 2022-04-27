@@ -18,8 +18,8 @@ const Card = function ({
     }
   }
   return (
-    <div className="carouselElement">
-      <div className="carouselContent">
+    <div className="cardContainer">
+      <div className="cardContent">
         <p className="title">{title}</p>
         {subtitle
         && <p className="subtitle">{subtitle}</p>}

@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Header from '../Header';
 import Home from '../Home';
 import Error from '../Error';
+import ListSoundboard from '../ListSoundboard';
 
 import './styles.scss';
 
@@ -12,6 +13,7 @@ const App = () => (
     <Header title="Squalala" />
     <Routes>
       <Route path="/" exact element={<Home />} />
+      <Route path="/soundboard" exact element={<ListSoundboard />} />
       {/* <Route path="/soundboard/:id">
         <Soundboard />
       </Route> */}

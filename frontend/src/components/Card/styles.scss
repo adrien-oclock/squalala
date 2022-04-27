@@ -1,12 +1,12 @@
 @use '../../styles/vars';
 
-.carouselElement {
+.cardContainer {
   height: 100%;
   color: vars.$text-color;
 }
 
-.carouselContent {
-  height: 60%;
+.cardContent {
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;

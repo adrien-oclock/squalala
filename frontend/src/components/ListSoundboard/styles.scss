@@ -1,0 +1,153 @@
+@use '../../styles/vars';
+
+.listContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  form {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: vars.$fade-color;
+    margin: 1em 0;
+    padding: 1em;
+
+    #search-input {
+
+      width: 50%;
+      position: relative;
+
+      input, button {
+        border: 0;
+        color: vars.$background-color;
+      }
+
+      input[type="search"] {
+        height: 30%;
+        width: 100%;
+        background: vars.$text-color;
+        padding: 0.5rem 1rem;
+        border-radius: .7rem;
+        appearance: none; //for iOS input[type="search"] roundedness issue. border-radius alone doesn't work
+        transition: all .3s cubic-bezier(0, 0, 0.43, 1.49);
+        transition-property: width, border-radius;
+        z-index: 1;
+        position: relative;
+
+        &:focus {
+          border-radius: .7rem 0 0 .7rem;
+          width: 80%;
+          + button {
+            display: block;
+          }
+        }
+      }
+
+      button {
+        display: none; // prevent being able to tab to it
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 20%;
+        height: 100%;
+        font-weight: bold;
+        background: vars.$primary-color;
+        border-radius: 0 .7rem .7rem 0;
+        color: vars.$text-color;
+      }
+
+      label {
+        position: absolute;
+        clip: rect(1px, 1px, 1px, 1px);
+        padding: 0;
+        border: 0;
+        height: 1px;
+        width: 1px;
+        overflow: hidden;
+      }
+    }
+
+    #checkboxes {
+      width: 80%;
+      margin-top: 1em;
+      list-style: none;
+      padding: 20px;
+
+
+        li {
+          display: inline;
+
+          input[type="checkbox"]:checked + label::before {
+            content: "\f00c";
+            transform: rotate(-360deg);
+            transition: transform .3s ease-in-out;
+          }
+
+          input[type="checkbox"]:checked + label {
+            border: 2px solid #1bdbf8;
+            background-color: #12bbd4;
+            color: #fff;
+            transition: all .2s;
+          }
+
+          input[type="checkbox"] {
+            display: absolute;
+            position: absolute;
+            opacity: 0;
+
+            label{
+              display: inline-block;
+              background-color: rgba(255, 255, 255, .9);
+              border: 2px solid rgba(139, 139, 139, .3);
+              color: #adadad;
+              border-radius: 25px;
+              white-space: nowrap;
+              margin: 3px 0px;
+              padding: 8px 12px;
+              cursor: pointer;
+              -webkit-touch-callout: none;
+              -webkit-user-select: none;
+              -moz-user-select: none;
+              -ms-user-select: none;
+              user-select: none;
+              -webkit-tap-highlight-color: transparent;
+              transition: all .2s;
+  
+              &::before {
+                display: inline-block;
+                font-style: normal;
+                font-variant: normal;
+                text-rendering: auto;
+                -webkit-font-smoothing: antialiased;
+                font-family: "Font Awesome 5 Free";
+                font-weight: 900;
+                font-size: 12px;
+                padding: 2px 6px 2px 2px;
+                content: "\f067";
+                transition: transform .3s ease-in-out;
+              }
+            }
+          }
+
+          input[type="checkbox"]:focus + label {
+            border: 2px solid #e9a1ff;
+          }
+        }
+    }
+  }
+
+  section {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+
+    .cardContainer {
+      width: 30%;
+      height: 30vh;
+    }
+  }
+}
