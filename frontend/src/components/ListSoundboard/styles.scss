@@ -12,8 +12,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: vars.$fade-color;
-    margin: 1em 0;
+    margin: 2em 0;
     padding: 1em;
 
     #search-input {
@@ -87,10 +86,6 @@
           padding-top: 1em;
           text-align: center;
 
-          input[type="checkbox"]:checked + label::before {
-            transition: transform .3s ease-in-out;
-          }
-
           input[type="checkbox"]:checked + label {
             border: 2px solid vars.$background-color;
             background-color: vars.$primary-color;
@@ -106,6 +101,7 @@
             opacity: 0;
             top: 0;
             left: 0;
+            z-index: -1;
           }
 
           input[type="checkbox"]:focus + label {
@@ -141,6 +137,10 @@
       }
       i {
         margin-left: .5em;
+      }
+
+      .btn-primary {
+        color: vars.$background-color;
       }
     }
   }

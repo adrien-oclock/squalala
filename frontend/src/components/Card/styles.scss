@@ -1,16 +1,59 @@
 @use '../../styles/vars';
 
 .cardContainer {
+  position: relative;
   height: 100%;
   color: vars.$text-color;
+  background-color: vars.$dark-color;
+  transition: visibility 0s, opacity 0.5s linear;
+  margin-bottom: 1em;
+
+  i {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 1em 1em 0 0;
+    color: vars.$primary-color;
+    cursor: pointer;
+    // To ensure that icon always clickable
+    z-index: 10;
+  }
+
+  .fa-minus-circle {
+    color: vars.$background-color;
+  }
 }
 
 .cardContent {
   height: 100%;
+  opacity: 0;
+}
+
+.cardContent.visible {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+  transition: opacity .3s linear; 
+  opacity: 1;
+}
+
+.verso {
+  height: 100%;
+  opacity: 0;
+  text-align: center;
+  transform: translate(0, -100%);
+}
+
+.verso.visible{
+  display: flex;
+  align-items: center;
+  border: vars.$dark-color solid 2px;
+  border-radius: .3rem;
+  background-color: vars.$text-color;
+  color: vars.$background-color;
+  transition: opacity .3s linear; 
+  opacity: 0.7;
 }
 
 .theme {

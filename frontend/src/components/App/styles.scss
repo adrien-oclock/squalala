@@ -49,3 +49,8 @@
     background-color: vars.$primary-color;
   }
 }
+
+.ghost {
+  border: vars.$fade-color solid 2px;
+  border-radius: 0.5rem;
+}

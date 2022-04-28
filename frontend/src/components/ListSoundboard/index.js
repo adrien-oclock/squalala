@@ -66,7 +66,6 @@ const ListSoundboard = function () {
       id: 2,
       title: 'Boom',
       author: 'Venga',
-      description: 'Hic nulla dolores et distinctio minus non voluptates voluptate et animi vero.',
       sounds: 12,
       themes: [
         {
@@ -141,7 +140,7 @@ const ListSoundboard = function () {
   ];
   return (
     <div className="listContainer">
-      <form id="filter">
+      <form id="filter" className="ghost">
         <div id="search-input">
           <label htmlFor="search">Rechercher</label>
           <input id="search" type="search" placeholder="Rechercher..." />
@@ -171,7 +170,7 @@ const ListSoundboard = function () {
       </form>
       <section id="list">
         {data.map((soundboard) => (
-          <Card key={soundboard.id} title={soundboard.title} subtitle={soundboard.author} themes={soundboard.themes} rating={soundboard.rating} />
+          <Card key={soundboard.id} title={soundboard.title} subtitle={soundboard.author} info={`Nombres de sons : ${soundboard.sounds}`} themes={soundboard.themes} rating={soundboard.rating} text={soundboard.description} />
         ))}
       </section>
     </div>
