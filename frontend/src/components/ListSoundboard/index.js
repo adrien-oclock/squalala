@@ -1,11 +1,48 @@
 /* eslint-disable max-len */
-import React from 'react';
+import { useEffect, useState } from 'react';
 
 import Card from '../Card';
 
 import './styles.scss';
 
 const ListSoundboard = function () {
+  const [activatedDateSort, setActivatedDateSort] = useState('primary');
+  const [activatedLikeSort, setActivatedLikeSort] = useState('secondary');
+  const [dateSort, setDateSort] = useState('up');
+  const [likeSort, setLikeSort] = useState('down');
+
+  const sortButtonHandler = (e) => {
+    const clickedSort = e.target.dataset.sort;
+
+    // Change sort order date
+    if (clickedSort === 'date' && activatedDateSort === 'primary') {
+      if (dateSort === 'up') {
+        setDateSort('down');
+      }
+      else {
+        setDateSort('up');
+      }
+    }
+    else if (clickedSort === 'date' && activatedDateSort === 'secondary') {
+      setActivatedDateSort('primary');
+      setActivatedLikeSort('secondary');
+    }
+
+    // Change sort order like
+    if (clickedSort === 'like' && activatedLikeSort === 'primary') {
+      if (likeSort === 'up') {
+        setLikeSort('down');
+      }
+      else {
+        setLikeSort('up');
+      }
+    }
+    else if (clickedSort === 'like' && activatedLikeSort === 'secondary') {
+      setActivatedDateSort('secondary');
+      setActivatedLikeSort('primary');
+    }
+  };
+
   const data = [
     {
       id: 1,
@@ -113,14 +150,24 @@ const ListSoundboard = function () {
           </button>
         </div>
         <ul id="checkboxes">
-          <li><input type="checkbox" name="theme[]" value="1" key="theme-1"/><label htmlFor="theme-1">Tata</label></li>
-          <li><input type="checkbox" name="theme[]" value="2" key="theme-2"/><label htmlFor="theme-2">Titi</label></li>
-          <li><input type="checkbox" name="theme[]" value="3" key="theme-3"/><label htmlFor="theme-3">Toto</label></li>
-          <li><input type="checkbox" name="theme[]" value="4" key="theme-4"/><label htmlFor="theme-4">Tutu</label></li>
-          <li><input type="checkbox" name="theme[]" value="5" key="theme-5"/><label htmlFor="theme-5">Yolo</label></li>
-          <li><input type="checkbox" name="theme[]" value="6" key="theme-6"/><label htmlFor="theme-6">Super thème</label></li>
-          <li><input type="checkbox" name="theme[]" value="7" key="theme-7"/><label htmlFor="theme-7">Youpi</label></li>
+          <li><input type="checkbox" name="theme[]" value="1" id="theme-1" key="theme-1" defaultChecked /><label htmlFor="theme-1">Tata</label></li>
+          <li><input type="checkbox" name="theme[]" value="2" id="theme-2" key="theme-2" /><label htmlFor="theme-2">Titi</label></li>
+          <li><input type="checkbox" name="theme[]" value="3" id="theme-3" key="theme-3" /><label htmlFor="theme-3">Toto</label></li>
+          <li><input type="checkbox" name="theme[]" value="4" id="theme-4" key="theme-4" /><label htmlFor="theme-4">Tutu</label></li>
+          <li><input type="checkbox" name="theme[]" value="5" id="theme-5" key="theme-5" /><label htmlFor="theme-5">Yolo</label></li>
+          <li><input type="checkbox" name="theme[]" value="6" id="theme-6" key="theme-6" /><label htmlFor="theme-6">Super thème</label></li>
+          <li><input type="checkbox" name="theme[]" value="7" id="theme-7" key="theme-7" /><label htmlFor="theme-7">Youpi</label></li>
         </ul>
+        <div id="sorting">
+          <button type="button" className={`btn btn-${activatedDateSort}`} onClick={sortButtonHandler} data-sort="date">
+            Date
+            <i className={`fa fa-arrow-${dateSort}`} />
+          </button>
+          <button type="button" className={`btn btn-${activatedLikeSort}`} onClick={sortButtonHandler} data-sort="like">
+            Like
+            <i className={`fa fa-arrow-${likeSort}`} />
+          </button>
+        </div>
       </form>
       <section id="list">
         {data.map((soundboard) => (
