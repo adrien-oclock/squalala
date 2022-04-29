@@ -6,7 +6,7 @@ section {
   justify-content: space-around;
   width: 80%;
   margin: auto;
-  height: 80vh;
+  height: calc(80vh - 2em);
 }
 
 h2 {

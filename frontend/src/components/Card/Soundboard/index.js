@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import './styles.scss';
 
-const Card = function ({
+const CardSoundboard = function ({
   title, subtitle, info, text, themes, rating,
 }) {
   const stars = [];
@@ -23,7 +23,7 @@ const Card = function ({
   return (
     <div className="cardContainer">
       {text
-      && <i onClick={toggleFlip} className={`fa fa-${flip ? 'minus' : 'plus'}-circle`} />}
+      && <i onClick={toggleFlip} className={`fa fa-${flip ? 'minus' : 'plus'}-circle tool right`} aria-hidden="true" />}
       <div className={`cardContent ${flip ? '' : 'visible'}`}>
         <p className="title">{title}</p>
         {subtitle
@@ -47,7 +47,7 @@ const Card = function ({
   );
 };
 
-Card.defaultProps = {
+CardSoundboard.defaultProps = {
   subtitle: null,
   themes: null,
   rating: null,
@@ -55,7 +55,7 @@ Card.defaultProps = {
   text: null,
 };
 
-Card.propTypes = {
+CardSoundboard.propTypes = {
   title: PropTypes.string.isRequired,
   subtitle: PropTypes.string,
   info: PropTypes.string,
@@ -69,4 +69,4 @@ Card.propTypes = {
   rating: PropTypes.number,
 };
 
-export default Card;
+export default CardSoundboard;

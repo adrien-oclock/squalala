@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import { useEffect, useState } from 'react';
 
-import Card from '../Card';
+import CardSoundboard from '../Card/Soundboard';
 
 import './styles.scss';
 
@@ -170,7 +170,7 @@ const ListSoundboard = function () {
       </form>
       <section id="list">
         {data.map((soundboard) => (
-          <Card key={soundboard.id} title={soundboard.title} subtitle={soundboard.author} info={`Nombres de sons : ${soundboard.sounds}`} themes={soundboard.themes} rating={soundboard.rating} text={soundboard.description} />
+          <CardSoundboard key={soundboard.id} title={soundboard.title} subtitle={soundboard.author} info={`Nombres de sons : ${soundboard.sounds}`} themes={soundboard.themes} rating={soundboard.rating} text={soundboard.description} />
         ))}
       </section>
     </div>

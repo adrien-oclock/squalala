@@ -5,6 +5,7 @@ import Home from '../Home';
 import Error from '../Error';
 import ListSoundboard from '../ListSoundboard';
 import ListUser from '../ListUser';
+import Soundboard from '../Soundboard';
 
 import './styles.scss';
 
@@ -16,9 +17,7 @@ const App = () => (
       <Route path="/" exact element={<Home />} />
       <Route path="/soundboard" exact element={<ListSoundboard />} />
       <Route path="/user" exact element={<ListUser />} />
-      {/* <Route path="/soundboard/:id">
-        <Soundboard />
-      </Route> */}
+      <Route path="/soundboard/:id" element={<Soundboard />} />
       <Route path="*" element={<Error />} />
     </Routes>
   </div>

@@ -1,0 +1,41 @@
+@use '../../styles/vars';
+
+.profile {
+  display: flex;
+
+  #author {
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+
+    h4 {
+      margin-bottom: 2em;
+      font-size: large;
+      font-weight: 600;
+    }
+
+    nav {
+      height: 100%;
+      width: 100%;
+
+      ul {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        li {
+          margin-bottom: 1em;
+        }
+      }
+    }
+  }
+
+  #soundboard {
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    align-items: flex-start;
+    align-content: flex-start;
+  }
+}

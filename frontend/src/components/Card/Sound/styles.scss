@@ -1,0 +1,139 @@
+@use '../../../styles/vars';
+
+.cardContainer {
+  position: relative;
+  width: 18%;
+  height: 20vh;
+  color: vars.$text-color;
+  background-color: vars.$dark-color;
+  transition: visibility 0s, opacity 0.5s linear;
+  margin: 0 2% 2% 0;
+
+  &.add {
+    display: table;
+
+    i {
+      display: table-cell;
+      vertical-align: middle;
+      text-align: center;
+      font-size: xxx-large;
+      cursor: pointer;
+
+      &:hover {
+        color: vars.$primary-color;
+        transition: .3s;
+      }
+    }
+  }
+
+  &.rate ul {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+      li {
+        display: inline;
+        position: relative;
+        width: 15%;
+        text-align: center;
+
+        input[type="radio"] {
+          display: absolute;
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          opacity: 0;
+          top: 0;
+          left: 0;
+          z-index: -1;
+        }
+
+        label i {
+          display: inline-block;
+          color: vars.$text-color;
+          content: '\2606';
+          border-radius: .3rem;
+          white-space: nowrap;
+          cursor: pointer;
+          -webkit-touch-callout: none;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+          -webkit-tap-highlight-color: transparent;
+          transition: all .2s;
+
+          &.fill {
+            color: vars.$primary-color;
+          }
+        }
+      }
+  }
+
+  i {
+    &.tool {
+      width: fit-content;
+      display: inline;
+      position: absolute;
+      top: 0;
+      color: vars.$primary-color;
+      cursor: pointer;
+      // To ensure that icon always clickable
+      z-index: 10;
+    }
+    
+    &.right {
+      right: 0;
+      padding: 1em 1em 0 0;
+    }
+
+    &.left {
+      left: 0;
+      padding: 1em 0 0 1em;
+    }
+
+    &.flipped {
+      color: vars.$background-color;
+    }
+  }
+}
+
+.cardContent {
+  height: 100%;
+  opacity: 0;
+
+  &.visible {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    transition: opacity .3s linear; 
+    opacity: 1;
+  }
+}
+
+.verso {
+  height: 100%;
+  opacity: 0;
+  text-align: center;
+  transform: translate(0, -100%);
+
+  &.visible{
+    display: flex;
+    align-items: center;
+    border: vars.$dark-color solid 2px;
+    border-radius: .3rem;
+    background-color: vars.$text-color;
+    color: vars.$background-color;
+    transition: opacity .3s linear; 
+    opacity: 0.7;
+  }
+}
+
+.theme {
+  display: flex;
+  width: 80%;
+  justify-content: space-evenly;
+}
