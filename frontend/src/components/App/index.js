@@ -4,6 +4,7 @@ import Header from '../Header';
 import Home from '../Home';
 import Error from '../Error';
 import ListSoundboard from '../ListSoundboard';
+import ListUser from '../ListUser';
 
 import './styles.scss';
 
@@ -14,6 +15,7 @@ const App = () => (
     <Routes>
       <Route path="/" exact element={<Home />} />
       <Route path="/soundboard" exact element={<ListSoundboard />} />
+      <Route path="/user" exact element={<ListUser />} />
       {/* <Route path="/soundboard/:id">
         <Soundboard />
       </Route> */}

@@ -1,0 +1,100 @@
+@use '../../styles/vars';
+
+.listContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  form {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 2em 0;
+    padding: 1em;
+
+    #search-input {
+
+      width: 50%;
+      position: relative;
+
+      input, button {
+        border: 0;
+        color: vars.$background-color;
+      }
+
+      input[type="search"] {
+        height: 30%;
+        width: 100%;
+        background: vars.$text-color;
+        padding: 0.5rem 1rem;
+        border-radius: .7rem;
+        appearance: none; //for iOS input[type="search"] roundedness issue. border-radius alone doesn't work
+        transition: all .3s cubic-bezier(0, 0, 0.43, 1.49);
+        transition-property: width, border-radius;
+        z-index: 1;
+        position: relative;
+
+        &:focus {
+          border-radius: .7rem 0 0 .7rem;
+          width: 80%;
+          + button {
+            display: block;
+          }
+        }
+      }
+
+      button {
+        display: none; // prevent being able to tab to it
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 20%;
+        height: 100%;
+        font-weight: bold;
+        background: vars.$primary-color;
+        border-radius: 0 .7rem .7rem 0;
+        color: vars.$text-color;
+      }
+
+      label {
+        position: absolute;
+        clip: rect(1px, 1px, 1px, 1px);
+        padding: 0;
+        border: 0;
+        height: 1px;
+        width: 1px;
+        overflow: hidden;
+      }
+    }
+
+    
+    #sorting {
+      align-self: end;
+      
+      button {
+        margin-left: 1em;
+      }
+      i {
+        margin-left: .5em;
+      }
+
+      .btn-primary {
+        color: vars.$background-color;
+      }
+    }
+  }
+
+  section {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+
+    .cardContainer {
+      width: 30%;
+      height: 30vh;
+    }
+  }
+}
