@@ -154,7 +154,7 @@ const Soundboard = function () {
       </section>
       <section id="soundboard">
         {data.sounds.map((sound) => (
-          <CardSound key={sound.id} title={sound.title} text={sound.text} />
+          <CardSound key={sound.id} id={sound.id} title={sound.title} text={sound.text} />
         ))}
         <CardSound key="sound-rate" rating={data.rating} />
         <CardSound key="sound-add" add />

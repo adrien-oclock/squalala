@@ -81,7 +81,7 @@
       color: vars.$primary-color;
       cursor: pointer;
       // To ensure that icon always clickable
-      z-index: 10;
+      z-index: 1;
     }
     
     &.right {
@@ -97,6 +97,10 @@
     &.flipped {
       color: vars.$background-color;
     }
+  }
+
+  .delete {
+    margin-top: 1em;
   }
 }
 

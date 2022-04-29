@@ -9,7 +9,7 @@
     position: relative;
     width: 100%;
 
-    input {
+    input, textarea {
       width: 100%;
       padding: .5em 0;
       font-size: 16px;
@@ -32,6 +32,8 @@
       transition: .5s;
     }
 
+    textarea:focus ~ label,
+    textarea:valid ~ label,
     input:focus ~ label,
     input:valid ~ label {
       top: -20px;

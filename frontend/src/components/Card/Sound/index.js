@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import Popup from '../../Popup';
 
 import './styles.scss';
 
 const CardSound = function ({
-  title, text, add, rating,
+  title, text, add, rating, id,
 }) {
   const [visibilityAdd, setVisibilityAdd] = useState(false);
   const [visibilityEdit, setVisibilityEdit] = useState(false);
@@ -28,6 +29,23 @@ const CardSound = function ({
         </div>
         {text
         && <div className={`verso ${flip ? 'visible' : ''}`}><p className="text">{text}</p></div>}
+        <Popup onClose={popupCloseHandler} show={visibilityEdit}>
+          <section>
+            <h3>Modifier le son</h3>
+            <form className="formContainer">
+              <div className="inputContainer">
+                <input type="text" name="title" id={`edit-title-${id}`} value={title} autoComplete="off" required />
+                <label htmlFor={`edit-title-${id}`}>Titre</label>
+              </div>
+              <div className="inputContainer">
+                <textarea name="description" id={`edit-description-${id}`} value={text} autoComplete="off" required />
+                <label htmlFor={`edit-description-${id}`}>Description</label>
+              </div>
+              <button type="submit" className="btn btn-primary">Modifier</button>
+            </form>
+            <button type="button" className="btn btn-primary delete">Supprimer</button>
+          </section>
+        </Popup>
       </div>
     );
   }
@@ -77,11 +95,28 @@ const CardSound = function ({
   return (
     <div className="cardContainer add">
       <i onClick={() => setVisibilityAdd(!visibilityAdd)} className="fa fa-plus" aria-hidden="true" />
+      <Popup onClose={popupCloseHandler} show={visibilityAdd}>
+        <section id="add-sound">
+          <h3>Ajout de son</h3>
+          <form className="formContainer">
+            <div className="inputContainer">
+              <input type="text" name="title" id="add-title" autoComplete="off" required />
+              <label htmlFor="add-title">Titre</label>
+            </div>
+            <div className="inputContainer">
+              <textarea name="description" id="add-description" autoComplete="off" required />
+              <label htmlFor="add-description">Description</label>
+            </div>
+            <button type="submit" className="btn btn-primary">Ajouter</button>
+          </form>
+        </section>
+      </Popup>
     </div>
   );
 };
 
 CardSound.defaultProps = {
+  id: null,
   title: null,
   add: false,
   rating: null,
@@ -89,6 +124,7 @@ CardSound.defaultProps = {
 };
 
 CardSound.propTypes = {
+  id: PropTypes.number,
   title: PropTypes.string,
   text: PropTypes.string,
   rating: PropTypes.number,
