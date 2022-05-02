@@ -5,6 +5,7 @@ namespace App\Controller\Api\V1;
 use App\Repository\SoundboardRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/api/v1/soundboards", name="api_v1_soundboards_")
