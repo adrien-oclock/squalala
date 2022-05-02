@@ -42,9 +42,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $likes;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $email;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Soundboard::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $soundboard;
+
     public function __construct()
     {
         $this->likes = new ArrayCollection();
+        $this->soundboard = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -153,6 +164,48 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->likes->removeElement($like)) {
             $like->removeUser($this);
+        }
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Soundboard>
+     */
+    public function getSoundboard(): Collection
+    {
+        return $this->soundboard;
+    }
+
+    public function addSoundboard(Soundboard $soundboard): self
+    {
+        if (!$this->soundboard->contains($soundboard)) {
+            $this->soundboard[] = $soundboard;
+            $soundboard->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSoundboard(Soundboard $soundboard): self
+    {
+        if ($this->soundboard->removeElement($soundboard)) {
+            // set the owning side to null (unless already changed)
+            if ($soundboard->getUser() === $this) {
+                $soundboard->setUser(null);
+            }
         }
 
         return $this;

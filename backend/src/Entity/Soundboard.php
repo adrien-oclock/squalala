@@ -30,11 +30,6 @@ class Soundboard
     private $description;
 
     /**
-     * @ORM\OneToOne(targetEntity=Sound::class, mappedBy="soundboard", cascade={"persist", "remove"})
-     */
-    private $sound;
-
-    /**
      * @ORM\ManyToMany(targetEntity=Tag::class, mappedBy="soundboard")
      */
     private $tags;
@@ -44,10 +39,22 @@ class Soundboard
      */
     private $likes;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="soundboard")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Sound::class, mappedBy="soundboard")
+     */
+    private $sound;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
         $this->likes = new ArrayCollection();
+        $this->sound = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -75,23 +82,6 @@ class Soundboard
     public function setDescription(string $description): self
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getSound(): ?Sound
-    {
-        return $this->sound;
-    }
-
-    public function setSound(Sound $sound): self
-    {
-        // set the owning side of the relation if necessary
-        if ($sound->getSoundboard() !== $this) {
-            $sound->setSoundboard($this);
-        }
-
-        $this->sound = $sound;
 
         return $this;
     }
@@ -145,6 +135,48 @@ class Soundboard
     {
         if ($this->likes->removeElement($like)) {
             $like->removeSoundboard($this);
+        }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Sound>
+     */
+    public function getSound(): Collection
+    {
+        return $this->sound;
+    }
+
+    public function addSound(Sound $sound): self
+    {
+        if (!$this->sound->contains($sound)) {
+            $this->sound[] = $sound;
+            $sound->setSoundboard($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSound(Sound $sound): self
+    {
+        if ($this->sound->removeElement($sound)) {
+            // set the owning side to null (unless already changed)
+            if ($sound->getSoundboard() === $this) {
+                $sound->setSoundboard(null);
+            }
         }
 
         return $this;

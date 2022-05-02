@@ -31,7 +31,7 @@ class Tag
 
     public function __construct()
     {
-        $this->soundboard = new ArrayCollection();
+        $this->soundboards = new ArrayCollection();
     }
 
     public function getId(): ?int

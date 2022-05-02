@@ -33,7 +33,7 @@ class Sound
     private $position;
 
     /**
-     * @ORM\OneToOne(targetEntity=Soundboard::class, inversedBy="sound", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Soundboard::class, inversedBy="sound")
      * @ORM\JoinColumn(nullable=false)
      */
     private $soundboard;
@@ -84,7 +84,7 @@ class Sound
         return $this->soundboard;
     }
 
-    public function setSoundboard(Soundboard $soundboard): self
+    public function setSoundboard(?Soundboard $soundboard): self
     {
         $this->soundboard = $soundboard;
 
