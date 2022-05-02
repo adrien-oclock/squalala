@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass=LikeRepository::class)
  * @ORM\Table(name="`like`")
  */
-class Like
+class Like extends Core
 {
     /**
      * @ORM\Id
@@ -34,6 +34,16 @@ class Like
      * @ORM\Column(type="integer")
      */
     private $score;
+
+    /**
+     * @ORM\Column(type="datetime_immutable")
+     */
+    protected $createdAt;
+
+    /**
+     * @ORM\Column(type="datetime_immutable")
+     */
+    protected $updatedAt;
 
     public function __construct()
     {

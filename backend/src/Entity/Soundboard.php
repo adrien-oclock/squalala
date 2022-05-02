@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=SoundboardRepository::class)
  */
-class Soundboard
+class Soundboard extends Core
 {
     /**
      * @ORM\Id
@@ -49,6 +49,16 @@ class Soundboard
      * @ORM\OneToMany(targetEntity=Sound::class, mappedBy="soundboard")
      */
     private $sound;
+
+    /**
+     * @ORM\Column(type="datetime_immutable")
+     */
+    protected $createdAt;
+
+    /**
+     * @ORM\Column(type="datetime_immutable")
+     */
+    protected $updatedAt;
 
     public function __construct()
     {

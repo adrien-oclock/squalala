@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=SoundRepository::class)
  */
-class Sound
+class Sound extends Core
 {
     /**
      * @ORM\Id
@@ -37,6 +37,16 @@ class Sound
      * @ORM\JoinColumn(nullable=false)
      */
     private $soundboard;
+
+    /**
+     * @ORM\Column(type="datetime_immutable")
+     */
+    protected $createdAt;
+
+    /**
+     * @ORM\Column(type="datetime_immutable")
+     */
+    protected $updatedAt;
 
     public function getId(): ?int
     {

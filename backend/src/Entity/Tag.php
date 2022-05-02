@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=TagRepository::class)
  */
-class Tag
+class Tag extends Core
 {
     /**
      * @ORM\Id
@@ -28,6 +28,16 @@ class Tag
      * @ORM\ManyToMany(targetEntity=Soundboard::class, inversedBy="tags")
      */
     private $soundboards;
+
+    /**
+     * @ORM\Column(type="datetime_immutable")
+     */
+    protected $createdAt;
+
+    /**
+     * @ORM\Column(type="datetime_immutable")
+     */
+    protected $updatedAt;
 
     public function __construct()
     {
