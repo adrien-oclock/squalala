@@ -7,15 +7,20 @@ header {
 
   .header-left {
     width: 20%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
 
-    h1 {
-      font-size: xx-large;
-      font-weight: 600;
+    a {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+  
+      h1 {
+        font-size: xx-large;
+        font-weight: 600;
+      }
     }
+    
   }
 
   .header-right {

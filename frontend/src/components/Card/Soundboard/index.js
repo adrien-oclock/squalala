@@ -23,7 +23,7 @@ const CardSoundboard = function ({
   return (
     <div className="cardContainer">
       {text
-      && <i onClick={toggleFlip} className={`fa fa-${flip ? 'minus' : 'plus'}-circle tool right`} aria-hidden="true" />}
+      && <i onClick={toggleFlip} className={`fa fa-${flip ? 'minus' : 'plus'}-circle tool right ${flip ? 'flipped' : ''}`} aria-hidden="true" />}
       <div className={`cardContent ${flip ? '' : 'visible'}`}>
         <p className="title">{title}</p>
         {subtitle
