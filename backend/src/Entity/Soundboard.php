@@ -43,12 +43,6 @@ class Soundboard extends Core
     private $tags;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Like::class, mappedBy="soundboards", cascade={"persist"})
-     * @Groups("api_soundboard_browse")
-     */
-    private $likes;
-
-    /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="soundboards", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      * @Groups("api_soundboard_browse")
@@ -60,6 +54,12 @@ class Soundboard extends Core
      * @Groups("api_soundboard_browse")
      */
     private $sounds;
+
+    /**
+     * @Groups("api_soundboard_browse")
+     * @ORM\OneToMany(targetEntity=Like::class, mappedBy="soundboard", cascade={"persist"})
+     */
+    private $likes;
 
     /**
      * @ORM\Column(type="datetime_immutable")
@@ -139,33 +139,6 @@ class Soundboard extends Core
         return $this;
     }
 
-    /**
-     * @return Collection<int, Like>
-     */
-    public function getLikes(): Collection
-    {
-        return $this->likes;
-    }
-
-    public function addLike(Like $like): self
-    {
-        if (!$this->likes->contains($like)) {
-            $this->likes[] = $like;
-            $like->addSoundboard($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLike(Like $like): self
-    {
-        if ($this->likes->removeElement($like)) {
-            $like->removeSoundboard($this);
-        }
-
-        return $this;
-    }
-
     public function getUser(): ?User
     {
         return $this->user;
@@ -208,9 +181,38 @@ class Soundboard extends Core
         return $this;
     }
 
-
     /**
-     * Ceci est du code à exécuter avant la mise à jour d'un tvshow
+     * @return Collection<int, Like>
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Like $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->setSoundboard($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Like $like): self
+    {
+        if ($this->likes->removeElement($like)) {
+            // set the owning side to null (unless already changed)
+            if ($like->getSoundboard() === $this) {
+                $like->setSoundboard(null);
+            }
+        }
+
+        return $this;
+    }
+
+     /**
+     * Ceci est du code à exécuter avant la mise à jour
      * 
      * @ORM\PreUpdate
      *

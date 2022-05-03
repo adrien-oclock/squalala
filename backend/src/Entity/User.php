@@ -44,11 +44,6 @@ class User extends Core implements UserInterface, PasswordAuthenticatedUserInter
     private $password;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Like::class, mappedBy="users")
-     */
-    private $likes;
-
-    /**
      * @ORM\Column(type="string", length=255)
      * @Groups("api_user_browse")
      */
@@ -70,14 +65,19 @@ class User extends Core implements UserInterface, PasswordAuthenticatedUserInter
      */
     protected $updatedAt;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Like::class, mappedBy="user")
+     */
+    private $likes;
+
     public function __construct()
     {
-        $this->likes = new ArrayCollection();
         $this->soundboard = new ArrayCollection();
 
         /* Initialize dates */
         $this->setCreatedAt();
         $this->setUpdatedAt();
+        $this->likes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -164,33 +164,6 @@ class User extends Core implements UserInterface, PasswordAuthenticatedUserInter
         // $this->plainPassword = null;
     }
 
-    /**
-     * @return Collection<int, Like>
-     */
-    public function getLikes(): Collection
-    {
-        return $this->likes;
-    }
-
-    public function addLike(Like $like): self
-    {
-        if (!$this->likes->contains($like)) {
-            $this->likes[] = $like;
-            $like->addUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLike(Like $like): self
-    {
-        if ($this->likes->removeElement($like)) {
-            $like->removeUser($this);
-        }
-
-        return $this;
-    }
-
     public function getEmail(): ?string
     {
         return $this->email;
@@ -234,7 +207,37 @@ class User extends Core implements UserInterface, PasswordAuthenticatedUserInter
     }
 
     /**
-     * Ceci est du code à exécuter avant la mise à jour d'un tvshow
+     * @return Collection<int, Like>
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Like $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Like $like): self
+    {
+        if ($this->likes->removeElement($like)) {
+            // set the owning side to null (unless already changed)
+            if ($like->getUser() === $this) {
+                $like->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * Ceci est du code à exécuter avant la mise à jour
      * 
      * @ORM\PreUpdate
      *

@@ -119,7 +119,7 @@ class Sound extends Core
     }
 
     /**
-     * Ceci est du code à exécuter avant la mise à jour d'un tvshow
+     * Ceci est du code à exécuter avant la mise à jour
      * 
      * @ORM\PreUpdate
      *

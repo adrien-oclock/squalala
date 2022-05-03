@@ -38,8 +38,6 @@ class AppFixtures extends Fixture
             // et le conteneur de service s'est occupé de l'instancié
             $hashedPassword = $this->passwordHasher->hashPassword($basicUser, 'user');
             $basicUser->setPassword($hashedPassword);
-            $basicUser->setCreatedAt();
-            $basicUser->setUpdatedAt();
 
             $userList[] = $basicUser;
         }
@@ -48,9 +46,7 @@ class AppFixtures extends Fixture
         for ($tagNumber = 0; $tagNumber < 10; $tagNumber++) {
             $tag = new Tag();
             $entityManager->persist($tag);
-            $tag->setTitle($faker->word());
-            $tag->setCreatedAt();
-            $tag->setUpdatedAt();
+            $tag->setTitle($faker->unique()->word());
             $tagList[] = $tag;
         }
 
@@ -64,8 +60,6 @@ class AppFixtures extends Fixture
                 $title = $faker->unique()->soundboardTitle();
                 $soundboard->setTitle($title);
                 $soundboard->setDescription($faker->sentence(12));
-                $soundboard->setCreatedAt();
-                $soundboard->setUpdatedAt();
 
                 /* Add tags to soundboard */
                 $nbTags = $faker->numberBetween(0, 3);
@@ -82,11 +76,9 @@ class AppFixtures extends Fixture
 
                     $like = new Like();
                     $entityManager->persist($like);
-                    $like->addUser($otherUser);
-                    $like->addSoundboard($soundboard);
+                    $like->setUser($otherUser);
+                    $like->setSoundboard($soundboard);
                     $like->setScore($faker->numberBetween(1, 5));
-                    $like->setCreatedAt();
-                    $like->setUpdatedAt();
                 }
                 $soundboard->setUser($currentUser);
 
@@ -100,8 +92,6 @@ class AppFixtures extends Fixture
                     $sound->setDescription($faker->unique()->sentence(12));
                     $sound->setPosition($soundNumber);
                     $sound->setSoundboard($soundboard);
-                    $sound->setCreatedAt();
-                    $sound->setUpdatedAt();
                 }
             }
         }
