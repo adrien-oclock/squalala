@@ -6,9 +6,13 @@ use App\Repository\TagRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
+use Doctrine\ORM\Mapping\PreUpdate;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=TagRepository::class)
+ * @ORM\HasLifecycleCallbacks
  */
 class Tag extends Core
 {
@@ -16,11 +20,13 @@ class Tag extends Core
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("api_tag_browse")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Groups("api_tag_browse")
      */
     private $title;
 
@@ -42,6 +48,10 @@ class Tag extends Core
     public function __construct()
     {
         $this->soundboards = new ArrayCollection();
+        
+        /* Initialize dates */
+        $this->setCreatedAt();
+        $this->setUpdatedAt();
     }
 
     public function getId(): ?int
@@ -83,5 +93,16 @@ class Tag extends Core
         $this->soundboards->removeElement($soundboard);
 
         return $this;
+    }
+
+    /**
+     * Ceci est du code à exécuter avant la mise à jour d'un tvshow
+     * 
+     * @ORM\PreUpdate
+     *
+     * @return void
+     */
+    public function updateDate() {
+        $this->setUpdatedAt();
     }
 }

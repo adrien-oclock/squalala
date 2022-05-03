@@ -4,9 +4,13 @@ namespace App\Entity;
 
 use App\Repository\SoundRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
+use Doctrine\ORM\Mapping\PreUpdate;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=SoundRepository::class)
+ * @ORM\HasLifecycleCallbacks
  */
 class Sound extends Core
 {
@@ -14,21 +18,26 @@ class Sound extends Core
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * 
+     * @Groups("api_sound_browse")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=128)
+     * @Groups("api_sound_browse")
      */
     private $title;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups("api_sound_browse")
      */
     private $description;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups("api_sound_browse")
      */
     private $position;
 
@@ -40,6 +49,7 @@ class Sound extends Core
 
     /**
      * @ORM\Column(type="datetime_immutable")
+     * @Groups("api_sound_browse")
      */
     protected $createdAt;
 
@@ -47,6 +57,13 @@ class Sound extends Core
      * @ORM\Column(type="datetime_immutable")
      */
     protected $updatedAt;
+
+    public function __construct()
+    {
+        /* Initialize dates */
+        $this->setCreatedAt();
+        $this->setUpdatedAt();
+    }
 
     public function getId(): ?int
     {
@@ -99,5 +116,16 @@ class Sound extends Core
         $this->soundboard = $soundboard;
 
         return $this;
+    }
+
+    /**
+     * Ceci est du code à exécuter avant la mise à jour d'un tvshow
+     * 
+     * @ORM\PreUpdate
+     *
+     * @return void
+     */
+    public function updateDate() {
+        $this->setUpdatedAt();
     }
 }

@@ -6,10 +6,14 @@ use App\Repository\LikeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
+use Doctrine\ORM\Mapping\PreUpdate;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=LikeRepository::class)
  * @ORM\Table(name="`like`")
+ * @ORM\HasLifecycleCallbacks
  */
 class Like extends Core
 {
@@ -17,26 +21,29 @@ class Like extends Core
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("api_like_browse")
      */
     private $id;
 
     /**
      * @ORM\ManyToMany(targetEntity=Soundboard::class, inversedBy="likes")
      */
-    private $soundboard;
+    private $soundboards;
 
     /**
      * @ORM\ManyToMany(targetEntity=User::class, inversedBy="likes")
      */
-    private $user;
+    private $users;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups("api_like_browse")
      */
     private $score;
 
     /**
      * @ORM\Column(type="datetime_immutable")
+     * @Groups("api_like_browse")
      */
     protected $createdAt;
 
@@ -47,8 +54,12 @@ class Like extends Core
 
     public function __construct()
     {
-        $this->soundboard = new ArrayCollection();
+        $this->soundboards = new ArrayCollection();
         $this->user = new ArrayCollection();
+
+        /* Initialize dates */
+        $this->setCreatedAt();
+        $this->setUpdatedAt();
     }
 
     public function getId(): ?int
@@ -66,8 +77,8 @@ class Like extends Core
 
     public function addSoundboard(Soundboard $soundboard): self
     {
-        if (!$this->soundboard->contains($soundboard)) {
-            $this->soundboard[] = $soundboard;
+        if (!$this->soundboards->contains($soundboard)) {
+            $this->soundboards[] = $soundboard;
         }
 
         return $this;
@@ -75,7 +86,7 @@ class Like extends Core
 
     public function removeSoundboard(Soundboard $soundboard): self
     {
-        $this->soundboard->removeElement($soundboard);
+        $this->soundboards->removeElement($soundboard);
 
         return $this;
     }
@@ -83,15 +94,15 @@ class Like extends Core
     /**
      * @return Collection<int, User>
      */
-    public function getUser(): Collection
+    public function getUsers(): Collection
     {
         return $this->user;
     }
 
     public function addUser(User $user): self
     {
-        if (!$this->user->contains($user)) {
-            $this->user[] = $user;
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
         }
 
         return $this;
@@ -99,7 +110,7 @@ class Like extends Core
 
     public function removeUser(User $user): self
     {
-        $this->user->removeElement($user);
+        $this->users->removeElement($user);
 
         return $this;
     }
@@ -114,5 +125,16 @@ class Like extends Core
         $this->score = $score;
 
         return $this;
+    }
+
+    /**
+     * Ceci est du code à exécuter avant la mise à jour d'un tvshow
+     * 
+     * @ORM\PreUpdate
+     *
+     * @return void
+     */
+    public function updateDate() {
+        $this->setUpdatedAt();
     }
 }

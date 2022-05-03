@@ -6,11 +6,15 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
+use Doctrine\ORM\Mapping\PreUpdate;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @ORM\HasLifecycleCallbacks
  */
 class User extends Core implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -18,11 +22,13 @@ class User extends Core implements UserInterface, PasswordAuthenticatedUserInter
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("api_user_browse")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups("api_user_browse")
      */
     private $username;
 
@@ -38,12 +44,13 @@ class User extends Core implements UserInterface, PasswordAuthenticatedUserInter
     private $password;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Like::class, mappedBy="user")
+     * @ORM\ManyToMany(targetEntity=Like::class, mappedBy="users")
      */
     private $likes;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("api_user_browse")
      */
     private $email;
 
@@ -54,6 +61,7 @@ class User extends Core implements UserInterface, PasswordAuthenticatedUserInter
 
     /**
      * @ORM\Column(type="datetime_immutable")
+     * @Groups("api_user_browse")
      */
     protected $createdAt;
 
@@ -66,6 +74,10 @@ class User extends Core implements UserInterface, PasswordAuthenticatedUserInter
     {
         $this->likes = new ArrayCollection();
         $this->soundboard = new ArrayCollection();
+
+        /* Initialize dates */
+        $this->setCreatedAt();
+        $this->setUpdatedAt();
     }
 
     public function getId(): ?int
@@ -219,5 +231,16 @@ class User extends Core implements UserInterface, PasswordAuthenticatedUserInter
         }
 
         return $this;
+    }
+
+    /**
+     * Ceci est du code à exécuter avant la mise à jour d'un tvshow
+     * 
+     * @ORM\PreUpdate
+     *
+     * @return void
+     */
+    public function updateDate() {
+        $this->setUpdatedAt();
     }
 }

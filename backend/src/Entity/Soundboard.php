@@ -6,9 +6,13 @@ use App\Repository\SoundboardRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
+use Doctrine\ORM\Mapping\PreUpdate;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=SoundboardRepository::class)
+ * @ORM\HasLifecycleCallbacks
  */
 class Soundboard extends Core
 {
@@ -16,42 +20,50 @@ class Soundboard extends Core
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("api_soundboard_browse")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=128)
+     * @Groups("api_soundboard_browse")
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups("api_soundboard_browse")
      */
     private $description;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Tag::class, mappedBy="soundboard")
+     * @ORM\ManyToMany(targetEntity=Tag::class, mappedBy="soundboards", cascade={"persist"})
+     * @Groups("api_soundboard_browse")
      */
     private $tags;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Like::class, mappedBy="soundboard")
+     * @ORM\ManyToMany(targetEntity=Like::class, mappedBy="soundboards", cascade={"persist"})
+     * @Groups("api_soundboard_browse")
      */
     private $likes;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="soundboard")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="soundboards", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
+     * @Groups("api_soundboard_browse")
      */
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity=Sound::class, mappedBy="soundboard")
+     * @ORM\OneToMany(targetEntity=Sound::class, mappedBy="soundboard", cascade={"persist"})
+     * @Groups("api_soundboard_browse")
      */
-    private $sound;
+    private $sounds;
 
     /**
      * @ORM\Column(type="datetime_immutable")
+     * @Groups("api_soundboard_browse")
      */
     protected $createdAt;
 
@@ -64,7 +76,11 @@ class Soundboard extends Core
     {
         $this->tags = new ArrayCollection();
         $this->likes = new ArrayCollection();
-        $this->sound = new ArrayCollection();
+        $this->sounds = new ArrayCollection();
+
+        /* Initialize dates */
+        $this->setCreatedAt();
+        $this->setUpdatedAt();
     }
 
     public function getId(): ?int
@@ -165,15 +181,15 @@ class Soundboard extends Core
     /**
      * @return Collection<int, Sound>
      */
-    public function getSound(): Collection
+    public function getSounds(): Collection
     {
-        return $this->sound;
+        return $this->sounds;
     }
 
     public function addSound(Sound $sound): self
     {
-        if (!$this->sound->contains($sound)) {
-            $this->sound[] = $sound;
+        if (!$this->sounds->contains($sound)) {
+            $this->sounds[] = $sound;
             $sound->setSoundboard($this);
         }
 
@@ -182,7 +198,7 @@ class Soundboard extends Core
 
     public function removeSound(Sound $sound): self
     {
-        if ($this->sound->removeElement($sound)) {
+        if ($this->sounds->removeElement($sound)) {
             // set the owning side to null (unless already changed)
             if ($sound->getSoundboard() === $this) {
                 $sound->setSoundboard(null);
@@ -190,5 +206,17 @@ class Soundboard extends Core
         }
 
         return $this;
+    }
+
+
+    /**
+     * Ceci est du code à exécuter avant la mise à jour d'un tvshow
+     * 
+     * @ORM\PreUpdate
+     *
+     * @return void
+     */
+    public function updateDate() {
+        $this->setUpdatedAt();
     }
 }
