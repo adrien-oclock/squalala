@@ -11,6 +11,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity(repositoryClass=LikeRepository::class)
  * @ORM\Table(name="`like`")
+ * @ORM\HasLifecycleCallbacks
  */
 class Like extends Core
 {
@@ -70,6 +71,13 @@ class Like extends Core
 
     public function setScore(int $score): self
     {
+        if ($score > 5) {
+            $score = 5;
+        }
+        else if ($score < 1) {
+            $score = 1;
+        }
+
         $this->score = $score;
 
         return $this;

@@ -40,7 +40,7 @@ class LikesController extends AbstractController
             return $this->getNotFoundResponse();
         }
 
-        $displayGroups = ['api_like_browse', 'api_like_browse', 'api_like_browse', 'api_like_browse', 'api_user_browse'];
+        $displayGroups = ['api_like_browse', 'api_like_detail_browse'];
         return $this->json($like, Response::HTTP_OK, [], ['groups' => $displayGroups]);
     }
 
