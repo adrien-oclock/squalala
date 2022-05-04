@@ -26,6 +26,27 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         parent::__construct($registry, User::class);
     }
 
+    public function findAll(string $order = 'DESC')
+    {
+        return $this->findBy([], [
+            'createdAt' => $order
+        ]);
+    }
+
+    public function findAllByLikes(string $order = 'DESC')
+    {
+        // Left join because we want users with no relation to likes
+        return $this->createQueryBuilder('u')
+            ->select('AVG(l.score) as HIDDEN averageLike', 'u')
+            ->leftJoin('u.soundboard', 's')
+            ->leftJoin('s.likes', 'l')
+            ->orderBy('averageLike', $order)
+            ->groupBy('u')
+            ->getQuery() 
+            ->getResult();
+        ;
+    }
+
     /**
      * @throws ORMException
      * @throws OptimisticLockException
