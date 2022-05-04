@@ -23,6 +23,26 @@ class SoundboardRepository extends ServiceEntityRepository
         parent::__construct($registry, Soundboard::class);
     }
 
+    public function findAll(string $order = 'DESC')
+    {
+        return $this->findBy([], [
+            'createdAt' => $order
+        ]);
+    }
+
+    public function findAllByLikes(string $order = 'DESC')
+    {
+        // Left join because we want soundboard with no relation to likes
+        return $this->createQueryBuilder('s')
+            ->select('AVG(l.score) AS HIDDEN averageLike', 's')
+            ->leftJoin('s.likes', 'l')
+            ->orderBy('averageLike', $order)
+            ->groupBy('s')
+            ->getQuery() 
+            ->getResult();
+        ;
+    }
+
     /**
      * @throws ORMException
      * @throws OptimisticLockException

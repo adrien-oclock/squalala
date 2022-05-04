@@ -19,11 +19,22 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class SoundboardsController extends AbstractController
 {
     /**
-     * @Route("", name="browse", methods={"GET"})
+     * @Route("/likes/{order}", name="browse_by_likes", methods={"GET"}, defaults={"order"="desc"})
      */
-    public function browse(SoundboardRepository $soundboardRepository): Response
+    public function browseByLikes(string $order, SoundboardRepository $soundboardRepository): Response
     {
-        $allSoundboards = $soundboardRepository->findAll();
+        $allSoundboards = $soundboardRepository->findAllByLikes($order);
+
+        $displayGroups = ['api_soundboard_browse', 'api_sound_browse', 'api_tag_browse', 'api_like_browse', 'api_user_browse'];
+        return $this->json($allSoundboards, Response::HTTP_OK, [], ['groups' => $displayGroups]);
+    }
+
+    /**
+     * @Route("/{order}", name="browse", methods={"GET"}, defaults={"order"="desc"})
+     */
+    public function browse(string $order, SoundboardRepository $soundboardRepository): Response
+    {
+        $allSoundboards = $soundboardRepository->findAll($order);
 
         $displayGroups = ['api_soundboard_browse', 'api_sound_browse', 'api_tag_browse', 'api_like_browse', 'api_user_browse'];
         return $this->json($allSoundboards, Response::HTTP_OK, [], ['groups' => $displayGroups]);
