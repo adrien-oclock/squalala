@@ -73,6 +73,7 @@ class User extends Core implements UserInterface, PasswordAuthenticatedUserInter
     public function __construct()
     {
         $this->soundboard = new ArrayCollection();
+        $this->roles = ['ROLE_USER'];
 
         /* Initialize dates */
         $this->setCreatedAt();
