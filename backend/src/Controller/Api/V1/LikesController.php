@@ -25,7 +25,7 @@ class LikesController extends AbstractController
     {
         $allLikes = $likeRepository->findAll();
 
-        $displayGroups = ['api_like_browse', 'api_like_detail_browse', 'api_soundboard_browse', 'api_user_browse'];
+        $displayGroups = ['api_like_browse', 'api_soundboard_browse', 'api_user_like_browse', 'api_soundboard_like_browse', 'api_user_detail_browse'];
         return $this->json($allLikes, Response::HTTP_OK, [], ['groups' => $displayGroups]);
     }
 
@@ -43,7 +43,7 @@ class LikesController extends AbstractController
             return $this->getNotFoundResponse();
         }
 
-        $displayGroups = ['api_like_browse', 'api_like_detail_browse', 'api_soundboard_browse', 'api_user_browse'];
+        $displayGroups = ['api_like_detail_browse', 'api_soundboard_browse', 'api_user_like_browse', 'api_soundboard_like_browse', 'api_user_detail_browse'];
         return $this->json($like, Response::HTTP_OK, [], ['groups' => $displayGroups]);
     }
 

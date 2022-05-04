@@ -26,7 +26,7 @@ class UsersController extends AbstractController
     {
         $allUsers = $userRepository->findAll();
 
-        $displayGroups = ['api_user_browse', 'api_sound_browse', 'api_tag_browse', 'api_like_browse', 'api_soundboard_browse'];
+        $displayGroups = ['api_user_detail_browse', 'api_sound_browse', 'api_tag_browse', 'api_like_browse', 'api_soundboard_browse', 'api_like_user_browse', 'api_soundboard_user_browse'];
         return $this->json($allUsers, Response::HTTP_OK, [], ['groups' => $displayGroups]);
     }
 
@@ -41,7 +41,7 @@ class UsersController extends AbstractController
             return $this->getNotFoundResponse();
         }
 
-        $displayGroups = ['api_user_browse', 'api_sound_browse', 'api_tag_browse', 'api_like_browse', 'api_soundboard_browse'];
+        $displayGroups = ['api_user_detail_browse', 'api_sound_browse', 'api_tag_browse', 'api_like_browse', 'api_soundboard_browse', 'api_like_user_browse', 'api_soundboard_user_browse'];
         return $this->json($user, Response::HTTP_OK, [], ['groups' => $displayGroups]);
     }
 

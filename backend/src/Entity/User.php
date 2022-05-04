@@ -22,13 +22,13 @@ class User extends Core implements UserInterface, PasswordAuthenticatedUserInter
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups("api_user_browse")
+     * @Groups("api_user_detail_browse")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups("api_user_browse")
+     * @Groups("api_user_detail_browse")
      */
     private $username;
 
@@ -45,14 +45,21 @@ class User extends Core implements UserInterface, PasswordAuthenticatedUserInter
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups("api_user_browse")
+     * @Groups("api_user_detail_browse")
      */
     private $email;
 
     /**
      * @ORM\OneToMany(targetEntity=Soundboard::class, mappedBy="user", orphanRemoval=true)
+     * @Groups("api_soundboard_user_browse")
      */
     private $soundboard;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Like::class, mappedBy="user", orphanRemoval=true)
+     * @Groups("api_like_user_browse")
+     */
+    private $likes;
 
     /**
      * @ORM\Column(type="datetime_immutable")
@@ -64,11 +71,6 @@ class User extends Core implements UserInterface, PasswordAuthenticatedUserInter
      * @ORM\Column(type="datetime_immutable")
      */
     protected $updatedAt;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Like::class, mappedBy="user", orphanRemoval=true)
-     */
-    private $likes;
 
     public function __construct()
     {

@@ -25,7 +25,7 @@ class Like extends Core
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="likes")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups("api_like_detail_browse")
+     * @Groups("api_user_like_browse")
      */
     private $user;
 
@@ -33,13 +33,13 @@ class Like extends Core
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity=Soundboard::class, inversedBy="likes")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups("api_like_detail_browse")
+     * @Groups("api_soundboard_like_browse")
      */
     private $soundboard;
 
     /**
      * @ORM\Column(type="datetime_immutable")
-     * @Groups("api_like_detail_browse")
+     * @Groups("api_like_browse")
      */
     protected $createdAt;
 

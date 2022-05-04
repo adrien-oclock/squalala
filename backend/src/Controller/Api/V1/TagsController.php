@@ -25,7 +25,7 @@ class TagsController extends AbstractController
     {
         $allTags = $tagRepository->findAll();
 
-        $displayGroups = ['api_tag_browse', 'api_tag_browse', 'api_tag_browse', 'api_like_browse', 'api_user_browse'];
+        $displayGroups = ['api_tag_browse'];
         return $this->json($allTags, Response::HTTP_OK, [], ['groups' => $displayGroups]);
     }
 
@@ -40,7 +40,7 @@ class TagsController extends AbstractController
             return $this->getNotFoundResponse();
         }
 
-        $displayGroups = ['api_tag_browse', 'api_tag_browse', 'api_tag_browse', 'api_like_browse', 'api_user_browse'];
+        $displayGroups = ['api_tag_browse'];
         return $this->json($tag, Response::HTTP_OK, [], ['groups' => $displayGroups]);
     }
 

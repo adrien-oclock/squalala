@@ -25,7 +25,7 @@ class SoundsController extends AbstractController
     {
         $allSounds = $soundRepository->findAll();
 
-        $displayGroups = ['api_sound_browse', 'api_sound_browse', 'api_tag_browse', 'api_like_browse', 'api_user_browse'];
+        $displayGroups = ['api_sound_browse'];
         return $this->json($allSounds, Response::HTTP_OK, [], ['groups' => $displayGroups]);
     }
 
@@ -40,7 +40,7 @@ class SoundsController extends AbstractController
             return $this->getNotFoundResponse();
         }
 
-        $displayGroups = ['api_sound_browse', 'api_sound_browse', 'api_tag_browse', 'api_like_browse', 'api_user_browse'];
+        $displayGroups = ['api_sound_browse'];
         return $this->json($sound, Response::HTTP_OK, [], ['groups' => $displayGroups]);
     }
 
