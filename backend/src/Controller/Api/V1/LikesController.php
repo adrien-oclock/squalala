@@ -25,31 +25,37 @@ class LikesController extends AbstractController
     {
         $allLikes = $likeRepository->findAll();
 
-        $displayGroups = ['api_like_browse', 'api_like_detail_browse'];
+        $displayGroups = ['api_like_browse', 'api_like_detail_browse', 'api_soundboard_browse', 'api_user_browse'];
         return $this->json($allLikes, Response::HTTP_OK, [], ['groups' => $displayGroups]);
     }
 
     /**
-     * @Route("/{id}", name="read", methods={"GET"}, requirements={"id"="\d+"})
+     * @Route("/{id_user}/{id_soundboard}", name="read", methods={"GET"}, requirements={"id_user"="\d+", "id_soundboard"="\d+"})
      */
-    public function read(int $id, LikeRepository $likeRepository): Response
+    public function read(int $id_user, int $id_soundboard, LikeRepository $likeRepository): Response
     {
-        $like = $likeRepository->find($id);
+        $like = $likeRepository->find([
+            'user'          => $id_user,
+            'soundboard'    => $id_soundboard
+        ]);
 
         if (is_null($like)) {
             return $this->getNotFoundResponse();
         }
 
-        $displayGroups = ['api_like_browse', 'api_like_detail_browse'];
+        $displayGroups = ['api_like_browse', 'api_like_detail_browse', 'api_soundboard_browse', 'api_user_browse'];
         return $this->json($like, Response::HTTP_OK, [], ['groups' => $displayGroups]);
     }
 
     /**
-     * @Route("/{id}", name="update", methods={"PATCH"}, requirements={"id"="\d+"})
+     * @Route("/{id_user}/{id_soundboard}", name="update", methods={"PATCH"}, requirements={"id_user"="\d+", "id_soundboard"="\d+"})
      */
-    public function update(ValidatorInterface $validator, int $id, LikeRepository $likeRepository, Request $request, SerializerInterface $serializer, EntityManagerInterface $entityManager): Response
+    public function update(ValidatorInterface $validator, int $id_user, int $id_soundboard, LikeRepository $likeRepository, Request $request, SerializerInterface $serializer, EntityManagerInterface $entityManager): Response
     {
-        $like = $likeRepository->find($id);
+        $like = $likeRepository->find([
+            'user'          => $id_user,
+            'soundboard'    => $id_soundboard
+        ]);
 
         if (is_null($like)) {
             return $this->getNotFoundResponse();
@@ -78,7 +84,7 @@ class LikesController extends AbstractController
         
         $reponseAsArray = [
             'message' => 'Like mis à jour',
-            'id' => $like->getId()
+            'score' => $like->getScore(),
         ];
 
         return $this->json($reponseAsArray, Response::HTTP_CREATED);
@@ -87,7 +93,7 @@ class LikesController extends AbstractController
     /**
      * @Route("", name="add", methods={"POST"})
      */
-    public function add(ValidatorInterface $validator, Request $request, SerializerInterface $serializer, EntityManagerInterface $entityManager): Response
+    public function add(ValidatorInterface $validator, LikeRepository $likeRepository, Request $request, SerializerInterface $serializer, EntityManagerInterface $entityManager): Response
     {
         $jsonContent = $request->getContent();
         $like = $serializer->deserialize($jsonContent, Like::class, 'json');
@@ -106,23 +112,37 @@ class LikesController extends AbstractController
             return $this->json($reponseAsArray, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
+        // Vérification de l'existence de ce like
+        $existingLike = $likeRepository->find([
+            'user'          => $like->getUser()->getId(),
+            'soundboard'    => $like->getSoundboard()->getId()
+        ]);
+        // Le like existe déjà, on le met à jour
+        if (!is_null($existingLike)) {
+            return $this->update($validator, $like->getUser()->getId(), $like->getSoundboard()->getId(), $likeRepository, $request, $serializer, $entityManager);
+        }
+
         $entityManager->persist($like);
         $entityManager->flush();
         
         $reponseAsArray = [
             'message' => 'Like créé',
-            'id' => $like->getId()
+            'score' => $like->getScore()
         ];
 
         return $this->json($reponseAsArray, Response::HTTP_CREATED);
     }
 
     /**
-     * @Route("/{id}", name="delete", methods={"DELETE"}, requirements={"id"="\d+"})
+     * @Route("/{id_user}/{id_soundboard}", name="delete", methods={"DELETE"}, requirements={"id_user"="\d+", "id_soundboard"="\d+"})
      */
-    public function delete(int $id, LikeRepository $likeRepository, EntityManagerInterface $entityManager): Response
+    public function delete(int $id_user, int $id_soundboard, LikeRepository $likeRepository, EntityManagerInterface $entityManager): Response
     {
-        $like = $likeRepository->find($id);
+        $like = $likeRepository->find([
+            'user'          => $id_user,
+            'soundboard'    => $id_soundboard
+        ]);
+
         if (is_null($like)) {
             return $this->getNotFoundResponse();
         }
@@ -133,7 +153,8 @@ class LikesController extends AbstractController
         
         $reponseAsArray = [
             'message' => 'Like supprimé',
-            'id' => $id
+            'user' => $id_user,
+            'soundboard' => $id_soundboard
         ];
 
         return $this->json($reponseAsArray);

@@ -16,27 +16,23 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class Like extends Core
 {
     /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     * @Groups("api_like_browse")
-     */
-    private $id;
-
-    /**
      * @ORM\Column(type="integer")
      * @Groups("api_like_browse")
      */
     private $score;
     
     /**
+     * @ORM\Id
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="likes")
+     * @ORM\JoinColumn(nullable=false)
      * @Groups("api_like_detail_browse")
      */
     private $user;
 
     /**
+     * @ORM\Id
      * @ORM\ManyToOne(targetEntity=Soundboard::class, inversedBy="likes")
+     * @ORM\JoinColumn(nullable=false)
      * @Groups("api_like_detail_browse")
      */
     private $soundboard;
@@ -52,16 +48,14 @@ class Like extends Core
      */
     protected $updatedAt;
 
-    public function __construct()
+    public function __construct($user, $soundboard)
     {
+        $this->user = $user;
+        $this->soundboard = $soundboard;
+        
         /* Initialize dates */
         $this->setCreatedAt();
         $this->setUpdatedAt();
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getScore(): ?int
@@ -88,23 +82,9 @@ class Like extends Core
         return $this->user;
     }
 
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
     public function getSoundboard(): ?Soundboard
     {
         return $this->soundboard;
-    }
-
-    public function setSoundboard(?Soundboard $soundboard): self
-    {
-        $this->soundboard = $soundboard;
-
-        return $this;
     }
 
     /**

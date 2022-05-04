@@ -38,28 +38,22 @@ class Soundboard extends Core
 
     /**
      * @ORM\ManyToMany(targetEntity=Tag::class, mappedBy="soundboards", cascade={"persist"})
-     * @Groups("api_soundboard_browse")
+     * @Groups("api_tag_browse")
      */
     private $tags;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="soundboards", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
-     * @Groups("api_soundboard_browse")
+     * @Groups("api_user_browse")
      */
     private $user;
 
     /**
      * @ORM\OneToMany(targetEntity=Sound::class, mappedBy="soundboard", cascade={"persist"})
-     * @Groups("api_soundboard_browse")
+     * @Groups("api_sound_browse")
      */
     private $sounds;
-
-    /**
-     * @Groups("api_soundboard_browse")
-     * @ORM\OneToMany(targetEntity=Like::class, mappedBy="soundboard", cascade={"persist"})
-     */
-    private $likes;
 
     /**
      * @ORM\Column(type="datetime_immutable")
@@ -71,6 +65,11 @@ class Soundboard extends Core
      * @ORM\Column(type="datetime_immutable")
      */
     protected $updatedAt;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Like::class, mappedBy="soundboard", orphanRemoval=true)
+     */
+    private $likes;
 
     public function __construct()
     {
@@ -187,28 +186,6 @@ class Soundboard extends Core
     public function getLikes(): Collection
     {
         return $this->likes;
-    }
-
-    public function addLike(Like $like): self
-    {
-        if (!$this->likes->contains($like)) {
-            $this->likes[] = $like;
-            $like->setSoundboard($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLike(Like $like): self
-    {
-        if ($this->likes->removeElement($like)) {
-            // set the owning side to null (unless already changed)
-            if ($like->getSoundboard() === $this) {
-                $like->setSoundboard(null);
-            }
-        }
-
-        return $this;
     }
 
      /**

@@ -74,10 +74,8 @@ class AppFixtures extends Fixture
                         continue;
                     }
 
-                    $like = new Like();
+                    $like = new Like($otherUser, $soundboard);
                     $entityManager->persist($like);
-                    $like->setUser($otherUser);
-                    $like->setSoundboard($soundboard);
                     $like->setScore($faker->numberBetween(1, 5));
                 }
                 $soundboard->setUser($currentUser);
