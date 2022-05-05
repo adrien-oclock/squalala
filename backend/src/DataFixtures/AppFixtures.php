@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Config\RolesConfig;
 use App\DataFixtures\Provider\SqualalaProvider;
 use App\Entity\Like;
 use App\Entity\Sound;
@@ -30,7 +31,7 @@ class AppFixtures extends Fixture
         for ($i = 0; $i <= 5; $i++) {
             $basicUser = new User();
             $entityManager->persist($basicUser);
-            $basicUser->setRoles(['ROLE_USER']);
+            $basicUser->setRoles([RolesConfig::USER]);
             $basicUser->setUsername($faker->userName());
             $basicUser->setEmail($faker->email());
             // il faut fournir un mot de passe hashé
