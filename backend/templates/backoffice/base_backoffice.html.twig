@@ -14,19 +14,29 @@
       <ul class="navbar-nav">
         <li class="nav-item">
           <a 
-          {% if app.request.get('_route') starts with 'backoffice_tag' %}
-            class="nav-link active" aria-current="page"
-          {% else %}
-            class="nav-link"  href="{{ url('backoffice_tag_browse') }}"
-          {% endif %}
-          >Tag</a>
+            {% if app.request.get('_route') starts with 'backoffice_soundboard' %}
+              class="nav-link active" aria-current="page"
+            {% else %}
+              class="nav-link"  href="{{ url('backoffice_soundboard_browse') }}"
+            {% endif %}
+            >Soundboard
+          </a>
           <a 
-          {% if app.request.get('_route') starts with 'backoffice_user' %}
-            class="nav-link active" aria-current="page"
-          {% else %}
-            class="nav-link"  href="{{ url('backoffice_user_browse') }}"
-          {% endif %}
-          >Utilisateur</a>
+            {% if app.request.get('_route') starts with 'backoffice_tag' %}
+              class="nav-link active" aria-current="page"
+            {% else %}
+              class="nav-link"  href="{{ url('backoffice_tag_browse') }}"
+            {% endif %}
+            >Tag
+          </a>
+          <a 
+            {% if app.request.get('_route') starts with 'backoffice_user' %}
+              class="nav-link active" aria-current="page"
+            {% else %}
+              class="nav-link"  href="{{ url('backoffice_user_browse') }}"
+            {% endif %}
+            >Utilisateur
+          </a>
         </li>
       </ul>
       {% block backoffice_menu %}
