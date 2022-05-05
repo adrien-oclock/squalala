@@ -22,5 +22,18 @@
   </div>
 
   {{ form(soundboard_form) }}
+
+  {% if soundboard.sounds|length > 0 %}
+    <h2>Sons</h2>
+    <ul>
+      {% for sound in soundboard.sounds %}
+          <li>
+              <a href="{{ url('backoffice_sound_read', {"id" : sound.id}) }}">
+                  {{ sound.title }} - Position {{ sound.position }}
+              </a>
+          </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
 </div>
 {% endblock %}
