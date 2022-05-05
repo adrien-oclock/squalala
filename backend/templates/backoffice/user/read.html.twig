@@ -24,12 +24,11 @@
   {{ form(user_form) }}
 
   {% if user.soundboard|length > 0 %}
-    <h2>Soundboard</h2>
+    <h2>Soundboards</h2>
     <ul>
       {% for soundboard in user.soundboard %}
           <li>
-              {# <a href="{{ url('backoffice_soundboard_read', {"id" : soundboard.id}) }}"> #}
-              <a href="#">
+              <a href="{{ url('backoffice_soundboard_read', {"id" : soundboard.id}) }}">
                   {{ soundboard.title }}
               </a>
           </li>
