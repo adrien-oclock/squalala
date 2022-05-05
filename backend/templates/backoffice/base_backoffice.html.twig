@@ -14,7 +14,7 @@
       <ul class="navbar-nav">
         <li class="nav-item">
           <a 
-            {% if app.request.get('_route') starts with 'backoffice_soundboard' %}
+            {% if app.request.get('_route') starts with 'backoffice_soundboard_' %}
               class="nav-link active" aria-current="page"
             {% else %}
               class="nav-link"  href="{{ url('backoffice_soundboard_browse') }}"
@@ -22,7 +22,15 @@
             >Soundboard
           </a>
           <a 
-            {% if app.request.get('_route') starts with 'backoffice_tag' %}
+            {% if app.request.get('_route') starts with 'backoffice_sound_' %}
+              class="nav-link active" aria-current="page"
+            {% else %}
+              class="nav-link"  href="{{ url('backoffice_sound_browse') }}"
+            {% endif %}
+            >Son
+          </a>
+          <a 
+            {% if app.request.get('_route') starts with 'backoffice_tag_' %}
               class="nav-link active" aria-current="page"
             {% else %}
               class="nav-link"  href="{{ url('backoffice_tag_browse') }}"
@@ -30,7 +38,7 @@
             >Tag
           </a>
           <a 
-            {% if app.request.get('_route') starts with 'backoffice_user' %}
+            {% if app.request.get('_route') starts with 'backoffice_user_' %}
               class="nav-link active" aria-current="page"
             {% else %}
               class="nav-link"  href="{{ url('backoffice_user_browse') }}"
