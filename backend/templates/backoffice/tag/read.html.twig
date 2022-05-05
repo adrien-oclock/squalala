@@ -23,16 +23,17 @@
 
   {{ form(tag_form) }}
 
-  <h2>Soundboard</h2>
-  <ul>
-    {% for soundboard in tag.soundboards %}
-        <li>
-            {# <a href="{{ url('backoffice_soundboard_read', {"id" : soundboard.id}) }}"> #}
-            <a href="#">
-                {{ soundboard.title }}
-            </a>
-        </li>
-    {% endfor %}
-  </ul>
+  {% if tag.soundboards|length > 0 %}
+    <h2>Soundboards</h2>
+    <ul>
+      {% for soundboard in tag.soundboards %}
+          <li>
+              <a href="{{ url('backoffice_soundboard_read', {"id" : soundboard.id}) }}">
+                  {{ soundboard.title }}
+              </a>
+          </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
 </div>
 {% endblock %}
