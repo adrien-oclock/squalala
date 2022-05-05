@@ -38,6 +38,14 @@
             >Tag
           </a>
           <a 
+            {% if app.request.get('_route') starts with 'backoffice_like_' %}
+              class="nav-link active" aria-current="page"
+            {% else %}
+              class="nav-link"  href="{{ url('backoffice_like_browse') }}"
+            {% endif %}
+            >Like
+          </a>
+          <a 
             {% if app.request.get('_route') starts with 'backoffice_user_' %}
               class="nav-link active" aria-current="page"
             {% else %}

@@ -82,9 +82,23 @@ class Like extends Core
         return $this->user;
     }
 
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
     public function getSoundboard(): ?Soundboard
     {
         return $this->soundboard;
+    }
+
+    public function setSoundboard(?Soundboard $soundboard): self
+    {
+        $this->soudnboard = $soundboard;
+
+        return $this;
     }
 
     /**

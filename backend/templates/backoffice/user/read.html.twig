@@ -35,5 +35,18 @@
       {% endfor %}
     </ul>
   {% endif %}
+
+  {% if user.likes|length > 0 %}
+    <h2>Likes</h2>
+    <ul>
+      {% for like in user.likes %}
+          <li>
+              <a href="{{ url('backoffice_like_read', {"user_id" : like.user.id, "soundboard_id" : like.soundboard.id}) }}">
+                  {{ like.soundboard.title }} - {{ like.score }}
+              </a>
+          </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
 </div>
 {% endblock %}
