@@ -31,7 +31,9 @@ class SoundboardType extends AbstractType
                 'class' => Tag::class,
                 'choice_label' => 'title',
                 'multiple' => true,
-                'expanded' => true
+                'expanded' => true,
+                // Useful for collection of entities
+                'by_reference' => false
             ])
             ->add('user', EntityType::class, [
                 'label' => 'Utilisateur',
