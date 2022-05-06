@@ -12,9 +12,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 // Convert route id to Entity
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/backoffice/soundboard", name="backoffice_soundboard_")
+ * @IsGranted("ROLE_ADMIN")
  */
 class SoundboardController extends AbstractController
 {

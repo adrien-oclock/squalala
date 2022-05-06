@@ -13,9 +13,11 @@ use Symfony\Component\Routing\Annotation\Route;
 // Convert route id to Entity
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/backoffice/user", name="backoffice_user_")
+ * @IsGranted("ROLE_ADMIN")
  */
 class UserController extends AbstractController
 {
