@@ -30,17 +30,6 @@ class SoundboardsController extends AbstractController
     }
 
     /**
-     * @Route("/{order}", name="browse", methods={"GET"}, defaults={"order"="desc"})
-     */
-    public function browse(string $order, SoundboardRepository $soundboardRepository): Response
-    {
-        $allSoundboards = $soundboardRepository->findAll($order);
-
-        $displayGroups = ['api_soundboard_browse', 'api_sound_browse', 'api_tag_browse', 'api_like_browse', 'api_user_browse'];
-        return $this->json($allSoundboards, Response::HTTP_OK, [], ['groups' => $displayGroups]);
-    }
-
-    /**
      * @Route("/{id}", name="read", methods={"GET"}, requirements={"id"="\d+"})
      */
     public function read(int $id, SoundboardRepository $soundboardRepository): Response
@@ -55,6 +44,17 @@ class SoundboardsController extends AbstractController
         return $this->json($soundboard, Response::HTTP_OK, [], ['groups' => $displayGroups]);
     }
 
+    /**
+     * @Route("/{order}", name="browse", methods={"GET"}, defaults={"order"="desc"})
+     */
+    public function browse(string $order, SoundboardRepository $soundboardRepository): Response
+    {
+        $allSoundboards = $soundboardRepository->findAll($order);
+
+        $displayGroups = ['api_soundboard_browse', 'api_sound_browse', 'api_tag_browse', 'api_like_browse', 'api_user_browse'];
+        return $this->json($allSoundboards, Response::HTTP_OK, [], ['groups' => $displayGroups]);
+    }
+    
     /**
      * @Route("/{id}", name="update", methods={"PATCH"}, requirements={"id"="\d+"})
      */
