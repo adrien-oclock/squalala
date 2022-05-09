@@ -5,6 +5,7 @@ namespace App\Controller\BackOffice;
 use App\Entity\Sound;
 use App\Form\SoundType;
 use App\Repository\SoundRepository;
+use App\Service\File;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,6 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 // Convert route id to Entity
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\UrlHelper;
 
 /**
  * @Route("/backoffice/sound", name="backoffice_sound_")
@@ -60,13 +62,18 @@ class SoundController extends AbstractController
      /**
      * @Route("/edit/{id}", name="edit", methods={"GET", "POST"}, requirements={"id"="\d+"})
      */
-    public function edit(Request $request, Sound $sound, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Sound $sound, EntityManagerInterface $entityManager, File $fileManager, UrlHelper $urlHelper): Response
     {
         $soundForm = $this->createForm(SoundType::class, $sound);
 
         $soundForm->handleRequest($request);
 
         if ($soundForm->isSubmitted() && $soundForm->isValid()) {
+            $soundFile = $soundForm->get('file')->getData();
+            if ($soundFile) {
+                $soundFilename = $fileManager->upload($soundFile, $sound->getId());
+                $sound->setFilename($soundFilename);
+            }
             $entityManager->flush();
 
             $this->addFlash('success', "Sound `{$sound->getTitle()}` mis à jour");
@@ -84,7 +91,7 @@ class SoundController extends AbstractController
      /**
      * @Route("/add", name="add", methods={"GET", "POST"})
      */
-    public function add(Request $request, EntityManagerInterface $entityManager): Response
+    public function add(Request $request, EntityManagerInterface $entityManager, File $fileManager): Response
     {
         $sound = new Sound();
 
@@ -101,6 +108,10 @@ class SoundController extends AbstractController
         // l'objet de formulaire vérifie si le formulaire est valide (token csrf mais pas que)
         if ($soundForm->isSubmitted() && $soundForm->isValid()) {
             $entityManager->persist($sound);
+            $soundFile = $soundForm->get('file')->getData();
+            if ($soundFile) {
+                $fileManager->upload($soundFile, $sound->getId());
+            }
             $entityManager->flush();
 
             $this->addFlash('success', "Sound `{$sound->getTitle()}` ajouté");

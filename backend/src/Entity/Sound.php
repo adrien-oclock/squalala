@@ -58,6 +58,11 @@ class Sound extends Core
      */
     protected $updatedAt;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $filename;
+
     public function __construct()
     {
         /* Initialize dates */
@@ -127,5 +132,17 @@ class Sound extends Core
      */
     public function updateDate() {
         $this->setUpdatedAt();
+    }
+
+    public function getFilename(): ?string
+    {
+        return $this->filename;
+    }
+
+    public function setFilename(string $filename): self
+    {
+        $this->filename = $filename;
+
+        return $this;
     }
 }

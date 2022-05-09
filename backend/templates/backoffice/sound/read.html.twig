@@ -10,6 +10,10 @@
 
 <div class="container">
 
+  <audio controls>
+    <source src="{{ asset(sound.filename, 'sounds') }}" />
+  </audio>
+
   {{ include('_partials/_flash_messages.html.twig') }}
 
   <h1>{{ sound.title }}</h1>

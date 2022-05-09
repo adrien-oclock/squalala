@@ -9,6 +9,7 @@ use App\Entity\Sound;
 use App\Entity\Soundboard;
 use App\Entity\Tag;
 use App\Entity\User;
+use App\Service\File;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
@@ -17,9 +18,11 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class AppFixtures extends Fixture
 {
     private $passwordHasher;
+    private $fileManager;
 
-    public function __construct(UserPasswordHasherInterface $passwordHasher) {
+    public function __construct(UserPasswordHasherInterface $passwordHasher, File $fileManager) {
         $this->passwordHasher = $passwordHasher;
+        $this->fileManager = $fileManager;
     }
 
     public function load(ObjectManager $entityManager)
@@ -86,10 +89,12 @@ class AppFixtures extends Fixture
                 for ($soundNumber = 1; $soundNumber <= $maxSounds; $soundNumber++)
                 {
                     $sound = new Sound();
+                    $title = $faker->unique()->words(3, true);
                     $entityManager->persist($sound);
-                    $sound->setTitle($faker->unique()->words(3, true));
+                    $sound->setTitle($title);
                     $sound->setDescription($faker->unique()->sentence(12));
                     $sound->setPosition($soundNumber);
+                    $sound->setFilename('toto.mp3');
                     $sound->setSoundboard($soundboard);
                 }
             }

@@ -17,6 +17,11 @@ framework:
     php_errors:
         log: true
 
+    assets:
+        packages:
+            sounds:
+                base_path: '%sounds_directory%'
+
 when@test:
     framework:
         test: true
