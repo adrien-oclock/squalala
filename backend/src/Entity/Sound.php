@@ -60,6 +60,7 @@ class Sound extends Core
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("api_sound_browse")
      */
     private $filename;
 

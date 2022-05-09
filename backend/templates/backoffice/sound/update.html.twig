@@ -25,6 +25,13 @@
 </h1>
 <div class="text-end">
 </div>
+
+{% if sound.filename %}
+    <audio controls>
+        <source src="{{ asset(sound.filename, 'sounds') }}" />
+    </audio>
+{% endif %}
+
 {{ form_start(sound_form, {'attr': {'novalidate': 'novalidate'}}) }}
 
     {{ form_errors(sound_form) }}
