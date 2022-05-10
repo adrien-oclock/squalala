@@ -9,7 +9,6 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   togglePopupHandler: (newValue) => {
-    console.log('Popup');
     dispatch(togglePopup(newValue));
   }
 });
