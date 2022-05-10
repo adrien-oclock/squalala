@@ -1,17 +1,15 @@
-import { createStore } from 'redux';
-// outil pour faire le lien entre notre store et le redux dev tool (il faut aussi
-// avoir installé l'extension dans le navigateur)
-import { devToolsEnhancer } from 'redux-devtools-extension';
+import { createStore, applyMiddleware, compose } from 'redux';
+
 import reducer from 'src/reducers';
 
-/*
-le store est le "gardien" de notre state : il le stocke et il le protège (il
-autorisera seulement certaines modifications)
-*/
-const store = createStore(
-  // reducer
-  reducer,
-  // enhancer
-  devToolsEnhancer(),
+import userMiddleware from 'src/middlewares/userMiddleware';
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const enhancers = composeEnhancers(
+  applyMiddleware(userMiddleware),
 );
+
+const store = createStore(reducer, enhancers);
+
 export default store;

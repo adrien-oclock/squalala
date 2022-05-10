@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 
-import popupReducer from './popup';
+import userReducer from './user';
 
 const rootReducer = combineReducers({
-  popup: popupReducer,
+  user: userReducer,
 });
 
 export default rootReducer;

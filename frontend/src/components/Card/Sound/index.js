@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Popup from 'src/containers/Popup';
+import Popup from '../../Popup';
 
 import './styles.scss';
 
