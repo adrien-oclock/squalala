@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 
 import Logo from '../Logo';
-import Login from '../Login';
+import Login from 'src/containers/Login';
 import Menu from '../Menu';
 
 import './styles.scss';

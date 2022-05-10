@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 import Home from 'src/components/Home';
 import SliderArrows from 'src/components/Slider-arrows';
-// import { changeNameAction } from 'src/actions';
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -24,7 +23,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  return ;
+  return {};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

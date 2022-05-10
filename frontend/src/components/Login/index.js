@@ -1,19 +1,14 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { useEffect, useState } from 'react';
-import Popup from '../Popup';
+import Popup from 'src/containers/Popup';
 import './styles.scss';
 
-const Login = () => {
-  const [visibility, setVisibility] = useState(false);
-
-  const popupCloseHandler = (e) => {
-    setVisibility(e);
-  };
+const Login = ({togglePopupHandler}) => {
 
   return (
     <div>
-      <button className="btn btn-primary" onClick={() => setVisibility(!visibility)} type="button">Connexion</button>
-      <Popup onClose={popupCloseHandler} show={visibility}>
+      <button className="btn btn-primary" onClick={() => {togglePopupHandler(true)}} type="button">Connexion</button>
+      <Popup>
         <section id="register-form">
           <h3>Inscription</h3>
           <form className="formContainer">
