@@ -1,5 +1,6 @@
 export const REGISTER = 'REGISTER';
 export const LOG_IN = 'LOG_IN';
+export const CHECK_MATCHING_PASSWORD = 'CHECK_MATCHING_PASSWORD';
 export const UPDATE_LOGIN_FIELD = 'UPDATE_LOGIN_FIELD';
 export const SAVE_USER_DATA = 'SAVE_USER_DATA';
 
@@ -9,6 +10,10 @@ export const register = () => ({
 
 export const logIn = () => ({
   type: LOG_IN,
+});
+
+export const checkMatchingPassword = () => ({
+  type: CHECK_MATCHING_PASSWORD,
 });
 
 export const updateLoginField = (newValue, name) => ({

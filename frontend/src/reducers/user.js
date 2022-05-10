@@ -1,8 +1,12 @@
-import { UPDATE_LOGIN_FIELD, SAVE_USER_DATA } from '../actions/user';
+import { UPDATE_LOGIN_FIELD, SAVE_USER_DATA, CHECK_MATCHING_PASSWORD } from '../actions/user';
 
 export const initialState = {
-  logged: false,
-  email: '',
+  logged: false,  
+  matching_password: true,
+  reg_email: '',
+  reg_username: '',
+  reg_password: '',
+  reg_password_bis: '',
   password: '',
   username: '',
   token: '',
@@ -15,6 +19,16 @@ const reducer = (state = initialState, action = {}) => {
         ...state,
         [action.name]: action.value,
       };
+
+    case CHECK_MATCHING_PASSWORD:
+      let validate = false;
+      if (state.reg_password === state.reg_password_bis) {
+        validate = true;
+      }
+      return {
+        ...state,
+        matching_password: validate
+      }
 
     case SAVE_USER_DATA:
       return {

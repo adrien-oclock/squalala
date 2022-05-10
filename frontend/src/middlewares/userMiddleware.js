@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LOG_IN, saveUserData } from '../actions/user';
+import { LOG_IN, REGISTER, saveUserData } from '../actions/user';
 
 const userMiddleware = (store) => (next) => (action) => {
   // console.log('on a intercepté une action dans le middleware: ', action);
@@ -21,6 +21,31 @@ const userMiddleware = (store) => (next) => (action) => {
             username,
             password,
             response.data.token,
+          ));
+        })
+        .catch((error) => {
+          console.warn(error);
+        });
+      break;
+    }
+
+    case REGISTER: {
+      const { reg_username, reg_password, reg_email } = store.getState().user;
+
+      axios.post(
+        'http://localhost/tools/squalala/backend/public/api/v1/users',
+        {
+          username: reg_username,
+          email: reg_email,
+          password: reg_password,
+        },
+      )
+        .then((response) => {
+
+          store.dispatch(saveUserData(
+            reg_username,
+            reg_password,
+            '',
           ));
         })
         .catch((error) => {
