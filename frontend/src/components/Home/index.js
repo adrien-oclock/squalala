@@ -1,25 +1,11 @@
 import React from 'react';
 
 import Slider from 'react-slick';
-import SliderArrows from '../Slider-arrows';
 import CardSoundboard from '../Card/Soundboard';
 
 import './styles.scss';
 
-const Home = function () {
-  const settings = {
-    infinite: true,
-    fade: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    adaptiveHeight: true,
-    nextArrow: <SliderArrows />,
-    prevArrow: <SliderArrows />,
-  };
-
-  const themes = [{ id: 1, name: 'toto' }, { id: 2, name: 'titi' }, { id: 3, name: 'tata' }];
-
+const Home = function ({settings, themes}) {
   return (
     <section id="home">
       <div className="carouselContainer">
