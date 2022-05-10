@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LOG_IN, REGISTER, saveUserData } from '../actions/user';
+import { LOG_IN, REGISTER, updateLoginField, saveUserData } from '../actions/user';
 
 const userMiddleware = (store) => (next) => (action) => {
   // console.log('on a intercepté une action dans le middleware: ', action);
@@ -46,6 +46,16 @@ const userMiddleware = (store) => (next) => (action) => {
             reg_username,
             reg_password,
             '',
+          ));
+
+          store.dispatch(updateLoginField(
+            reg_username,
+            'username',
+          ));
+
+          store.dispatch(updateLoginField(
+            reg_password,
+            'password',
           ));
         })
         .catch((error) => {
