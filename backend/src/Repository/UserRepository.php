@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
@@ -33,23 +34,11 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         ]);
     }
 
-    public function findAllWithSearch($search, string $order = 'DESC')
-    {
-        return $this->createQueryBuilder('u')
-            ->select('u')
-            ->andWhere('u.username LIKE :search')
-            ->setParameter('search', '%' . $search . '%')
-            ->orderBy('u.createdAt', $order)
-            ->getQuery() 
-            ->getResult();
-        ;
-    }
-
-    public function findAllByLikes(string $order = 'DESC', $search = null)
+    public function findAllWithLikes(string $order = 'DESC', $sortBy = 'date', $search = null)
     {
         // Left join because we want users with no relation to likes
         $qb = $this->createQueryBuilder('u')
-        ->select('AVG(l.score) as HIDDEN averageLike', 'u')
+        ->select('u, AVG(l.score) as rating')
         ->leftJoin('u.soundboard', 's')
         ->leftJoin('s.likes', 'l');
 
@@ -59,9 +48,16 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ;
         }
 
-        $qb->orderBy('averageLike', $order)->groupBy('u');
+        if ($sortBy === 'date') {
+            $qb->orderBy('u.createdAt', $order);
+        }
+        else {
+            $qb->orderBy('rating', $order);
+        }
 
-        return $qb->getQuery()->getResult();
+        return $qb->groupBy('u')
+        ->getQuery()
+        ->getResult();
     }
 
     /**

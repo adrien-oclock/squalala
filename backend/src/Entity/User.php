@@ -63,7 +63,7 @@ class User extends Core implements UserInterface, PasswordAuthenticatedUserInter
 
     /**
      * @ORM\Column(type="datetime_immutable")
-     * @Groups("api_user_browse")
+     * @Groups("api_user_detail_browse")
      */
     protected $createdAt;
 
