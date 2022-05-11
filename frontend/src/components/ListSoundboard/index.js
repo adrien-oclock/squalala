@@ -11,6 +11,7 @@ const ListSoundboard = function (props) {
   // useEffect need props to access vars
   useEffect(() => {
     props.loadSoundboards();
+    props.loadTags();
   }, []);
 
   const [activatedDateSort, setActivatedDateSort] = useState('primary');
@@ -54,7 +55,6 @@ const ListSoundboard = function (props) {
     return 'Chargement';
   }
 
-  console.log(props.soundboards);
   return (
     <div className="listContainer">
       <form id="filter" className="ghost">
@@ -66,13 +66,12 @@ const ListSoundboard = function (props) {
           </button>
         </div>
         <ul id="checkboxes">
-          <li><input type="checkbox" name="theme[]" value="1" id="theme-1" key="theme-1" defaultChecked /><label htmlFor="theme-1">Tata</label></li>
-          <li><input type="checkbox" name="theme[]" value="2" id="theme-2" key="theme-2" /><label htmlFor="theme-2">Titi</label></li>
-          <li><input type="checkbox" name="theme[]" value="3" id="theme-3" key="theme-3" /><label htmlFor="theme-3">Toto</label></li>
-          <li><input type="checkbox" name="theme[]" value="4" id="theme-4" key="theme-4" /><label htmlFor="theme-4">Tutu</label></li>
-          <li><input type="checkbox" name="theme[]" value="5" id="theme-5" key="theme-5" /><label htmlFor="theme-5">Yolo</label></li>
-          <li><input type="checkbox" name="theme[]" value="6" id="theme-6" key="theme-6" /><label htmlFor="theme-6">Super thème</label></li>
-          <li><input type="checkbox" name="theme[]" value="7" id="theme-7" key="theme-7" /><label htmlFor="theme-7">Youpi</label></li>
+          {props.tags.map((tag) => (
+            <li key={`theme-${tag.id}`}>
+              <input type="checkbox" name="theme[]" value={tag.id} id={`theme-${tag.id}`} />
+              <label htmlFor={`theme-${tag.id}`}>{tag.title}</label>
+            </li>
+          ))}
         </ul>
         <div id="sorting">
           <button type="button" className={`btn btn-${activatedDateSort}`} onClick={sortButtonHandler} data-sort="date">
