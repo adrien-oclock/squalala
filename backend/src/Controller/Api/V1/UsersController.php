@@ -22,9 +22,10 @@ class UsersController extends AbstractController
     /**
      * @Route("/likes/{order}", name="browse_by_likes", methods={"GET"}, defaults={"order"="desc"})
      */
-    public function browseByLikes(string $order, UserRepository $userRepository): Response
+    public function browseByLikes(string $order, UserRepository $userRepository, Request $request): Response
     {
-        $allUsers = $userRepository->findAllByLikes($order);
+        $search = $request->query->get('search');
+        $allUsers = $userRepository->findAllByLikes($order, $search);
 
         $displayGroups = ['api_user_detail_browse', 'api_sound_browse', 'api_tag_browse', 'api_like_browse', 'api_soundboard_browse', 'api_like_user_browse', 'api_soundboard_user_browse'];
         return $this->json($allUsers, Response::HTTP_OK, [], ['groups' => $displayGroups]);
@@ -48,9 +49,15 @@ class UsersController extends AbstractController
     /**
      * @Route("/{order}", name="browse", methods={"GET"}, defaults={"order"="desc"})
      */
-    public function browse(string $order, UserRepository $userRepository): Response
+    public function browse(string $order, UserRepository $userRepository, Request $request): Response
     {
-        $allUsers = $userRepository->findAll($order);
+        if ($request->query->has('search'))
+        {
+            $search = $request->query->get('search');
+            $allUsers = $userRepository->findAllWithSearch($search, $order);
+        } else {
+            $allUsers = $userRepository->findAll($order);
+        }
 
         $displayGroups = ['api_user_detail_browse', 'api_sound_browse', 'api_tag_browse', 'api_like_browse', 'api_soundboard_browse', 'api_like_user_browse', 'api_soundboard_user_browse'];
         return $this->json($allUsers, Response::HTTP_OK, [], ['groups' => $displayGroups]);

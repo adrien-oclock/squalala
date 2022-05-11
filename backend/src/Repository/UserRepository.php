@@ -33,18 +33,35 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         ]);
     }
 
-    public function findAllByLikes(string $order = 'DESC')
+    public function findAllWithSearch($search, string $order = 'DESC')
     {
-        // Left join because we want users with no relation to likes
         return $this->createQueryBuilder('u')
-            ->select('AVG(l.score) as HIDDEN averageLike', 'u')
-            ->leftJoin('u.soundboard', 's')
-            ->leftJoin('s.likes', 'l')
-            ->orderBy('averageLike', $order)
-            ->groupBy('u')
+            ->select('u')
+            ->andWhere('u.username LIKE :search')
+            ->setParameter('search', '%' . $search . '%')
+            ->orderBy('u.createdAt', $order)
             ->getQuery() 
             ->getResult();
         ;
+    }
+
+    public function findAllByLikes(string $order = 'DESC', $search = null)
+    {
+        // Left join because we want users with no relation to likes
+        $qb = $this->createQueryBuilder('u')
+        ->select('AVG(l.score) as HIDDEN averageLike', 'u')
+        ->leftJoin('u.soundboard', 's')
+        ->leftJoin('s.likes', 'l');
+
+        if ($search) {
+            $qb->andWhere('u.username LIKE :search')
+            ->setParameter('search', '%' . $search . '%')
+            ;
+        }
+
+        $qb->orderBy('averageLike', $order)->groupBy('u');
+
+        return $qb->getQuery()->getResult();
     }
 
     /**
