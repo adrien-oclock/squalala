@@ -34,7 +34,7 @@ const CardSoundboard = function ({
         && (
         <ul className="theme">
           {themes.map((theme) => (
-            <li key={theme.id}><a className="btn btn-secondary" href="#">{theme.name}</a></li>
+            <li key={theme.id}><a className="btn btn-secondary" href="#">{theme.title}</a></li>
           ))}
         </ul>
         )}
@@ -63,7 +63,7 @@ CardSoundboard.propTypes = {
   themes: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
     }),
   ),
   rating: PropTypes.number,

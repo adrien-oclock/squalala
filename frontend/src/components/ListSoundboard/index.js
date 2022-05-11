@@ -5,7 +5,14 @@ import CardSoundboard from '../Card/Soundboard';
 
 import './styles.scss';
 
-const ListSoundboard = function () {
+const ListSoundboard = function (props) {
+
+  // Only on init
+  // useEffect need props to access vars
+  useEffect(() => {
+    props.loadSoundboards();
+  }, []);
+
   const [activatedDateSort, setActivatedDateSort] = useState('primary');
   const [activatedLikeSort, setActivatedLikeSort] = useState('secondary');
   const [dateSort, setDateSort] = useState('up');
@@ -43,101 +50,11 @@ const ListSoundboard = function () {
     }
   };
 
-  const data = [
-    {
-      id: 1,
-      title: 'Yata',
-      author: 'Adrien',
-      description: 'Hic nulla dolores et distinctio minus non voluptates voluptate et animi vero.',
-      sounds: 42,
-      themes: [
-        {
-          id: 1,
-          name: 'tata',
-        },
-        {
-          id: 2,
-          name: 'tutu',
-        },
-      ],
-      rating: 4,
-    },
-    {
-      id: 2,
-      title: 'Boom',
-      author: 'Venga',
-      sounds: 12,
-      themes: [
-        {
-          id: 1,
-          name: 'titi',
-        },
-        {
-          id: 2,
-          name: 'tutu',
-        },
-      ],
-      rating: 2,
-    },
-    {
-      id: 3,
-      title: 'Yop',
-      author: 'TF1',
-      description: 'Hic nulla dolores et distinctio minus non voluptates voluptate et animi vero.',
-      sounds: 42,
-      rating: 3,
-    },
-    {
-      id: 4,
-      title: 'Boson',
-      author: 'Higgs',
-      description: 'Hic nulla dolores et distinctio minus non voluptates voluptate et animi vero.',
-      sounds: 52,
-      themes: [
-        {
-          id: 1,
-          name: 'bim',
-        },
-        {
-          id: 2,
-          name: 'paf',
-        },
-      ],
-      rating: 4,
-    },
-    {
-      id: 5,
-      title: 'Yolo',
-      author: 'Torink',
-      description: 'Hic nulla dolores et distinctio minus non voluptates voluptate et animi vero.',
-      sounds: 1,
-      themes: [
-        {
-          id: 1,
-          name: 'tata',
-        },
-      ],
-      rating: 5,
-    },
-    {
-      id: 6,
-      title: 'Test',
-      author: 'John',
-      description: 'Hic nulla dolores et distinctio minus non voluptates voluptate et animi vero.',
-      sounds: 10,
-      themes: [
-        {
-          id: 1,
-          name: 'tata',
-        },
-        {
-          id: 2,
-          name: 'tutu',
-        },
-      ],
-      rating: 1,
-    },
-  ];
+  if (props.loading) {
+    return 'Chargement';
+  }
+
+  console.log(props.soundboards);
   return (
     <div className="listContainer">
       <form id="filter" className="ghost">
@@ -169,8 +86,8 @@ const ListSoundboard = function () {
         </div>
       </form>
       <section id="list">
-        {data.map((soundboard) => (
-          <CardSoundboard key={soundboard.id} title={soundboard.title} subtitle={soundboard.author} info={`Nombres de sons : ${soundboard.sounds}`} themes={soundboard.themes} rating={soundboard.rating} text={soundboard.description} />
+        {props.soundboards.map((soundboard) => (
+          <CardSoundboard key={soundboard.id} title={soundboard.title} subtitle={soundboard.user.username} info={`Nombres de sons : ${soundboard.sounds.length}`} themes={soundboard.tags} rating={soundboard.rating} text={soundboard.description} />
         ))}
       </section>
     </div>

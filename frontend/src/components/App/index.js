@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Header from '../Header';
 import Home from 'src/containers/Home';
 import Error from '../Error';
-import ListSoundboard from '../ListSoundboard';
+import ListSoundboard from 'src/containers/ListSoundboard';
 import ListUser from '../ListUser';
 import Soundboard from '../Soundboard';
 
