@@ -30,17 +30,37 @@ class SoundboardRepository extends ServiceEntityRepository
         ]);
     }
 
-    public function findAllByLikes(string $order = 'DESC')
+    public function findAllWithLikes(string $order = 'DESC', $sortBy = 'date', $search = null, $tags = null)
     {
-        // Left join because we want soundboard with no relation to likes
-        return $this->createQueryBuilder('s')
-            ->select('AVG(l.score) AS HIDDEN averageLike', 's')
-            ->leftJoin('s.likes', 'l')
-            ->orderBy('averageLike', $order)
-            ->groupBy('s')
-            ->getQuery() 
-            ->getResult();
-        ;
+        // Left join because we want users with no relation to likes
+        $qb = $this->createQueryBuilder('s')
+        ->select('s, AVG(l.score) AS rating')
+        ->leftJoin('s.likes', 'l');
+
+        if ($search) {
+            $qb->andWhere('s.title LIKE :search')
+            ->orWhere('s.description LIKE :search')
+            ->setParameter('search', '%' . $search . '%')
+            ;
+        }
+
+        if ($tags) {
+            $qb->leftJoin('s.tags', 't')
+            ->andWhere('t.id IN (:tags)')
+            ->setParameter('tags', $tags)
+            ;
+        }
+
+        if ($sortBy === 'date') {
+            $qb->orderBy('s.createdAt', $order);
+        }
+        else {
+            $qb->orderBy('rating', $order);
+        }
+
+        return $qb->groupBy('s')
+        ->getQuery()
+        ->getResult();
     }
 
     /**

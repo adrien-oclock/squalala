@@ -21,11 +21,13 @@ class SoundboardsController extends AbstractController
     /**
      * @Route("/likes/{order}", name="browse_by_likes", methods={"GET"}, defaults={"order"="desc"})
      */
-    public function browseByLikes(string $order, SoundboardRepository $soundboardRepository): Response
+    public function browseByLikes(string $order, SoundboardRepository $soundboardRepository, Request $request): Response
     {
-        $allSoundboards = $soundboardRepository->findAllByLikes($order);
+        $search = $request->query->get('search');
+        $tags = $request->query->get('tag');
+        $allSoundboards = $soundboardRepository->findAllWithLikes($order, 'like', $search, $tags);
 
-        $displayGroups = ['api_soundboard_browse', 'api_sound_browse', 'api_tag_browse', 'api_like_browse', 'api_user_browse'];
+        $displayGroups = ['api_soundboard_browse', 'api_sound_browse', 'api_tag_browse', 'api_like_browse', 'api_user_browse', 'api_user_detail_browse'];
         return $this->json($allSoundboards, Response::HTTP_OK, [], ['groups' => $displayGroups]);
     }
 
@@ -40,18 +42,20 @@ class SoundboardsController extends AbstractController
             return $this->getNotFoundResponse();
         }
 
-        $displayGroups = ['api_soundboard_browse', 'api_sound_browse', 'api_tag_browse', 'api_like_browse', 'api_user_browse'];
+        $displayGroups = ['api_soundboard_browse', 'api_sound_browse', 'api_tag_browse', 'api_like_browse', 'api_user_browse', 'api_user_detail_browse'];
         return $this->json($soundboard, Response::HTTP_OK, [], ['groups' => $displayGroups]);
     }
 
     /**
      * @Route("/{order}", name="browse", methods={"GET"}, defaults={"order"="desc"})
      */
-    public function browse(string $order, SoundboardRepository $soundboardRepository): Response
+    public function browse(string $order, SoundboardRepository $soundboardRepository, Request $request): Response
     {
-        $allSoundboards = $soundboardRepository->findAll($order);
+        $search = $request->query->get('search');
+        $tags = $request->query->get('tag');
+        $allSoundboards = $soundboardRepository->findAllWithLikes($order, 'date', $search, $tags);
 
-        $displayGroups = ['api_soundboard_browse', 'api_sound_browse', 'api_tag_browse', 'api_like_browse', 'api_user_browse'];
+        $displayGroups = ['api_soundboard_browse', 'api_sound_browse', 'api_tag_browse', 'api_like_browse', 'api_user_browse', 'api_user_detail_browse'];
         return $this->json($allSoundboards, Response::HTTP_OK, [], ['groups' => $displayGroups]);
     }
     
