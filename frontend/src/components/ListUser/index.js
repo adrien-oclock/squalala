@@ -5,7 +5,14 @@ import CardSoundboard from '../Card/Soundboard';
 
 import './styles.scss';
 
-const ListUser = function () {
+const ListUser = function (props) {
+
+  // Only on init
+  // useEffect need props to access vars
+  useEffect(() => {
+    props.loadUsers();
+  }, []);
+
   const [activatedDateSort, setActivatedDateSort] = useState('primary');
   const [activatedLikeSort, setActivatedLikeSort] = useState('secondary');
   const [dateSort, setDateSort] = useState('up');
@@ -43,50 +50,11 @@ const ListUser = function () {
     }
   };
 
-  const data = [
-    {
-      id: 1,
-      username: 'Yata',
-      created_at: '2019-04-08',
-      soundboards: 42,
-      rating: 4,
-    },
-    {
-      id: 2,
-      username: 'Bonjour',
-      created_at: '2019-01-08',
-      soundboards: 12,
-      rating: 1,
-    },
-    {
-      id: 3,
-      username: 'Wesh',
-      created_at: '2018-01-02',
-      soundboards: 5,
-      rating: 2,
-    },
-    {
-      id: 4,
-      username: 'Adrien',
-      created_at: '2022-06-15',
-      soundboards: 105,
-      rating: 5,
-    },
-    {
-      id: 5,
-      username: 'Oclock',
-      created_at: '2019-04-08',
-      soundboards: 10,
-      rating: 3,
-    },
-    {
-      id: 1,
-      username: 'Yolo',
-      created_at: '2019-04-08',
-      soundboards: 42,
-      rating: 4,
-    },
-  ];
+  if (props.loading) {
+    return 'Chargement';
+  }
+
+  console.log(props.users);
   return (
     <div className="listContainer">
       <form id="filter" className="ghost">
@@ -109,7 +77,7 @@ const ListUser = function () {
         </div>
       </form>
       <section id="list">
-        {data.map((user) => (
+        {props.users.map((user) => (
           <CardSoundboard key={user.id} title={user.username} subtitle={`Nombres de soundboards : ${user.soundboards}`} info={`Créé le : ${user.created_at}`} rating={user.rating} />
         ))}
       </section>

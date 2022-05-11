@@ -3,6 +3,8 @@ export const LOG_IN = 'LOG_IN';
 export const CHECK_MATCHING_PASSWORD = 'CHECK_MATCHING_PASSWORD';
 export const UPDATE_LOGIN_FIELD = 'UPDATE_LOGIN_FIELD';
 export const SAVE_USER_DATA = 'SAVE_USER_DATA';
+export const FETCH_USERS = 'FETCH_USERS';
+export const SAVE_USERS = 'SAVE_USERS';
 
 export const register = () => ({
   type: REGISTER,
@@ -27,4 +29,13 @@ export const saveUserData = (isLogged, username, token) => ({
   isLogged: isLogged,
   username: username,
   token: token,
+});
+
+export const fetchUsers = () => ({
+  type: FETCH_USERS,
+});
+
+export const saveUsers = (users) => ({
+  type: SAVE_USERS,
+  users: users,
 });

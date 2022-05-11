@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LOG_IN, REGISTER, updateLoginField, saveUserData } from '../actions/user';
+import { LOG_IN, REGISTER, FETCH_USERS, updateLoginField, saveUserData, saveUsers } from 'src/actions/user';
 
 const userMiddleware = (store) => (next) => (action) => {
   // console.log('on a intercepté une action dans le middleware: ', action);
@@ -57,6 +57,18 @@ const userMiddleware = (store) => (next) => (action) => {
             reg_password,
             'password',
           ));
+        })
+        .catch((error) => {
+          console.warn(error);
+        });
+      break;
+    }
+
+    case FETCH_USERS: {
+
+      axios.get('http://localhost/tools/squalala/backend/public/api/v1/users')
+        .then((response) => {
+          store.dispatch(saveUsers(response.data));
         })
         .catch((error) => {
           console.warn(error);

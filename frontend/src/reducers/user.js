@@ -1,7 +1,8 @@
-import { UPDATE_LOGIN_FIELD, SAVE_USER_DATA, CHECK_MATCHING_PASSWORD } from '../actions/user';
+import { UPDATE_LOGIN_FIELD, SAVE_USER_DATA, CHECK_MATCHING_PASSWORD, SAVE_USERS } from '../actions/user';
 
 export const initialState = {
-  logged: false,  
+  logged: false, 
+  loading: true,
   matching_password: true,
   reg_email: '',
   reg_username: '',
@@ -10,6 +11,7 @@ export const initialState = {
   password: '',
   username: '',
   token: '',
+  list: [],
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -36,6 +38,13 @@ const reducer = (state = initialState, action = {}) => {
         username: action.username,
         logged: action.isLogged,
         token: action.token,
+      };
+
+    case SAVE_USERS:
+      return {
+        ...state,
+        list: action.users,
+        loading: false
       };
 
     default:
