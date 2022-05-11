@@ -31,8 +31,9 @@ export const saveUserData = (isLogged, username, token) => ({
   token: token,
 });
 
-export const fetchUsers = (sortBy, order) => ({
+export const fetchUsers = (search, sortBy, order) => ({
   type: FETCH_USERS,
+  search: search,
   sortBy: sortBy,
   order: order,
 });

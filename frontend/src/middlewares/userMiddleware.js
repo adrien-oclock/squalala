@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { LOG_IN, REGISTER, FETCH_USERS, updateLoginField, saveUserData, saveUsers } from 'src/actions/user';
+import { formatData } from 'src/utils';
 
 const userMiddleware = (store) => (next) => (action) => {
   // console.log('on a intercepté une action dans le middleware: ', action);
@@ -65,15 +66,20 @@ const userMiddleware = (store) => (next) => (action) => {
     }
 
     case FETCH_USERS: {
-      const { sortBy, order } = action;
+      const { search, sortBy, order } = action;
       let endpoint = 'http://localhost/tools/squalala/backend/public/api/v1/users';
       if (sortBy === 'like') {
         endpoint += '/likes'
       }
       endpoint += '/' + order;
+
+      if (search) {
+        endpoint += '?search=' + search;
+      }
+
       axios.get(endpoint)
         .then((response) => {
-          store.dispatch(saveUsers(response.data));
+          store.dispatch(saveUsers(formatData(response.data)));
         })
         .catch((error) => {
           console.warn(error);
