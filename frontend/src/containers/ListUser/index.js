@@ -8,8 +8,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  loadUsers: () => {
-    dispatch(fetchUsers());
+  loadUsers: (sortBy, order) => {
+    dispatch(fetchUsers(sortBy, order));
   },
 });
 

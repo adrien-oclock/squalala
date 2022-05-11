@@ -65,8 +65,13 @@ const userMiddleware = (store) => (next) => (action) => {
     }
 
     case FETCH_USERS: {
-
-      axios.get('http://localhost/tools/squalala/backend/public/api/v1/users')
+      const { sortBy, order } = action;
+      let endpoint = 'http://localhost/tools/squalala/backend/public/api/v1/users';
+      if (sortBy === 'like') {
+        endpoint += '/likes'
+      }
+      endpoint += '/' + order;
+      axios.get(endpoint)
         .then((response) => {
           store.dispatch(saveUsers(response.data));
         })

@@ -1,4 +1,4 @@
-import { UPDATE_LOGIN_FIELD, SAVE_USER_DATA, CHECK_MATCHING_PASSWORD, SAVE_USERS } from '../actions/user';
+import { UPDATE_LOGIN_FIELD, SAVE_USER_DATA, CHECK_MATCHING_PASSWORD, SAVE_USERS, FETCH_USERS } from '../actions/user';
 
 export const initialState = {
   logged: false, 
@@ -38,6 +38,12 @@ const reducer = (state = initialState, action = {}) => {
         username: action.username,
         logged: action.isLogged,
         token: action.token,
+      };
+
+    case FETCH_USERS:
+      return {
+        ...state,
+        loading: true
       };
 
     case SAVE_USERS:

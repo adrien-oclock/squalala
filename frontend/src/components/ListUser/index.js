@@ -10,12 +10,12 @@ const ListUser = function (props) {
   // Only on init
   // useEffect need props to access vars
   useEffect(() => {
-    props.loadUsers();
+    props.loadUsers('date', 'desc');
   }, []);
 
   const [activatedDateSort, setActivatedDateSort] = useState('primary');
   const [activatedLikeSort, setActivatedLikeSort] = useState('secondary');
-  const [dateSort, setDateSort] = useState('up');
+  const [dateSort, setDateSort] = useState('down');
   const [likeSort, setLikeSort] = useState('down');
 
   const sortButtonHandler = (e) => {
@@ -25,28 +25,34 @@ const ListUser = function (props) {
     if (clickedSort === 'date' && activatedDateSort === 'primary') {
       if (dateSort === 'up') {
         setDateSort('down');
+        props.loadUsers('date', 'desc');
       }
       else {
         setDateSort('up');
+        props.loadUsers('date', 'asc');
       }
     }
     else if (clickedSort === 'date' && activatedDateSort === 'secondary') {
       setActivatedDateSort('primary');
       setActivatedLikeSort('secondary');
+      props.loadUsers('date', 'desc');
     }
 
     // Change sort order like
     if (clickedSort === 'like' && activatedLikeSort === 'primary') {
       if (likeSort === 'up') {
         setLikeSort('down');
+        props.loadUsers('like', 'desc');
       }
       else {
         setLikeSort('up');
+        props.loadUsers('like', 'asc');
       }
     }
     else if (clickedSort === 'like' && activatedLikeSort === 'secondary') {
       setActivatedDateSort('secondary');
       setActivatedLikeSort('primary');
+      props.loadUsers('like', 'desc');
     }
   };
 
