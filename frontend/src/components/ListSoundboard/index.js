@@ -14,6 +14,7 @@ const ListSoundboard = function (props) {
   const [search, setSearch] = useState('');
   const [sortBy, setSortBy] = useState('date');
   const [order, setOrder] = useState('desc');
+  const [tags, setTags] = useState([]);
 
   // Only on init
   useEffect(() => {
@@ -21,8 +22,8 @@ const ListSoundboard = function (props) {
   }, []);
 
   useEffect(() => {
-    props.loadSoundboards(search, sortBy, order);
-  }, [search, sortBy, order]);
+    props.loadSoundboards(search, tags, sortBy, order);
+  }, [search, tags.length, sortBy, order]);
 
   const sortSoundboards = (e) => {
     const clickedSort = e.target.dataset.sort;
@@ -81,6 +82,26 @@ const ListSoundboard = function (props) {
     setSearch(e.target.search.value);
   };
 
+  const tagChangeHandler = (e) => {
+    const value = parseInt(e.target.value);
+    const isChecked = e.target.checked;
+
+    if (isChecked) {
+      setTags([...tags, value]);
+    }
+    else {
+      const index = tags.indexOf(value)
+      setTags([
+        ...tags.slice(0, index),
+        ...tags.slice(index + 1, tags.length),
+      ])
+    }
+  }
+
+  const tagCheckedHandler = (value) => {
+    return tags.includes(value);
+  }
+
   if (props.loading) {
     return 'Chargement';
   }
@@ -98,7 +119,7 @@ const ListSoundboard = function (props) {
         <ul id="checkboxes">
           {props.tags.map((tag) => (
             <li key={`theme-${tag.id}`}>
-              <input type="checkbox" name="theme[]" value={tag.id} id={`theme-${tag.id}`} />
+              <input type="checkbox" name="theme[]" value={tag.id} id={`theme-${tag.id}`} onChange={tagChangeHandler} defaultChecked={tagCheckedHandler(tag.id)} />
               <label htmlFor={`theme-${tag.id}`}>{tag.title}</label>
             </li>
           ))}

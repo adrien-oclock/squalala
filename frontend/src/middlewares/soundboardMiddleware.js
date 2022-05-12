@@ -5,18 +5,20 @@ import { formatData } from 'src/utils';
 const soundboardMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
     case FETCH_SOUNDBOARDS: {
-      const { search, sortBy, order } = action;
+      const { search, tags, sortBy, order } = action;
       let endpoint = 'http://localhost/tools/squalala/backend/public/api/v1/soundboards';
       if (sortBy === 'like') {
         endpoint += '/likes'
       }
       endpoint += '/' + order;
 
-      if (search) {
-        endpoint += '?search=' + search;
-      }
+      const url = new URL(endpoint);
+      url.search = new URLSearchParams({
+        search: search,
+        tag: tags
+      })
 
-      axios.get(endpoint)
+      axios.get(url)
         .then((response) => {
           store.dispatch(saveSoundboards(formatData(response.data)));
         })

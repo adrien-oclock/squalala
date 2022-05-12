@@ -73,11 +73,12 @@ const userMiddleware = (store) => (next) => (action) => {
       }
       endpoint += '/' + order;
 
-      if (search) {
-        endpoint += '?search=' + search;
-      }
+      const url = new URL(endpoint);
+      url.search = new URLSearchParams({
+        search: search
+      })
 
-      axios.get(endpoint)
+      axios.get(url)
         .then((response) => {
           store.dispatch(saveUsers(formatData(response.data)));
         })
