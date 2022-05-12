@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 
 import Logo from '../Logo';
 import Login from 'src/containers/Login';
-import Menu from '../Menu';
+import Menu from 'src/containers/Menu';
 
 import './styles.scss';
 

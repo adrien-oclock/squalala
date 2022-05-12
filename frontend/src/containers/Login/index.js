@@ -2,9 +2,10 @@ import { connect } from 'react-redux';
 import Login from 'src/components/Login';
 
 // on importe le composant de présentation
-import { logIn, register, updateLoginField, checkMatchingPassword } from 'src/actions/user';
+import { logIn, logOut, register, updateLoginField, checkMatchingPassword } from 'src/actions/user';
 
 const mapStateToProps = (state) => ({
+  loading: state.user.loading,
   reg_email: state.user.reg_email,
   reg_username: state.user.reg_username,
   reg_password: state.user.reg_password,
@@ -28,6 +29,9 @@ const mapDispatchToProps = (dispatch) => ({
   handleLogin: () => {
     dispatch(logIn());
   },
+  handleDisconnect: () => {
+    dispatch(logOut());
+  }
 });
 
 // === création de l'assistant
