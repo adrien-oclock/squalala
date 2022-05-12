@@ -54,8 +54,9 @@ const userMiddleware = (store) => (next) => (action) => {
         .then((response) => {
 
           store.dispatch(saveUserData(
-            username,
-            password,
+            true,
+            response.data.id,
+            response.data.username,
             response.data.token,
           ));
         })

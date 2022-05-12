@@ -17,7 +17,7 @@ const Menu = (props) => (
       </li>
       {props.isLogged &&
       <li>
-        <NavLink activeclassname="active" to="soundboard/1">Profil</NavLink>
+        <NavLink activeclassname="active" to={`profile/${props.user.id}`}>Profil</NavLink>
       </li>
       }
     </ul>
