@@ -18,6 +18,7 @@ export const initialState = {
   reg_password: '',
   reg_password_bis: '',
   password: '',
+  id: null,
   username: '',
   token: '',
   list: [],
@@ -44,6 +45,7 @@ const reducer = (state = initialState, action = {}) => {
     case SAVE_USER_DATA:
       return {
         ...state,
+        id: action.id,
         username: action.username,
         logged: action.isLogged,
         token: action.token,

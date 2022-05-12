@@ -29,9 +29,10 @@ export const updateLoginField = (newValue, name) => ({
   name: name,
 });
 
-export const saveUserData = (isLogged, username, token) => ({
+export const saveUserData = (isLogged, id, username, token) => ({
   type: SAVE_USER_DATA,
   isLogged: isLogged,
+  id: id,
   username: username,
   token: token,
 });
