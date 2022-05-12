@@ -26,6 +26,7 @@ const ListSoundboard = function (props) {
 
   const sortSoundboards = (e) => {
     const clickedSort = e.target.dataset.sort;
+
     // Change sort order date
     if (clickedSort === 'date' && activatedDateSort === 'primary') {
       setSortBy('date');
@@ -42,6 +43,12 @@ const ListSoundboard = function (props) {
       setActivatedDateSort('primary');
       setActivatedLikeSort('secondary');
       setSortBy('date');
+      if (dateSort === 'up') {
+        setOrder('asc');
+      }
+      else {
+        setOrder('desc');
+      }
     }
 
     // Change sort order like
@@ -60,6 +67,12 @@ const ListSoundboard = function (props) {
       setActivatedDateSort('secondary');
       setActivatedLikeSort('primary');
       setSortBy('like');
+      if (likeSort === 'up') {
+        setOrder('asc');
+      }
+      else {
+        setOrder('desc');
+      }
     }
   }
 
