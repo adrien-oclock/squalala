@@ -1,4 +1,4 @@
-import { SAVE_SOUNDBOARDS } from 'src/actions/soundboard';
+import { SAVE_SOUNDBOARDS, FETCH_SOUNDBOARDS } from 'src/actions/soundboard';
 
 export const initialState = {
   list: [],
@@ -14,6 +14,11 @@ const reducer = (state = initialState, action = {}) => {
         loading: false
       };
 
+    case FETCH_SOUNDBOARDS:
+      return {
+        ...state,
+        loading: true
+      };
     default:
       return state;
   }

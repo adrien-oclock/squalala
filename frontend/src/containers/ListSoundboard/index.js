@@ -13,8 +13,8 @@ const mapDispatchToProps = (dispatch) => ({
   loadTags: () => {
     dispatch(fetchTags());
   },
-  loadSoundboards: () => {
-    dispatch(fetchSoundboards());
+  loadSoundboards: (search, sortBy, order) => {
+    dispatch(fetchSoundboards(search, sortBy, order));
   }
 });
 
