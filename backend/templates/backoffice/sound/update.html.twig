@@ -1,0 +1,55 @@
+{% extends 'backoffice/base_backoffice.html.twig' %}
+
+{% block title %}
+    {% if page == 'create' %}
+        Nouveau son
+    {% else %}
+        Son {{ sound.title }}
+    {% endif %}
+{% endblock %}
+
+{% block backoffice_menu %}
+    {% include "backoffice/sound/_menu.html.twig" %}
+{% endblock %}
+
+{% block body %}
+<div class="container">
+
+{{ include('_partials/_flash_messages.html.twig') }}
+<h1> 
+    {% if page == 'create' %}
+        Nouveau son
+    {% else %}
+        Son {{ sound.title }}
+    {% endif %}
+</h1>
+<div class="text-end">
+</div>
+
+{% if sound.filename %}
+    <audio controls>
+        <source src="{{ asset(sound.filename, 'sounds') }}" />
+    </audio>
+{% endif %}
+
+{{ form_start(sound_form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+    {{ form_errors(sound_form) }}
+    {{ form_row(sound_form.title) }}
+    {{ form_row(sound_form.description) }}
+    {{ form_row(sound_form.position) }}
+    {{ form_row(sound_form.file) }}
+    {{ form_row(sound_form.soundboard) }}
+
+    <button type="submit" class="btn btn-primary mt-4">
+    {% if 'backoffice_sound_add' == app.request.get('_route') %}
+        Ajouter
+    {% else %}
+        Mettre à jour
+    {% endif %}
+    </button>
+
+{{ form_end(sound_form) }} 
+
+</div>
+{% endblock %}

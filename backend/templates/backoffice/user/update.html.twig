@@ -1,0 +1,47 @@
+{% extends 'backoffice/base_backoffice.html.twig' %}
+
+{% block title %}
+    {% if page == 'create' %}
+        Nouvel utilisateur
+    {% else %}
+        Utilisateur {{ user.userIdentifier }}
+    {% endif %}
+{% endblock %}
+
+{% block backoffice_menu %}
+    {% include "backoffice/user/_menu.html.twig" %}
+{% endblock %}
+
+{% block body %}
+<div class="container">
+
+{{ include('_partials/_flash_messages.html.twig') }}
+<h1> 
+    {% if page == 'create' %}
+        Nouvel utilisateur
+    {% else %}
+        Utilisateur {{ user.userIdentifier }}
+    {% endif %}
+</h1>
+<div class="text-end">
+</div>
+{{ form_start(user_form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+    {{ form_errors(user_form) }}
+    {{ form_row(user_form.username) }}
+    {{ form_row(user_form.email) }}
+    {{ form_row(user_form.password) }}
+    {{ form_row(user_form.roles) }}
+
+    <button type="submit" class="btn btn-primary mt-4">
+    {% if 'backoffice_user_add' == app.request.get('_route') %}
+        Ajouter
+    {% else %}
+        Mettre à jour
+    {% endif %}
+    </button>
+
+{{ form_end(user_form) }} 
+
+</div>
+{% endblock %}

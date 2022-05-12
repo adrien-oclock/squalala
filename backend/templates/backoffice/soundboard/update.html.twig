@@ -1,0 +1,47 @@
+{% extends 'backoffice/base_backoffice.html.twig' %}
+
+{% block title %}
+    {% if page == 'create' %}
+        Nouveau soundboard
+    {% else %}
+        Soundboard {{ soundboard.title }}
+    {% endif %}
+{% endblock %}
+
+{% block backoffice_menu %}
+    {% include "backoffice/soundboard/_menu.html.twig" %}
+{% endblock %}
+
+{% block body %}
+<div class="container">
+
+{{ include('_partials/_flash_messages.html.twig') }}
+<h1> 
+    {% if page == 'create' %}
+        Nouveau soundboard
+    {% else %}
+        Soundboard {{ soundboard.title }}
+    {% endif %}
+</h1>
+<div class="text-end">
+</div>
+{{ form_start(soundboard_form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+    {{ form_errors(soundboard_form) }}
+    {{ form_row(soundboard_form.title) }}
+    {{ form_row(soundboard_form.description) }}
+    {{ form_row(soundboard_form.tags) }}
+    {{ form_row(soundboard_form.user) }}
+
+    <button type="submit" class="btn btn-primary mt-4">
+    {% if 'backoffice_soundboard_add' == app.request.get('_route') %}
+        Ajouter
+    {% else %}
+        Mettre à jour
+    {% endif %}
+    </button>
+
+{{ form_end(soundboard_form) }} 
+
+</div>
+{% endblock %}

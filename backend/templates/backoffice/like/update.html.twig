@@ -1,0 +1,46 @@
+{% extends 'backoffice/base_backoffice.html.twig' %}
+
+{% block title %}
+    {% if page == 'create' %}
+        Nouveau like
+    {% else %}
+        Like de {{ like.user.username }} pour {{ like.soundboard.title }}
+    {% endif %}
+{% endblock %}
+
+{% block backoffice_menu %}
+    {% include "backoffice/like/_menu.html.twig" %}
+{% endblock %}
+
+{% block body %}
+<div class="container">
+
+{{ include('_partials/_flash_messages.html.twig') }}
+<h1> 
+    {% if page == 'create' %}
+        Nouveau like
+    {% else %}
+        Like de {{ like.user.username }} pour {{ like.soundboard.title }}
+    {% endif %}
+</h1>
+<div class="text-end">
+</div>
+{{ form_start(like_form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+    {{ form_errors(like_form) }}
+    {{ form_row(like_form.score) }}
+    {{ form_row(like_form.user) }}
+    {{ form_row(like_form.soundboard) }}
+
+    <button type="submit" class="btn btn-primary mt-4">
+    {% if 'backoffice_like_add' == app.request.get('_route') %}
+        Ajouter
+    {% else %}
+        Mettre à jour
+    {% endif %}
+    </button>
+
+{{ form_end(like_form) }} 
+
+</div>
+{% endblock %}

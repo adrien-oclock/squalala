@@ -1,0 +1,44 @@
+{% extends 'backoffice/base_backoffice.html.twig' %}
+
+{% block title %}
+    {% if page == 'create' %}
+        Nouveau tag
+    {% else %}
+        Tag {{ tag.title }}
+    {% endif %}
+{% endblock %}
+
+{% block backoffice_menu %}
+    {% include "backoffice/tag/_menu.html.twig" %}
+{% endblock %}
+
+{% block body %}
+<div class="container">
+
+{{ include('_partials/_flash_messages.html.twig') }}
+<h1> 
+    {% if page == 'create' %}
+        Nouveau tag
+    {% else %}
+        Tag {{ tag.title }}
+    {% endif %}
+</h1>
+<div class="text-end">
+</div>
+{{ form_start(tag_form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+    {{ form_errors(tag_form) }}
+    {{ form_row(tag_form.title) }}
+
+    <button type="submit" class="btn btn-primary mt-4">
+    {% if 'backoffice_tag_add' == app.request.get('_route') %}
+        Ajouter
+    {% else %}
+        Mettre à jour
+    {% endif %}
+    </button>
+
+{{ form_end(tag_form) }} 
+
+</div>
+{% endblock %}
