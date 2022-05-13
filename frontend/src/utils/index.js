@@ -56,3 +56,16 @@ export const getSoundboardById = (soundboards, id) => {
 
   return null;
 }
+
+export const getRating = (soundboard) => {
+  let rating = 1;
+  if (soundboard.likes !== undefined) {
+    const scores = [];
+    for (const like of soundboard.likes) {
+      scores.push(like.score);
+    }
+
+    rating = scores.reduce((a, b) => a + b, 0) / scores.length;
+  }
+  return rating;
+}

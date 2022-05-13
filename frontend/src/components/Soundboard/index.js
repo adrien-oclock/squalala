@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import { useEffect, useState } from 'react';
 import { useParams, useSearchParams, useLocation, NavLink } from 'react-router-dom';
-import { getFirstSoundboardId, getSoundboardById } from 'src/utils';
+import { getFirstSoundboardId, getSoundboardById, getRating } from 'src/utils';
 import CardSound from '../Card/Sound';
 import Popup from '../Popup';
 
@@ -54,11 +54,7 @@ const Soundboard = function (props) {
       return <CardSound key="sound-add" add />
     }
 
-    let rating = 1;
-    console.log(soundboard);
-    if (soundboard && soundboard.rating) {
-      rating = soundboard.rating;
-    }
+    const rating = getRating(soundboard);
     return <CardSound key="sound-rate" rating={rating} />
   }
 
