@@ -5,7 +5,7 @@ import Home from 'src/containers/Home';
 import Error from '../Error';
 import ListSoundboard from 'src/containers/ListSoundboard';
 import ListUser from 'src/containers/ListUser';
-import Soundboard from '../Soundboard';
+import Soundboard from 'src/containers/Soundboard';
 
 import './styles.scss';
 

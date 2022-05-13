@@ -1,5 +1,15 @@
 import axios from 'axios';
-import { LOG_IN, REGISTER, FETCH_USERS, updateLoginField, saveUserData, saveUsers } from 'src/actions/user';
+import { 
+  LOG_IN, 
+  REGISTER, 
+  FETCH_USER, 
+  FETCH_USERS, 
+  updateLoginField, 
+  saveUserData, 
+  saveUser, 
+  saveUsers,
+} from 'src/actions/user';
+import { fetchSoundboard } from 'src/actions/soundboard';
 import { formatData } from 'src/utils';
 
 const userMiddleware = (store) => (next) => (action) => {
@@ -7,7 +17,7 @@ const userMiddleware = (store) => (next) => (action) => {
 
   switch (action.type) {
     case REGISTER: {
-      const { reg_username, reg_password, reg_email } = store.getState().user;
+      const { reg_username, reg_password, reg_email } = store.getState().login;
 
       axios.post(
         'http://localhost/tools/squalala/backend/public/api/v1/users',
@@ -42,7 +52,7 @@ const userMiddleware = (store) => (next) => (action) => {
     }
 
     case LOG_IN: {
-      const { username, password } = store.getState().user;
+      const { username, password } = store.getState().login;
 
       axios.post(
         'http://localhost/tools/squalala/backend/public/api/v1/login_check',
@@ -59,6 +69,20 @@ const userMiddleware = (store) => (next) => (action) => {
             response.data.username,
             response.data.token,
           ));
+        })
+        .catch((error) => {
+          console.warn(error);
+        });
+      break;
+    }
+
+    case FETCH_USER: {
+      const { userId } = action;
+      let endpoint = 'http://localhost/tools/squalala/backend/public/api/v1/users/' + userId;
+
+      axios.get(endpoint)
+        .then((response) => {
+          store.dispatch(saveUser(response.data));
         })
         .catch((error) => {
           console.warn(error);
