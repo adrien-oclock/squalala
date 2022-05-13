@@ -68,6 +68,7 @@ class Soundboard extends Core
 
     /**
      * @ORM\OneToMany(targetEntity=Like::class, mappedBy="soundboard", orphanRemoval=true)
+     * @Groups("api_like_user_browse")
      */
     private $likes;
 
