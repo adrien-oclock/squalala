@@ -137,7 +137,16 @@ const ListSoundboard = function (props) {
       </form>
       <section id="list">
         {props.soundboards.map((soundboard) => (
-          <CardSoundboard key={soundboard.id} title={soundboard.title} subtitle={soundboard.user.username} info={`Nombres de sons : ${soundboard.sounds.length}`} themes={soundboard.tags} rating={soundboard.rating} text={soundboard.description} />
+          <CardSoundboard 
+          key={soundboard.id} 
+          title={soundboard.title} 
+          subtitle={soundboard.user.username} 
+          info={`Nombres de sons : ${soundboard.sounds.length}`} 
+          themes={soundboard.tags} 
+          rating={soundboard.rating} 
+          text={soundboard.description}
+          url={`/profile/${soundboard.user.id}?soundboard=${soundboard.id}`}
+           />
         ))}
       </section>
     </div>

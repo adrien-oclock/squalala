@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import { useEffect, useState } from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
-import { getSounboardById } from 'src/utils';
+import { useParams, useSearchParams, useLocation, NavLink } from 'react-router-dom';
+import { getFirstSoundboardId, getSoundboardById } from 'src/utils';
 import CardSound from '../Card/Sound';
 
 import './styles.scss';
@@ -9,16 +9,18 @@ import './styles.scss';
 const Soundboard = function (props) {
   const { id } = useParams();
   const [searchParams] = useSearchParams();
+  const location = useLocation();
 
   useEffect(() => {
     props.loadUser(id);
-  }, []);
+  }, [location]);
 
-  if (props.loading) {
+  if (props.loading || (props.user && props.user.id != id)) {
     return 'Chargement';
   }
 
-  const soundboard = getSounboardById(props.user.soundboard, searchParams.get('soundboard'));
+  const soundboardId = searchParams.get('soundboard') ? parseInt(searchParams.get('soundboard')) : getFirstSoundboardId(props.user.soundboard);
+  const soundboard = getSoundboardById(props.user.soundboard, soundboardId);
 
   return (
     <div className="profile">
@@ -27,7 +29,9 @@ const Soundboard = function (props) {
         <nav>
           <ul>
             {props.user.soundboard.map((soundboard) => (
-              <li key={soundboard.id} className={`btn ${soundboard.id === soundboard.id ? 'btn-primary' : 'btn-secondary'}`}><a href="#">{soundboard.title}</a></li>
+              <li key={soundboard.id} className={`btn ${soundboard.id === soundboardId ? 'btn-primary' : 'btn-secondary'}`}>
+                <NavLink to={`/profile/${props.user.id}?soundboard=${soundboard.id}`}>{soundboard.title}</NavLink>
+              </li>
             ))}
           </ul>
         </nav>
