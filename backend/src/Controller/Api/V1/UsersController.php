@@ -36,7 +36,7 @@ class UsersController extends AbstractController
      */
     public function read(int $id, UserRepository $userRepository): Response
     {
-        $user = $userRepository->find($id);
+        $user = $userRepository->findWithLikes($id);
 
         if (is_null($user)) {
             return $this->getNotFoundResponse();
