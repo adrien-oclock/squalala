@@ -8,6 +8,14 @@
   transition: visibility 0s, opacity 0.5s linear;
   margin-bottom: 1em;
 
+  .title {
+    z-index: 1;
+    color: vars.$primary-color;
+    &:hover {
+      color: vars.$text-color;
+    }
+  }
+
   i {
     &.tool {
       width: fit-content;

@@ -31,14 +31,14 @@ export const formatDate = (dateString) => {
   return date.getDay() + ' ' + months[date.getMonth()] + ' ' + date.getFullYear();
 }
 
-export const getSounboardById = (soundboards, id) => {
-  if (id) {
-    for (soundboard of soundboards) {
-      if (soundboard.id == id) {
-        return soundboard;
-      }
+export const getFirstSoundboardId = (soundboards) => {
+  return parseInt(soundboards[0].id);
+}
+
+export const getSoundboardById = (soundboards, id) => {
+  for (const soundboard of soundboards) {
+    if (soundboard.id === id) {
+      return soundboard;
     }
   }
-
-  return soundboards[0];
 }

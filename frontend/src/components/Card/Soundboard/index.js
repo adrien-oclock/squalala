@@ -1,10 +1,11 @@
 import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import './styles.scss';
 
 const CardSoundboard = function ({
-  title, subtitle, info, text, themes, rating,
+  title, subtitle, info, text, themes, rating, url,
 }) {
   const stars = [];
   if (rating) {
@@ -25,7 +26,7 @@ const CardSoundboard = function ({
       {text
       && <i onClick={toggleFlip} className={`fa fa-${flip ? 'minus' : 'plus'}-circle tool right ${flip ? 'flipped' : ''}`} aria-hidden="true" />}
       <div className={`cardContent ${flip ? '' : 'visible'}`}>
-        <p className="title">{title}</p>
+        <NavLink className="title" to={url}>{title}</NavLink>
         {subtitle
         && <p className="subtitle">{subtitle}</p>}
         {info
