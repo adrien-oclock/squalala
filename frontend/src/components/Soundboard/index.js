@@ -55,8 +55,9 @@ const Soundboard = function (props) {
     }
 
     let rating = 1;
+    console.log(soundboard);
     if (soundboard && soundboard.rating) {
-      let rating = soundboard.rating;
+      rating = soundboard.rating;
     }
     return <CardSound key="sound-rate" rating={rating} />
   }

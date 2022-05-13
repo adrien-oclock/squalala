@@ -118,7 +118,8 @@ const userMiddleware = (store) => (next) => (action) => {
       const { userId } = action;
       api.get('users/' + userId)
         .then((response) => {
-          store.dispatch(saveUser(response.data));
+          const data = formatData(response.data);
+          store.dispatch(saveUser(data[0]));
         })
         .catch((error) => {
           console.warn(error);

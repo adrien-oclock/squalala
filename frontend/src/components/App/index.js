@@ -12,14 +12,13 @@ import './styles.scss';
 
 // == Composant
 const App = function(props) {
-  useEffect(() => {
-    props.connectUser();
-  }, []);
+  // useEffect(() => {
+  //   props.connectUser();
+  // }, []);
 
-  console.log(props);
-  if (props.loading) {
-    return 'Chargement';
-  }
+  // if (props.loading) {
+  //   return 'Chargement';
+  // }
 
   return (
     <div className="app">
