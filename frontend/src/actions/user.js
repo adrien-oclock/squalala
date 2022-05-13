@@ -4,6 +4,8 @@ export const LOG_OUT = 'LOG_OUT';
 export const CHECK_MATCHING_PASSWORD = 'CHECK_MATCHING_PASSWORD';
 export const UPDATE_LOGIN_FIELD = 'UPDATE_LOGIN_FIELD';
 export const SAVE_USER_DATA = 'SAVE_USER_DATA';
+export const FETCH_USER = 'FETCH_USER';
+export const SAVE_USER = 'SAVE_USER';
 export const FETCH_USERS = 'FETCH_USERS';
 export const SAVE_USERS = 'SAVE_USERS';
 
@@ -35,6 +37,17 @@ export const saveUserData = (isLogged, id, username, token) => ({
   id: id,
   username: username,
   token: token,
+});
+
+export const fetchUser = (userId, soundboardId) => ({
+  type: FETCH_USER,
+  userId: userId,
+  soundboardId: soundboardId,
+});
+
+export const saveUser = (user) => ({
+  type: SAVE_USER,
+  user: user,
 });
 
 export const fetchUsers = (search, sortBy, order) => ({

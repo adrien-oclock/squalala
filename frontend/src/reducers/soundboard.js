@@ -7,6 +7,7 @@ export const initialState = {
 
 const reducer = (state = initialState, action = {}) => {
   switch (action.type) {
+    
     case SAVE_SOUNDBOARDS:
       return {
         ...state,
@@ -19,6 +20,7 @@ const reducer = (state = initialState, action = {}) => {
         ...state,
         loading: true
       };
+
     default:
       return state;
   }

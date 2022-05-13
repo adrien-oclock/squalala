@@ -4,6 +4,7 @@ import { formatData } from 'src/utils';
 
 const soundboardMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
+
     case FETCH_SOUNDBOARDS: {
       const { search, tags, sortBy, order } = action;
       let endpoint = 'http://localhost/tools/squalala/backend/public/api/v1/soundboards';

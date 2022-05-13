@@ -5,15 +5,15 @@ import Login from 'src/components/Login';
 import { logIn, logOut, register, updateLoginField, checkMatchingPassword } from 'src/actions/user';
 
 const mapStateToProps = (state) => ({
-  loading: state.user.loading,
-  reg_email: state.user.reg_email,
-  reg_username: state.user.reg_username,
-  reg_password: state.user.reg_password,
-  reg_password_bis: state.user.reg_password_bis,
-  matching_password: state.user.matching_password,
-  username: state.user.username,
-  password: state.user.password,
-  isLogged: state.user.logged,
+  loading: state.login.loading,
+  reg_email: state.login.reg_email,
+  reg_username: state.login.reg_username,
+  reg_password: state.login.reg_password,
+  reg_password_bis: state.login.reg_password_bis,
+  matching_password: state.login.matching_password,
+  username: state.login.username,
+  password: state.login.password,
+  isLogged: state.login.logged,
 });
 
 const mapDispatchToProps = (dispatch) => ({

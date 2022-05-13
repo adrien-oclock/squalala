@@ -34,11 +34,11 @@ const CardSound = function ({
             <h3>Modifier le son</h3>
             <form className="formContainer">
               <div className="inputContainer">
-                <input type="text" name="title" id={`edit-title-${id}`} value={title} autoComplete="off" required />
+                <input type="text" name="title" id={`edit-title-${id}`} defaultValue={title} autoComplete="off" required />
                 <label htmlFor={`edit-title-${id}`}>Titre</label>
               </div>
               <div className="inputContainer">
-                <textarea name="description" id={`edit-description-${id}`} value={text} autoComplete="off" required />
+                <textarea name="description" id={`edit-description-${id}`} defaultValue={text} autoComplete="off" required />
                 <label htmlFor={`edit-description-${id}`}>Description</label>
               </div>
               <button type="submit" className="btn btn-primary">Modifier</button>

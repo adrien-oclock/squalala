@@ -2,8 +2,8 @@ import { connect } from 'react-redux';
 import Menu from 'src/components/Menu';
 
 const mapStateToProps = (state) => ({
-  isLogged: state.user.logged,
-  user: state.user,
+  isLogged: state.login.logged,
+  user: state.login,
 });
 
 const mapDispatchToProps = (dispatch) => ({
