@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export const formatData = (data) => {
   const result = [];
 
@@ -50,3 +52,7 @@ export const getSoundboardById = (soundboards, id) => {
 
   return null;
 }
+
+export const api = axios.create({
+  baseURL: 'http://localhost/tools/squalala/backend/public/api/v1/',
+});

@@ -1,5 +1,6 @@
 export const REGISTER = 'REGISTER';
 export const LOG_IN = 'LOG_IN';
+export const LOG_IN_FROM_STORAGE = 'LOG_IN_FROM_STORAGE';
 export const LOG_OUT = 'LOG_OUT';
 export const CHECK_MATCHING_PASSWORD = 'CHECK_MATCHING_PASSWORD';
 export const UPDATE_LOGIN_FIELD = 'UPDATE_LOGIN_FIELD';
@@ -15,6 +16,10 @@ export const register = () => ({
 
 export const logIn = () => ({
   type: LOG_IN,
+});
+
+export const logInFromStorage = () => ({
+  type: LOG_IN_FROM_STORAGE,
 });
 
 export const logOut = () => ({

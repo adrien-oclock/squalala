@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { 
   LOG_IN, 
+  LOG_IN_FROM_STORAGE,
+  LOG_OUT, 
   REGISTER, 
   FETCH_USER, 
   FETCH_USERS, 
@@ -9,8 +11,7 @@ import {
   saveUser, 
   saveUsers,
 } from 'src/actions/user';
-import { fetchSoundboard } from 'src/actions/soundboard';
-import { formatData } from 'src/utils';
+import { formatData, api } from 'src/utils';
 
 const userMiddleware = (store) => (next) => (action) => {
   // console.log('on a intercepté une action dans le middleware: ', action);
@@ -19,8 +20,8 @@ const userMiddleware = (store) => (next) => (action) => {
     case REGISTER: {
       const { reg_username, reg_password, reg_email } = store.getState().login;
 
-      axios.post(
-        'http://localhost/tools/squalala/backend/public/api/v1/users',
+      api.post(
+        'users',
         {
           username: reg_username,
           email: reg_email,
@@ -54,8 +55,8 @@ const userMiddleware = (store) => (next) => (action) => {
     case LOG_IN: {
       const { username, password } = store.getState().login;
 
-      axios.post(
-        'http://localhost/tools/squalala/backend/public/api/v1/login_check',
+      api.post(
+        'login_check',
         {
           username: username,
           password: password,
@@ -69,6 +70,15 @@ const userMiddleware = (store) => (next) => (action) => {
             response.data.username,
             response.data.token,
           ));
+
+          localStorage.setItem('user', JSON.stringify({
+            'id': response.data.id,
+            'username': response.data.username,
+            'token': response.data.token,
+          }));
+
+          // From now on headers auth are sent
+          api.defaults.headers.common.Authorization = `bearer ${response.data.token}`;
         })
         .catch((error) => {
           console.warn(error);
@@ -76,11 +86,37 @@ const userMiddleware = (store) => (next) => (action) => {
       break;
     }
 
+    case LOG_IN_FROM_STORAGE: {
+      const user = JSON.parse(localStorage.getItem('user'));
+
+      if (user) {
+        store.dispatch(saveUserData(
+          true,
+          user.id,
+          user.username,
+          user.token,
+        ));
+        api.defaults.headers.common.Authorization = `bearer ${user.token}`;
+      } else {
+        store.dispatch(saveUserData(
+          false,
+          null,
+          '',
+          '',
+        ));
+      }
+
+      break;
+    }
+
+    case LOG_OUT: {
+      localStorage.removeItem('user');
+      api.defaults.headers.common.Authorization = null;
+    }
+
     case FETCH_USER: {
       const { userId } = action;
-      let endpoint = 'http://localhost/tools/squalala/backend/public/api/v1/users/' + userId;
-
-      axios.get(endpoint)
+      api.get('users/' + userId)
         .then((response) => {
           store.dispatch(saveUser(response.data));
         })
@@ -92,18 +128,15 @@ const userMiddleware = (store) => (next) => (action) => {
 
     case FETCH_USERS: {
       const { search, sortBy, order } = action;
-      let endpoint = 'http://localhost/tools/squalala/backend/public/api/v1/users';
+      let endpoint = 'users';
       if (sortBy === 'like') {
         endpoint += '/likes'
       }
       endpoint += '/' + order;
 
-      const url = new URL(endpoint);
-      url.search = new URLSearchParams({
-        search: search
-      })
-
-      axios.get(url)
+      api.get(endpoint, {params: {
+        search: search,
+      }})
         .then((response) => {
           store.dispatch(saveUsers(formatData(response.data)));
         })

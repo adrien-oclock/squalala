@@ -3,13 +3,14 @@ import {
   SAVE_USER_DATA, 
   CHECK_MATCHING_PASSWORD, 
   LOG_IN,
+  LOG_IN_FROM_STORAGE,
   LOG_OUT,
   REGISTER,
  } from '../actions/user';
 
 export const initialState = {
   logged: false, 
-  loading: false,
+  loading: true,
   matching_password: true,
   reg_email: '',
   reg_username: '',
@@ -59,6 +60,7 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         logged: false,
+        id: null,
         token: '',
       };
 
