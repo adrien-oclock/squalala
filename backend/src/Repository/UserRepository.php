@@ -34,6 +34,19 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         ]);
     }
 
+    public function findWithLikes(int $id)
+    {
+        return $this->createQueryBuilder('u')
+        ->select('u, AVG(l.score) as rating')
+        ->leftJoin('u.soundboard', 's')
+        ->leftJoin('s.likes', 'l')
+        ->andWhere('u.id = :id')
+        ->setParameter('id', $id)
+        ->groupBy('u')
+        ->getQuery()
+        ->getResult();
+    }
+
     public function findAllWithLikes(string $order = 'DESC', $sortBy = 'date', $search = null)
     {
         // Left join because we want users with no relation to likes
