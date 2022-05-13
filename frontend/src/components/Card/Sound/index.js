@@ -5,7 +5,7 @@ import Popup from '../../Popup';
 import './styles.scss';
 
 const CardSound = function ({
-  title, text, add, rating, id,
+  title, text, rating, id,
 }) {
   const [visibilityAdd, setVisibilityAdd] = useState(false);
   const [visibilityEdit, setVisibilityEdit] = useState(false);

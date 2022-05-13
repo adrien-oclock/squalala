@@ -1,25 +1,22 @@
 import axios from 'axios';
 import { FETCH_SOUNDBOARDS, saveSoundboards } from 'src/actions/soundboard';
-import { formatData } from 'src/utils';
+import { formatData, api } from 'src/utils';
 
 const soundboardMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
 
     case FETCH_SOUNDBOARDS: {
       const { search, tags, sortBy, order } = action;
-      let endpoint = 'http://localhost/tools/squalala/backend/public/api/v1/soundboards';
+      let endpoint = 'soundboards';
       if (sortBy === 'like') {
         endpoint += '/likes'
       }
       endpoint += '/' + order;
 
-      const url = new URL(endpoint);
-      url.search = new URLSearchParams({
+      api.get(endpoint, {params: {
         search: search,
         tag: tags
-      })
-
-      axios.get(url)
+      }})
         .then((response) => {
           store.dispatch(saveSoundboards(formatData(response.data)));
         })
