@@ -21,6 +21,18 @@ const Soundboard = function (props) {
 
   const soundboardId = searchParams.get('soundboard') ? parseInt(searchParams.get('soundboard')) : getFirstSoundboardId(props.user.soundboard);
   const soundboard = getSoundboardById(props.user.soundboard, soundboardId);
+  const soundboardElements = () => {
+    {props.user.soundboard.map((soundboard) => (
+      <li key={soundboard.id} className={`btn ${soundboard.id === soundboardId ? 'btn-primary' : 'btn-secondary'}`}>
+        <NavLink to={`/profile/${props.user.id}?soundboard=${soundboard.id}`}>{soundboard.title}</NavLink>
+      </li>
+    ))}
+  }
+  const soundElements = () => {
+    {soundboard.sounds.map((sound) => (
+      <CardSound key={sound.id} id={sound.id} title={sound.title} text={sound.description} />
+    ))}
+  }
 
   return (
     <div className="profile">
@@ -28,21 +40,15 @@ const Soundboard = function (props) {
         <h4>{props.user.username}</h4>
         <nav>
           <ul>
-            {props.user.soundboard.map((soundboard) => (
-              <li key={soundboard.id} className={`btn ${soundboard.id === soundboardId ? 'btn-primary' : 'btn-secondary'}`}>
-                <NavLink to={`/profile/${props.user.id}?soundboard=${soundboard.id}`}>{soundboard.title}</NavLink>
-              </li>
-            ))}
+            {props.user.soundboard && soundboardElements()}
           </ul>
         </nav>
       </section>
       <section id="soundboard">
-        {soundboard.sounds.map((sound) => (
-          <CardSound key={sound.id} id={sound.id} title={sound.title} text={sound.description} />
-        ))}
+        {soundboard && soundElements()}
         {props.currentUser.id === props.user.id
           ? <CardSound key="sound-add" add />
-          : <CardSound key="sound-rate" rating={soundboard.rating} />
+          : <CardSound key="sound-rate" rating={soundboard ? soundboard.rating : 1} />
         }
       </section>
     </div>
