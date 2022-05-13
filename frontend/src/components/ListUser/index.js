@@ -103,7 +103,14 @@ const ListUser = function (props) {
       </form>
       <section id="list">
         {props.users.map((user) => (
-          <CardSoundboard key={user.id} title={user.username} subtitle={`Nombre de soundboards : ${user.soundboard.length}`} info={`Créé le : ${formatDate(user.createdAt)}`} rating={user.rating} />
+          <CardSoundboard 
+          key={user.id} 
+          title={user.username} 
+          subtitle={`Nombre de soundboards : ${user.soundboard.length}`} 
+          info={`Créé le : ${formatDate(user.createdAt)}`} 
+          rating={user.rating}
+          url={`/profile/${user.id}`}
+           />
         ))}
       </section>
     </div>

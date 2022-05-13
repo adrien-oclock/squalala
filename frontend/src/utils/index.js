@@ -32,13 +32,21 @@ export const formatDate = (dateString) => {
 }
 
 export const getFirstSoundboardId = (soundboards) => {
-  return parseInt(soundboards[0].id);
+  if (soundboards.length) {
+    return parseInt(soundboards[0].id);
+  }
+  return null;
 }
 
 export const getSoundboardById = (soundboards, id) => {
-  for (const soundboard of soundboards) {
-    if (soundboard.id === id) {
-      return soundboard;
+  if (soundboards.length)
+  {
+    for (const soundboard of soundboards) {
+      if (soundboard.id === id) {
+        return soundboard;
+      }
     }
   }
+
+  return null;
 }
