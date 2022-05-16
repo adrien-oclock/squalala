@@ -5,7 +5,16 @@ import Popup from '../../Popup';
 import './styles.scss';
 
 const CardSound = function ({
-  title, text, rating, score, triggerRating, id, handleAddSound,
+  title, 
+  text, 
+  rating,
+  score, 
+  id, 
+  edit,
+  triggerRating, 
+  handleAddSound,
+  handleEditSound,
+  handleDeleteSound,
 }) {
   const [visibilityAdd, setVisibilityAdd] = useState(false);
   const [visibilityEdit, setVisibilityEdit] = useState(false);
@@ -18,12 +27,37 @@ const CardSound = function ({
   const [flip, setFlip] = useState(false);
   const toggleFlip = () => setFlip(!flip);
 
+  const addSound = (e) => {
+    e.preventDefault();
+    handleAddSound(e);
+    setVisibilityAdd(false);
+  }
+  
+  const editSound = (e) => {
+    e.preventDefault();
+    handleEditSound(e);
+    setVisibilityEdit(false);
+  }
+
+  const deleteSound = (e) => {
+    e.preventDefault();
+    handleDeleteSound(e);
+    setVisibilityEdit(false);
+  }
+
+  const editTool = () => {
+    if (edit) {
+      return <i onClick={() => setVisibilityEdit(!visibilityEdit)} className={`fa fa-pencil tool left ${flip ? 'flipped' : ''}`} aria-hidden="true" />
+    }
+  }
+
   if (title) {
     return (
       <div className="cardContainer">
         {text
-        && <i onClick={toggleFlip} className={`fa fa-${flip ? 'minus' : 'plus'}-circle tool right ${flip ? 'flipped' : ''}`} aria-hidden="true" />}
-        <i onClick={() => setVisibilityEdit(!visibilityEdit)} className={`fa fa-pencil tool left ${flip ? 'flipped' : ''}`} aria-hidden="true" />
+        &&
+        <i onClick={toggleFlip} className={`fa fa-${flip ? 'minus' : 'plus'}-circle tool right ${flip ? 'flipped' : ''}`} aria-hidden="true" />}
+        {editTool()}
         <div className={`cardContent ${flip ? '' : 'visible'}`}>
           <p className="title">{title}</p>
         </div>
@@ -32,7 +66,8 @@ const CardSound = function ({
         <Popup onClose={popupCloseHandler} show={visibilityEdit}>
           <section>
             <h3>Modifier le son</h3>
-            <form className="formContainer">
+            <form className="formContainer" onSubmit={editSound}>
+              <input type="hidden" name="id" value={id} />
               <div className="inputContainer">
                 <input type="text" name="title" id={`edit-title-${id}`} defaultValue={title} autoComplete="off" required />
                 <label htmlFor={`edit-title-${id}`}>Titre</label>
@@ -43,7 +78,7 @@ const CardSound = function ({
               </div>
               <button type="submit" className="btn btn-primary">Modifier</button>
             </form>
-            <button type="button" className="btn btn-primary delete">Supprimer</button>
+            <button type="button" className="btn btn-primary delete" data-id={id} onClick={deleteSound}>Supprimer</button>
           </section>
         </Popup>
       </div>
@@ -98,11 +133,6 @@ const CardSound = function ({
       </div>
     );
   }
-
-  const addSound = (e) => {
-    handleAddSound(e);
-    setVisibilityAdd(false);
-  }
   
   return (
     <div className="cardContainer add">
@@ -130,7 +160,7 @@ const CardSound = function ({
 CardSound.defaultProps = {
   id: null,
   title: null,
-  add: false,
+  edit: false,
   rating: null,
   score: null,
   text: null,
@@ -142,9 +172,11 @@ CardSound.propTypes = {
   text: PropTypes.string,
   rating: PropTypes.number,
   score: PropTypes.number,
-  add: PropTypes.bool,
+  edit: PropTypes.bool,
   triggerRating: PropTypes.func,
   handleAddSound: PropTypes.func,
+  handleEditSound: PropTypes.func,
+  handleDeleteSound: PropTypes.func,
 };
 
 export default CardSound;
