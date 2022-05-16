@@ -12,6 +12,7 @@ import {
   saveUsers,
 } from 'src/actions/user';
 import { formatData, api } from 'src/utils';
+import { getRating } from '../actions/user';
 
 const userMiddleware = (store) => (next) => (action) => {
   // console.log('on a intercepté une action dans le middleware: ', action);

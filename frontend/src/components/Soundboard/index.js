@@ -27,6 +27,9 @@ const Soundboard = function (props) {
 
   const soundboardId = searchParams.get('soundboard') ? parseInt(searchParams.get('soundboard')) : getFirstSoundboardId(props.user.soundboard);
   const soundboard = getSoundboardById(props.user.soundboard, soundboardId);
+  if (props.currentUser) {
+    const [score, setScore] = useState(getUserScoreInSoundboard(props.user, props.currentUser.id, soundboardId));
+  }
   const soundboardElements = function() {
     return (
       <>
@@ -40,22 +43,37 @@ const Soundboard = function (props) {
   }
 
   const soundElements = function() {
+    if (soundboard.sounds.length > 0) {
+      return (
+        <>
+          {soundboard.sounds.map((sound) => (
+            <CardSound key={sound.id} id={sound.id} title={sound.title} text={sound.description} />
+          ))}
+        </>
+      );
+    }
     return (
-      <>
-        {soundboard.sounds.map((sound) => (
-          <CardSound key={sound.id} id={sound.id} title={sound.title} text={sound.description} />
-        ))}
-      </>
+      <p>
+        Aucun son disponible
+      </p>
     );
   }
 
-  const soundAction = function() {
-    if (id == props.currentUser.id) {
-      return <CardSound key="sound-add" add />
-    }
+  const setNewRating = function(newRating) {
+    newRating = parseInt(newRating);
+    props.handleRating(newRating, soundboardId);
+    setScore(newRating);
+  }
 
-    const rating = getRating(soundboard);
-    return <CardSound key="sound-rate" rating={rating} />
+  const soundAction = function() {
+    if (props.currentUser.id) {
+      if (id == props.currentUser.id) {
+        return <CardSound key="sound-add" add />
+      }
+
+      const rating = getRating(soundboard);
+      return <CardSound key="sound-rate" rating={rating} score={score} triggerRating={setNewRating} />
+    }
   }
 
   return (
