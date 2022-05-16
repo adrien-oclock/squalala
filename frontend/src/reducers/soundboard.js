@@ -1,4 +1,8 @@
-import { SAVE_SOUNDBOARD, SAVE_SOUNDBOARDS, FETCH_SOUNDBOARDS } from 'src/actions/soundboard';
+import { 
+  ADD_SOUNDBOARD,
+  SAVE_SOUNDBOARD, 
+  SAVE_SOUNDBOARDS, 
+  FETCH_SOUNDBOARDS } from 'src/actions/soundboard';
 
 export const initialState = {
   list: [],
@@ -9,6 +13,12 @@ export const initialState = {
 const reducer = (state = initialState, action = {}) => {
   switch (action.type) {
     
+    case ADD_SOUNDBOARD:
+      return {
+        ...state,
+        loading: true
+      };
+
     case SAVE_SOUNDBOARD:
       return {
         ...state,

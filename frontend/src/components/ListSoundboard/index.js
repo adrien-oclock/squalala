@@ -16,11 +16,6 @@ const ListSoundboard = function (props) {
   const [order, setOrder] = useState('desc');
   const [tags, setTags] = useState([]);
 
-  // Only on init
-  useEffect(() => {
-    props.loadTags();
-  }, []);
-
   useEffect(() => {
     props.loadSoundboards(search, tags, sortBy, order);
   }, [search, tags.length, sortBy, order]);

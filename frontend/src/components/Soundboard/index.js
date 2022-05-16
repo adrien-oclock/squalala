@@ -21,13 +21,12 @@ const Soundboard = function (props) {
 
   useEffect(() => {
     props.loadUser(id, soundboardId);
-  }, [location]);
+  }, [location, props.soundboard]);
 
   if (props.loading || (props.user && props.user.id != id)) {
     return 'Chargement';
   }
 
-  console.log(props.soundboard);
   const soundboardElements = function() {
     return (
       <>
@@ -74,6 +73,22 @@ const Soundboard = function (props) {
     }
   }
 
+  const addSounboard = function(e) {
+    e.preventDefault();
+    const title = e.target.title.value;
+    const description = e.target.description.value;
+    const themes = [];
+
+    const checkBoxes = e.target.getElementsByClassName('checkboxTheme');
+    for (const item of checkBoxes) {
+      if (item.checked) {
+        themes.push(parseInt(item.value));
+      }
+    }
+    props.handleAddSoundboard(title, description, themes);
+    setVisibilityAdd(false);
+  }
+
   return (
     <div className="profile">
       <section id="author">
@@ -87,11 +102,19 @@ const Soundboard = function (props) {
                 <Popup onClose={popupCloseHandler} show={visibilityAdd}>
                   <section>
                     <h3>Ajouter une soundboard</h3>
-                    <form className="formContainer">
+                    <form className="formContainer" onSubmit={addSounboard}>
                       <div className="inputContainer">
                         <input type="text" name="title" id="soundboard-add-title" autoComplete="off" required />
                         <label htmlFor="soundboard-add-title">Titre</label>
                       </div>
+                      <ul id="checkboxes">
+                        {props.tags.map((tag) => (
+                          <li key={`theme-${tag.id}`}>
+                            <input type="checkbox" className="checkboxTheme" name="theme[]" value={tag.id} id={`theme-${tag.id}`} />
+                            <label htmlFor={`theme-${tag.id}`}>{tag.title}</label>
+                          </li>
+                        ))}
+                      </ul>
                       <div className="inputContainer">
                         <textarea name="description" id="soundboard-add-description" autoComplete="off" required />
                         <label htmlFor="soundboard-add-description">Description</label>

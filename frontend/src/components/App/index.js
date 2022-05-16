@@ -16,9 +16,14 @@ const App = function(props) {
   //   props.connectUser();
   // }, []);
 
-  // if (props.loading) {
-  //   return 'Chargement';
-  // }
+  // Only on init
+  useEffect(() => {
+    props.loadTags();
+  }, []);
+  
+  if (props.loading) {
+    return 'Chargement';
+  }
 
   return (
     <div className="app">
