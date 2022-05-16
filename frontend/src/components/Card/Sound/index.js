@@ -5,7 +5,7 @@ import Popup from '../../Popup';
 import './styles.scss';
 
 const CardSound = function ({
-  title, text, rating, id,
+  title, text, rating, score, triggerRating, id,
 }) {
   const [visibilityAdd, setVisibilityAdd] = useState(false);
   const [visibilityEdit, setVisibilityEdit] = useState(false);
@@ -54,6 +54,8 @@ const CardSound = function ({
 
     const ratingHandler = (e) => {
       const newRating = e.target.value;
+
+      triggerRating(newRating);
       // eslint-disable-next-line no-use-before-define
       setRating(newRating);
     };
@@ -87,7 +89,12 @@ const CardSound = function ({
 
     return (
       <div className="cardContainer rate">
-        <ul>{stars}</ul>
+        <div className="cardContent visible">
+          {score &&
+          <p>Vous avez mis la note de {score}</p>
+          }
+          <ul>{stars}</ul>
+        </div>
       </div>
     );
   }
@@ -120,6 +127,7 @@ CardSound.defaultProps = {
   title: null,
   add: false,
   rating: null,
+  score: null,
   text: null,
 };
 
@@ -128,7 +136,9 @@ CardSound.propTypes = {
   title: PropTypes.string,
   text: PropTypes.string,
   rating: PropTypes.number,
+  score: PropTypes.number,
   add: PropTypes.bool,
+  triggerRating: PropTypes.func,
 };
 
 export default CardSound;
