@@ -149,6 +149,10 @@ const CardSound = function ({
               <textarea name="description" id="add-description" autoComplete="off" required />
               <label htmlFor="add-description">Description</label>
             </div>
+            <div className="inputContainer">
+              <input type="file" name="file" id="add-file" required />
+              <label htmlFor="add-file">Fichier</label>
+            </div>
             <button type="submit" className="btn btn-primary">Ajouter</button>
           </form>
         </section>

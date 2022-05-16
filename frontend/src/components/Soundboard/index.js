@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import { useEffect, useState } from 'react';
 import { useParams, useSearchParams, useLocation, NavLink } from 'react-router-dom';
-import { getRating } from 'src/utils';
+import { getRating, getBase64 } from 'src/utils';
 import CardSound from '../Card/Sound';
 import Popup from '../Popup';
 
@@ -31,7 +31,8 @@ const Soundboard = function (props) {
     const title = e.target.title.value;
     const description = e.target.description.value;
     const position = props.soundboard.sounds.length + 1;
-    const filename = 'tata.mp3';
+    const files = e.target.file.files;
+    const filename = getBase64(files[0]);
     props.handleAddSound(title, description, filename, position);
   };
 
