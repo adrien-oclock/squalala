@@ -109,12 +109,8 @@ class SoundsController extends AbstractController
         $entityManager->persist($sound);
         $entityManager->flush();
         
-        $reponseAsArray = [
-            'message' => 'Sound créé',
-            'id' => $sound->getId()
-        ];
-
-        return $this->json($reponseAsArray, Response::HTTP_CREATED);
+        $displayGroups = ['api_sound_browse'];
+        return $this->json($sound, Response::HTTP_CREATED, [], ['groups' => $displayGroups]);
     }
 
     /**
