@@ -5,7 +5,7 @@ import Popup from '../../Popup';
 import './styles.scss';
 
 const CardSound = function ({
-  title, text, rating, score, triggerRating, id,
+  title, text, rating, score, triggerRating, id, handleAddSound,
 }) {
   const [visibilityAdd, setVisibilityAdd] = useState(false);
   const [visibilityEdit, setVisibilityEdit] = useState(false);
@@ -99,13 +99,18 @@ const CardSound = function ({
     );
   }
 
+  const addSound = (e) => {
+    handleAddSound(e);
+    setVisibilityAdd(false);
+  }
+  
   return (
     <div className="cardContainer add">
       <i onClick={() => setVisibilityAdd(!visibilityAdd)} className="fa fa-plus" aria-hidden="true" />
       <Popup onClose={popupCloseHandler} show={visibilityAdd}>
         <section id="add-sound">
           <h3>Ajout de son</h3>
-          <form className="formContainer">
+          <form className="formContainer" onSubmit={addSound}>
             <div className="inputContainer">
               <input type="text" name="title" id="add-title" autoComplete="off" required />
               <label htmlFor="add-title">Titre</label>
@@ -139,6 +144,7 @@ CardSound.propTypes = {
   score: PropTypes.number,
   add: PropTypes.bool,
   triggerRating: PropTypes.func,
+  handleAddSound: PropTypes.func,
 };
 
 export default CardSound;

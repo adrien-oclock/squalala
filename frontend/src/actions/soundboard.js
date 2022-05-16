@@ -5,8 +5,9 @@ export const SAVE_SOUNDBOARDS = 'SAVE_SOUNDBOARDS';
 export const ADD_RATING = 'ADD_RATING';
 export const ADD_SOUNDBOARD = 'ADD_SOUNDBOARD';
 
-export const fetchSoundboard = () => ({
+export const fetchSoundboard = (id) => ({
   type: FETCH_SOUNDBOARD,
+  id: id,
 });
 
 export const saveSoundboard = (soundboard) => ({

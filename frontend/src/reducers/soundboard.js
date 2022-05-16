@@ -1,6 +1,7 @@
 import { 
   ADD_SOUNDBOARD,
   SAVE_SOUNDBOARD, 
+  FETCH_SOUNDBOARD,
   SAVE_SOUNDBOARDS, 
   FETCH_SOUNDBOARDS } from 'src/actions/soundboard';
 
@@ -31,6 +32,12 @@ const reducer = (state = initialState, action = {}) => {
         ...state,
         list: action.soundboards,
         loading: false
+      };
+
+    case FETCH_SOUNDBOARD:
+      return {
+        ...state,
+        loading: true
       };
 
     case FETCH_SOUNDBOARDS:
