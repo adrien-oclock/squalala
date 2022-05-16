@@ -1,5 +1,10 @@
 import axios from 'axios';
-import { FETCH_SOUNDBOARDS, ADD_RATING, saveSoundboards } from 'src/actions/soundboard';
+import { 
+  FETCH_SOUNDBOARDS, 
+  ADD_RATING, 
+  ADD_SOUNDBOARD, 
+  saveSoundboard, 
+  saveSoundboards } from 'src/actions/soundboard';
 import { formatData, api } from 'src/utils';
 
 const soundboardMiddleware = (store) => (next) => (action) => {
@@ -19,6 +24,27 @@ const soundboardMiddleware = (store) => (next) => (action) => {
       }})
         .then((response) => {
           store.dispatch(saveSoundboards(formatData(response.data)));
+        })
+        .catch((error) => {
+          console.warn(error);
+        });
+      break;
+    }
+
+    case ADD_SOUNDBOARD: {
+      const { id } = store.getState().login;
+      const { title, description, tags } = action;
+      let endpoint = 'soundboards';
+      const params = {
+        user: parseInt(id),
+        title: title,
+        description: description,
+        tags: tags,
+      };
+
+      api.post(endpoint, JSON.stringify(params))
+        .then((response) => {
+          store.dispatch(saveSoundboard(response.data));
         })
         .catch((error) => {
           console.warn(error);
