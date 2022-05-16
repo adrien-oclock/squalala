@@ -27,6 +27,28 @@ const Soundboard = function (props) {
     return 'Chargement';
   }
 
+  const addHandler = (e) => {
+    const title = e.target.title.value;
+    const description = e.target.description.value;
+    const position = props.soundboard.sounds.length + 1;
+    const filename = 'tata.mp3';
+    props.handleAddSound(title, description, filename, position);
+  };
+
+  const editHandler = (e) => {
+    const id = e.target.id.value;
+    const title = e.target.title.value;
+    const description = e.target.description.value;
+    const position = 2;
+    const filename = 'tata.mp3';
+    props.handleEditSound(id, title, description, filename, position);
+  };
+
+  const deleteHandler = (e) => {
+    const id = parseInt(e.target.getAttribute("data-id"));
+    props.handleDeleteSound(id);
+  };
+
   const soundboardElements = function() {
     return (
       <>
@@ -44,7 +66,7 @@ const Soundboard = function (props) {
       return (
         <>
           {props.soundboard.sounds.map((sound) => (
-            <CardSound key={sound.id} id={sound.id} title={sound.title} text={sound.description} />
+            <CardSound key={sound.id} id={sound.id} title={sound.title} text={sound.description} edit={props.user.id == props.currentUser.id} handleEditSound={editHandler} handleDeleteSound={deleteHandler} />
           ))}
         </>
       );
@@ -61,16 +83,6 @@ const Soundboard = function (props) {
     props.handleRating(newRating, soundboardId);
     setScore(newRating);
   }
-
-  const addHandler = (e) => {
-    e.preventDefault();
-    const title = e.target.title.value;
-    const description = e.target.description.value;
-    const position = props.soundboard.sounds.length + 1;
-    const filename = 'tata.mp3';
-    props.handleAddSound(title, description, filename, position);
-    setVisibilityAdd(false);
-  };
 
   const soundAction = function() {
     if (props.currentUser.id) {
