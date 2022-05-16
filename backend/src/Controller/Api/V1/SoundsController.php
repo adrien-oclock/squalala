@@ -4,6 +4,9 @@ namespace App\Controller\Api\V1;
 
 use App\Entity\Sound;
 use App\Repository\SoundRepository;
+use App\Service\File;
+use App\Service\UploadedBase64File;
+use App\Utils\Base64FileExtractor;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -87,7 +90,7 @@ class SoundsController extends AbstractController
     /**
      * @Route("", name="add", methods={"POST"})
      */
-    public function add(ValidatorInterface $validator, Request $request, SerializerInterface $serializer, EntityManagerInterface $entityManager): Response
+    public function add(ValidatorInterface $validator, Request $request, SerializerInterface $serializer, EntityManagerInterface $entityManager, File $fileManager, Base64FileExtractor $base64FileExtractor): Response
     {
         $jsonContent = $request->getContent();
         $sound = $serializer->deserialize($jsonContent, Sound::class, 'json');
@@ -106,7 +109,10 @@ class SoundsController extends AbstractController
             return $this->json($reponseAsArray, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
+        $base64Image = $base64FileExtractor->extractBase64String($sound->getFilename());
         $entityManager->persist($sound);
+        $soundFile = new UploadedBase64File($base64Image, $sound->getId());
+        $fileManager->upload($soundFile, $sound->getId());
         $entityManager->flush();
         
         $displayGroups = ['api_sound_browse'];
