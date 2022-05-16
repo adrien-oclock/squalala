@@ -45,8 +45,7 @@ export const getFirstSoundboardId = (soundboards) => {
 }
 
 export const getSoundboardById = (soundboards, id) => {
-  if (soundboards.length)
-  {
+  if (soundboards.length) {
     for (const soundboard of soundboards) {
       if (id === null) {
         return soundboard;
@@ -71,4 +70,13 @@ export const getRating = (soundboard) => {
     rating = scores.reduce((a, b) => a + b, 0) / scores.length;
   }
   return rating;
+}
+
+export const getBase64 = (file) => {
+  var reader = new FileReader();
+  reader.readAsDataURL(file);
+  reader.onload = function () {
+  };
+  reader.onerror = function (error) {
+  };
 }
