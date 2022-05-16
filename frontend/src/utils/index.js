@@ -48,6 +48,9 @@ export const getSoundboardById = (soundboards, id) => {
   if (soundboards.length)
   {
     for (const soundboard of soundboards) {
+      if (id === null) {
+        return soundboard;
+      }
       if (soundboard.id === id) {
         return soundboard;
       }

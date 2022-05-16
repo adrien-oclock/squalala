@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import { useEffect, useState } from 'react';
 import { useParams, useSearchParams, useLocation, NavLink } from 'react-router-dom';
-import { getFirstSoundboardId, getSoundboardById, getRating } from 'src/utils';
+import { getRating } from 'src/utils';
 import CardSound from '../Card/Sound';
 import Popup from '../Popup';
 
@@ -12,24 +12,22 @@ const Soundboard = function (props) {
   const [searchParams] = useSearchParams();
   const location = useLocation();
   const [visibilityAdd, setVisibilityAdd] = useState(false);
+  const [score, setScore] = useState(null);
+  const soundboardId = searchParams.get('soundboard') ? parseInt(searchParams.get('soundboard')) : null;
 
   const popupCloseHandler = (e) => {
     setVisibilityAdd(e);
   };
 
   useEffect(() => {
-    props.loadUser(id);
+    props.loadUser(id, soundboardId);
   }, [location]);
 
   if (props.loading || (props.user && props.user.id != id)) {
     return 'Chargement';
   }
 
-  const soundboardId = searchParams.get('soundboard') ? parseInt(searchParams.get('soundboard')) : getFirstSoundboardId(props.user.soundboard);
-  const soundboard = getSoundboardById(props.user.soundboard, soundboardId);
-  if (props.currentUser) {
-    const [score, setScore] = useState(getUserScoreInSoundboard(props.user, props.currentUser.id, soundboardId));
-  }
+  console.log(props.soundboard);
   const soundboardElements = function() {
     return (
       <>
@@ -43,10 +41,10 @@ const Soundboard = function (props) {
   }
 
   const soundElements = function() {
-    if (soundboard.sounds.length > 0) {
+    if (props.soundboard.sounds.length > 0) {
       return (
         <>
-          {soundboard.sounds.map((sound) => (
+          {props.soundboard.sounds.map((sound) => (
             <CardSound key={sound.id} id={sound.id} title={sound.title} text={sound.description} />
           ))}
         </>
@@ -71,7 +69,7 @@ const Soundboard = function (props) {
         return <CardSound key="sound-add" add />
       }
 
-      const rating = getRating(soundboard);
+      const rating = getRating(props.soundboard);
       return <CardSound key="sound-rate" rating={rating} score={score} triggerRating={setNewRating} />
     }
   }
@@ -84,8 +82,8 @@ const Soundboard = function (props) {
           <ul>
             {props.user.soundboard && soundboardElements()}
             {id == props.currentUser.id && 
-              <li className="btn btn-secondary" onClick={() => setVisibilityAdd(!visibilityAdd)}>
-                <i className="fa fa-plus" aria-hidden="true" />
+              <li className="btn btn-secondary">
+                <i className="fa fa-plus" onClick={() => setVisibilityAdd(!visibilityAdd)} aria-hidden="true" />
                 <Popup onClose={popupCloseHandler} show={visibilityAdd}>
                   <section>
                     <h3>Ajouter une soundboard</h3>
@@ -108,8 +106,8 @@ const Soundboard = function (props) {
         </nav>
       </section>
       <section id="soundboard">
-        {soundboard && soundElements()}
-        {soundboard && soundAction()}
+        {props.soundboard && soundElements()}
+        {props.soundboard && soundAction()}
       </section>
     </div>
   );
