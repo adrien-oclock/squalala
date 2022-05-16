@@ -5,8 +5,8 @@ namespace App\Controller\Api\V1;
 use App\Entity\Sound;
 use App\Repository\SoundRepository;
 use App\Service\File;
-use App\Service\UploadedBase64File;
-use App\Utils\Base64FileExtractor;
+use App\Service\UploadBase64File;
+use App\Service\Base64FileExtractor;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -109,14 +109,41 @@ class SoundsController extends AbstractController
             return $this->json($reponseAsArray, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        $base64Image = $base64FileExtractor->extractBase64String($sound->getFilename());
+        $sound->setFilename('upload-' . uniqid() . '.mp3');
         $entityManager->persist($sound);
-        $soundFile = new UploadedBase64File($base64Image, $sound->getId());
-        $fileManager->upload($soundFile, $sound->getId());
         $entityManager->flush();
         
+        $base64Image = $base64FileExtractor->extractBase64String($sound->getFilename());
+        $soundFile = new UploadBase64File($base64Image, $sound->getId());
+        $filename = $fileManager->upload($soundFile, $sound->getId());
+        $sound->setFilename($filename);
+
+        $entityManager->persist($sound);
+        $entityManager->flush();
+
         $displayGroups = ['api_sound_browse'];
         return $this->json($sound, Response::HTTP_CREATED, [], ['groups' => $displayGroups]);
+    }
+
+    /**
+     * @Route("/upload", name="upload", methods={"POST"})
+     */
+    public function upload(Request $request, File $fileManager, Base64FileExtractor $base64FileExtractor): Response
+    {
+        $jsonContent = $request->getContent();
+        $data = json_decode($jsonContent);
+        $title = $data->filename;
+        $base64String = $data->file;
+        $base64Image = $base64FileExtractor->extractBase64String($base64String);
+        $soundFile = new UploadBase64File($base64Image, $title);
+        $fileManager->upload($soundFile, $title);
+
+        $reponseAsArray = [
+            'message' => 'Sound upploadé',
+            'title' => $title
+        ];
+
+        return $this->json($reponseAsArray, Response::HTTP_CREATED);
     }
 
     /**

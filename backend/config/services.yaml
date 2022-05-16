@@ -23,8 +23,8 @@ services:
     
     App\Service\File:
         arguments:
-            $targetDirectory: '%kernel.project_dir%/public/%sounds_directory%'
-
+            $targetDirectory: '%kernel.project_dir%/public%sounds_directory%'
+    
     api.event.authentication_success_listener:
         class: App\EventListener\AuthenticationSuccessListener
         tags:
