@@ -2,11 +2,11 @@ export const ADD_SOUND = 'ADD_SOUND';
 export const EDIT_SOUND = 'EDIT_SOUND';
 export const DELETE_SOUND = 'DELETE_SOUND';
 
-export const addSound = (title, description, filename, position) => ({
+export const addSound = (title, description, fileData, position) => ({
   type: ADD_SOUND,
   title: title,
   description: description,
-  filename: filename,
+  fileData: fileData,
   position: position,
 });
 

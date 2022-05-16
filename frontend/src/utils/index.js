@@ -73,10 +73,10 @@ export const getRating = (soundboard) => {
 }
 
 export const getBase64 = (file) => {
-  var reader = new FileReader();
-  reader.readAsDataURL(file);
-  reader.onload = function () {
-  };
-  reader.onerror = function (error) {
-  };
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
 }

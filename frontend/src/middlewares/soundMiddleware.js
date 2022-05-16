@@ -8,20 +8,27 @@ const soundMiddleware = (store) => (next) => (action) => {
 
     case ADD_SOUND: {
       const { soundboard } = store.getState();
-      const { title, description, filename, position } = action;
+      const { title, description, fileData, position } = action;
       let endpoint = 'sounds';
-      const params = {
-        soundboard: parseInt(soundboard.item.id),
-        title: title,
-        description: description,
-        filename: filename,
-        position: position,
-      };
 
-      api.post(endpoint, JSON.stringify(params))
+      api.post(endpoint + '/upload', JSON.stringify(fileData))
         .then((response) => {
-          console.log('Son ajouté')
-          store.dispatch(fetchSoundboard(soundboard.item.id));
+          const params = {
+            soundboard: parseInt(soundboard.item.id),
+            title: title,
+            description: description,
+            filename: response.title,
+            position: position,
+          };
+
+          api.post(endpoint, JSON.stringify(params))
+          .then((response) => {
+            console.log('Son ajouté')
+            store.dispatch(fetchSoundboard(soundboard.item.id));
+          })
+          .catch((error) => {
+            console.warn(error);
+          });
         })
         .catch((error) => {
           console.warn(error);

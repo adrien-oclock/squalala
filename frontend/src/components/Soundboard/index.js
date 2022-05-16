@@ -32,9 +32,16 @@ const Soundboard = function (props) {
     const description = e.target.description.value;
     const position = props.soundboard.sounds.length + 1;
     const files = e.target.file.files;
-    const filename = getBase64(files[0]);
-    props.handleAddSound(title, description, filename, position);
-  };
+    getBase64(files[0]).then((data) => {
+      const filename = files[0].name;
+      const fileData = {
+        filename: filename,
+        file: data,
+      }
+      console.log(fileData);
+      props.handleAddSound(title, description, fileData, position);
+    });
+  }
 
   const editHandler = (e) => {
     const id = e.target.id.value;
