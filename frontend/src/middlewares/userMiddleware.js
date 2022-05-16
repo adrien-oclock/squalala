@@ -11,7 +11,8 @@ import {
   saveUser, 
   saveUsers,
 } from 'src/actions/user';
-import { formatData, api } from 'src/utils';
+import { formatData, api, getSoundboardById } from 'src/utils';
+import { saveSoundboard } from '../actions/soundboard';
 import { getRating } from '../actions/user';
 
 const userMiddleware = (store) => (next) => (action) => {
@@ -116,11 +117,16 @@ const userMiddleware = (store) => (next) => (action) => {
     }
 
     case FETCH_USER: {
-      const { userId } = action;
+      const { userId, soundboardId } = action;
       api.get('users/' + userId)
         .then((response) => {
           const data = formatData(response.data);
           store.dispatch(saveUser(data[0]));
+        })
+        .then(() => {
+          const { item } = store.getState().user;
+          const soundboard = getSoundboardById(item.soundboard, soundboardId);
+          store.dispatch(saveSoundboard(soundboard));
         })
         .catch((error) => {
           console.warn(error);

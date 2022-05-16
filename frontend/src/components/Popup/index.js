@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import './styles.scss';
 
@@ -14,7 +15,7 @@ const Popup = (props) => {
     setShow(props.show);
   }, [props.show]);
 
-  return (
+  const view = () => (
     <div className={`popup-overlay ${show ? 'active' : ''}`}>
       <div className={`popup ${show ? 'active' : ''}`}>
         <a className="close-popup" onClick={closeHandler}>
@@ -28,6 +29,9 @@ const Popup = (props) => {
       </div>
     </div>
   );
+
+  const container = document.getElementById('root');
+  return ReactDOM.createPortal(view(), container);
 };
 
 Popup.propTypes = {

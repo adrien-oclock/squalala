@@ -4,14 +4,15 @@ import { fetchUser } from 'src/actions/user';
 import { addRating } from 'src/actions/soundboard';
 
 const mapStateToProps = (state) => ({
-  loading: state.user.loading,
+  loading: state.user.loading && state.soundboard.loading,
   user: state.user.item,
   currentUser: state.login,
+  soundboard: state.soundboard.item,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  loadUser: (userId) => {
-    dispatch(fetchUser(userId));
+  loadUser: (userId, soundboardId) => {
+    dispatch(fetchUser(userId, soundboardId));
   },
   handleRating: (rating, soundboardId) => {
     dispatch(addRating(rating, soundboardId));
