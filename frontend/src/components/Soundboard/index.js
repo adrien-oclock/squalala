@@ -21,7 +21,7 @@ const Soundboard = function (props) {
 
   useEffect(() => {
     props.loadUser(id, soundboardId);
-  }, [location, props.soundboard]);
+  }, [location, JSON.stringify(props.soundboard)]);
 
   if (props.loading || (props.user && props.user.id != id)) {
     return 'Chargement';
@@ -62,10 +62,20 @@ const Soundboard = function (props) {
     setScore(newRating);
   }
 
+  const addHandler = (e) => {
+    e.preventDefault();
+    const title = e.target.title.value;
+    const description = e.target.description.value;
+    const position = props.soundboard.sounds.length + 1;
+    const filename = 'tata.mp3';
+    props.handleAddSound(title, description, filename, position);
+    setVisibilityAdd(false);
+  };
+
   const soundAction = function() {
     if (props.currentUser.id) {
       if (id == props.currentUser.id) {
-        return <CardSound key="sound-add" add />
+        return <CardSound key="sound-add" add handleAddSound={addHandler} />
       }
 
       const rating = getRating(props.soundboard);
@@ -86,7 +96,6 @@ const Soundboard = function (props) {
       }
     }
     props.handleAddSoundboard(title, description, themes);
-    setVisibilityAdd(false);
   }
 
   return (

@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import Soundboard from 'src/components/Soundboard';
 import { fetchUser } from 'src/actions/user';
+import { addSound } from 'src/actions/sound';
 import { addRating, addSoundboard} from 'src/actions/soundboard';
 
 const mapStateToProps = (state) => ({
@@ -20,6 +21,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   handleAddSoundboard: (title, description, tags) => {
     dispatch(addSoundboard(title, description, tags));
+  },
+  handleAddSound: (title, description, filename, position) => {
+    dispatch(addSound(title, description, filename, position));
   },
 });
 

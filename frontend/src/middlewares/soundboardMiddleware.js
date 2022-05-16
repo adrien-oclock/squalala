@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { 
+  FETCH_SOUNDBOARD,
   FETCH_SOUNDBOARDS, 
   ADD_RATING, 
   ADD_SOUNDBOARD, 
@@ -9,6 +10,20 @@ import { formatData, api } from 'src/utils';
 
 const soundboardMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
+
+    case FETCH_SOUNDBOARD: {
+      const { id } = action;
+      let endpoint = 'soundboards/' + id;
+
+      api.get(endpoint)
+        .then((response) => {
+          store.dispatch(saveSoundboard(response.data));
+        })
+        .catch((error) => {
+          console.warn(error);
+        });
+      break;
+    }
 
     case FETCH_SOUNDBOARDS: {
       const { search, tags, sortBy, order } = action;
