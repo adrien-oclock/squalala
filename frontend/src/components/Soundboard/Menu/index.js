@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import SoundboardMenuElement from './Element';
 import Popup from 'src/components/Popup';
 
-const SoundboardMenu = function ({soundboards, loginId, userId, currentSoundboardId, tags, handleEditSoundboard, handleDeleteSoundboard}) {
+const SoundboardMenu = function ({soundboards, loginId, userId, currentSoundboardId, tags, handleAddSoundboard, handleEditSoundboard, handleDeleteSoundboard}) {
 
   const [visibilityAdd, setVisibilityAdd] = useState(false);
   const editor = loginId == userId ? true : false;
@@ -46,7 +46,8 @@ const SoundboardMenu = function ({soundboards, loginId, userId, currentSoundboar
         themes.push(parseInt(item.value));
       }
     }
-    props.handleAddSoundboard(title, description, themes);
+    handleAddSoundboard(title, description, themes);
+    setVisibilityAdd(false);
   }
 
   return (
@@ -101,6 +102,7 @@ SoundboardMenu.propTypes = {
   userId: PropTypes.number,
   currentSoundboardId: PropTypes.number,
   tags: PropTypes.array,
+  handleAddSoundboard: PropTypes.func,
   handleEditSoundboard: PropTypes.func,
   handleDeleteSoundboard: PropTypes.func,
 };
