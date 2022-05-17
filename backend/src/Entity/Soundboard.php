@@ -50,7 +50,7 @@ class Soundboard extends Core
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity=Sound::class, mappedBy="soundboard", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity=Sound::class, mappedBy="soundboard", cascade={"persist", "remove"})
      * @Groups("api_sound_browse")
      */
     private $sounds;
