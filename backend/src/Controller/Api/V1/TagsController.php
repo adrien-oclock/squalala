@@ -81,7 +81,7 @@ class TagsController extends AbstractController
             'id' => $tag->getId()
         ];
 
-        return $this->json($reponseAsArray, Response::HTTP_CREATED);
+        return $this->json($reponseAsArray, Response::HTTP_ACCEPTED);
     }
 
     /**

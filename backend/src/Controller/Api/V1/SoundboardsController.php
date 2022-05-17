@@ -91,12 +91,8 @@ class SoundboardsController extends AbstractController
         $entityManager->persist($soundboard);
         $entityManager->flush();
         
-        $reponseAsArray = [
-            'message' => 'Soundboard mis à jour',
-            'id' => $soundboard->getId()
-        ];
-
-        return $this->json($reponseAsArray, Response::HTTP_CREATED);
+        $displayGroups = ['api_soundboard_browse', 'api_sound_browse', 'api_tag_browse', 'api_like_browse', 'api_user_browse', 'api_user_detail_browse'];
+        return $this->json($soundboard, Response::HTTP_ACCEPTED, [], ['groups' => $displayGroups]);
     }
 
     /**
