@@ -45,7 +45,7 @@ class Sound extends Core
 
     /**
      * @ORM\ManyToOne(targetEntity=Soundboard::class, inversedBy="sound")
-     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $soundboard;
 
