@@ -80,3 +80,7 @@ export const getBase64 = (file) => {
     reader.onerror = error => reject(error);
   });
 }
+
+export const getSoundUrl = (filename) => {
+  return 'http://localhost/tools/squalala/backend/public/uploads/sounds/' + filename;
+}

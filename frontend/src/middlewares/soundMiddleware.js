@@ -17,13 +17,12 @@ const soundMiddleware = (store) => (next) => (action) => {
             soundboard: parseInt(soundboard.item.id),
             title: title,
             description: description,
-            filename: response.title,
+            filename: response.data.title,
             position: position,
           };
 
           api.post(endpoint, JSON.stringify(params))
           .then((response) => {
-            console.log('Son ajouté')
             store.dispatch(fetchSoundboard(soundboard.item.id));
           })
           .catch((error) => {
@@ -38,17 +37,34 @@ const soundMiddleware = (store) => (next) => (action) => {
 
     case EDIT_SOUND: {
       const { soundboard } = store.getState();
-      const { id, title, description, filename, position } = action;
-      let endpoint = 'sounds/' + id;
+      const { id, title, description, fileData, position } = action;
+      const endpoint = 'sounds';
       const params = {
         soundboard: parseInt(soundboard.item.id),
         title: title,
         description: description,
-        filename: filename,
         position: position,
       };
 
-      api.patch(endpoint, JSON.stringify(params))
+      if (fileData) {
+        api.post(endpoint + '/upload', JSON.stringify(fileData))
+        .then((response) => {
+          params.filename = response.data.title;
+
+          api.patch(endpoint + '/' + id, JSON.stringify(params))
+          .then((response) => {
+            console.log('Son modifié')
+            store.dispatch(fetchSoundboard(soundboard.item.id));
+          })
+          .catch((error) => {
+            console.warn(error);
+          });
+        })
+        .catch((error) => {
+          console.warn(error);
+        });
+      } else {
+        api.patch(endpoint + '/' + id, JSON.stringify(params))
         .then((response) => {
           console.log('Son modifié')
           store.dispatch(fetchSoundboard(soundboard.item.id));
@@ -56,6 +72,8 @@ const soundMiddleware = (store) => (next) => (action) => {
         .catch((error) => {
           console.warn(error);
         });
+      }
+
       break;
     }
 

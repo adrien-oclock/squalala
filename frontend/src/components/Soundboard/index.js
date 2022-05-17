@@ -38,7 +38,6 @@ const Soundboard = function (props) {
         filename: filename,
         file: data,
       }
-      console.log(fileData);
       props.handleAddSound(title, description, fileData, position);
     });
   }
@@ -48,8 +47,20 @@ const Soundboard = function (props) {
     const title = e.target.title.value;
     const description = e.target.description.value;
     const position = 2;
-    const filename = 'tata.mp3';
-    props.handleEditSound(id, title, description, filename, position);
+    const files = e.target.file.files;
+    if (files) {
+      getBase64(files[0]).then((data) => {
+        const filename = files[0].name;
+        const fileData = {
+          filename: filename,
+          file: data,
+        }
+        props.handleEditSound(id, title, description, fileData, position);
+      });
+    }
+    else {
+      props.handleEditSound(id, title, description, null, position);
+    }
   };
 
   const deleteHandler = (e) => {
@@ -74,7 +85,7 @@ const Soundboard = function (props) {
       return (
         <>
           {props.soundboard.sounds.map((sound) => (
-            <CardSound key={sound.id} id={sound.id} title={sound.title} text={sound.description} edit={props.user.id == props.currentUser.id} handleEditSound={editHandler} handleDeleteSound={deleteHandler} />
+            <CardSound key={sound.id} id={sound.id} title={sound.title} text={sound.description} file={sound.filename} edit={props.user.id == props.currentUser.id} handleEditSound={editHandler} handleDeleteSound={deleteHandler} />
           ))}
         </>
       );
