@@ -109,15 +109,6 @@ class SoundsController extends AbstractController
             return $this->json($reponseAsArray, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        $sound->setFilename('upload-' . uniqid() . '.mp3');
-        $entityManager->persist($sound);
-        $entityManager->flush();
-        
-        $base64Image = $base64FileExtractor->extractBase64String($sound->getFilename());
-        $soundFile = new UploadBase64File($base64Image, $sound->getId());
-        $filename = $fileManager->upload($soundFile, $sound->getId());
-        $sound->setFilename($filename);
-
         $entityManager->persist($sound);
         $entityManager->flush();
 
