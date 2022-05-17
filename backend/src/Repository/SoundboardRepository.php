@@ -30,7 +30,7 @@ class SoundboardRepository extends ServiceEntityRepository
         ]);
     }
 
-    public function findAllWithLikes(string $order = 'DESC', $sortBy = 'date', $search = null, $tags = null)
+    public function findAllWithLikes(string $order = 'DESC', $sortBy = 'date', $search = null, $tags = null, $limit = null)
     {
         // Left join because we want users with no relation to likes
         $qb = $this->createQueryBuilder('s')
@@ -56,6 +56,10 @@ class SoundboardRepository extends ServiceEntityRepository
         }
         else {
             $qb->orderBy('rating', $order);
+        }
+
+        if ($limit) {
+            $qb->setMaxResults($limit);
         }
 
         return $qb->groupBy('s')
