@@ -1,31 +1,65 @@
-import React from 'react';
-
+import { useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import CardSoundboard from '../Card/Soundboard';
+import SliderArrows from 'src/components/Slider-arrows';
 
 import './styles.scss';
 
-const Home = function ({settings, themes}) {
+const Home = function (props) {
+  const settings = {
+    infinite: true,
+    fade: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    adaptiveHeight: true,
+    nextArrow: <SliderArrows />,
+    prevArrow: <SliderArrows />,
+  }
+
+  useEffect(() => {
+    props.loadSoundboardsLasts();
+    props.loadSoundboardsTrending();
+  }, []);
+
+  if (props.loading) {
+    return 'Chargement';
+  }
+
   return (
     <section id="home">
       <div className="carouselContainer">
         <h2>5 derniers soundboards</h2>
         <Slider {...settings}>
-          <CardSoundboard key={1} title="tata" subtitle="Adrien" themes={themes} rating={4} url={`/profile/1?soundboard=1`} />
-          <CardSoundboard key={2} title="tutu" subtitle="Squalala" themes={themes} rating={2} url={`/profile/1?soundboard=1`} />
-          <CardSoundboard key={3} title="titi" subtitle="Oclock" themes={themes} rating={1} url={`/profile/1?soundboard=1`} />
-          <CardSoundboard key={4} title="toto" subtitle="Michel" themes={themes} rating={5} url={`/profile/1?soundboard=1`} />
-          <CardSoundboard key={5} title="tyty" subtitle="Torink" themes={themes} rating={3} url={`/profile/1?soundboard=1`} />
+          {props.listLasts.map((soundboard) => (
+            <CardSoundboard 
+            key={soundboard.id} 
+            title={soundboard.title} 
+            subtitle={soundboard.user.username} 
+            info={`Nombres de sons : ${soundboard.sounds.length}`} 
+            themes={soundboard.tags} 
+            rating={soundboard.rating} 
+            text={soundboard.description}
+            url={`/profile/${soundboard.user.id}?soundboard=${soundboard.id}`}
+            />
+          ))}
         </Slider>
       </div>
       <div className="carouselContainer">
         <h2>Top 5</h2>
         <Slider {...settings}>
-          <CardSoundboard key={6} title="tata" subtitle="Adrien" themes={themes} rating={4} url={`/profile/1?soundboard=1`} />
-          <CardSoundboard key={7} title="tutu" subtitle="Squalala" themes={themes} rating={2} url={`/profile/1?soundboard=1`} />
-          <CardSoundboard key={8} title="titi" subtitle="Oclock" themes={themes} rating={1} url={`/profile/1?soundboard=1`} />
-          <CardSoundboard key={9} title="toto" subtitle="Michel" themes={themes} rating={5} url={`/profile/1?soundboard=1`} />
-          <CardSoundboard key={10} title="tyty" subtitle="Torink" themes={themes} rating={3} url={`/profile/1?soundboard=1`} />
+          {props.listTrending.map((soundboard) => (
+            <CardSoundboard 
+            key={soundboard.id} 
+            title={soundboard.title} 
+            subtitle={soundboard.user.username} 
+            info={`Nombres de sons : ${soundboard.sounds.length}`} 
+            themes={soundboard.tags} 
+            rating={soundboard.rating} 
+            text={soundboard.description}
+            url={`/profile/${soundboard.user.id}?soundboard=${soundboard.id}`}
+            />
+          ))}
         </Slider>
       </div>
     </section>

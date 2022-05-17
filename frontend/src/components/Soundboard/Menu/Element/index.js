@@ -56,7 +56,7 @@ const SoundboardMenuElement = function ({soundboard, loginId, userId, currentSou
           <i className="fa fa-pencil" onClick={() => setVisibilityEdit(!visibilityEdit)} aria-hidden="true" />
           <Popup onClose={popupCloseHandler} show={visibilityEdit}>
             <section>
-              <h3>Modifier la soundboard</h3>
+              <h3>Modifier le soundboard</h3>
               <form className="formContainer" onSubmit={editSounboard}>
                 <input type="hidden" name="id" value={soundboard.id} />
                 <div className="inputContainer">
