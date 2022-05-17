@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom';
 
 import './styles.scss';
 
-const SoundboardMenuElement = function ({soundboard, loginId, userId, currentSoundboardId, tags, handleEditSoundboard}) {
+const SoundboardMenuElement = function ({soundboard, loginId, userId, currentSoundboardId, tags, handleEditSoundboard, handleDeleteSoundboard}) {
 
   const [visibilityEdit, setVisibilityEdit] = useState(false);
   const editor = loginId == userId ? true : false;
@@ -38,6 +38,14 @@ const SoundboardMenuElement = function ({soundboard, loginId, userId, currentSou
       }
     }
     handleEditSoundboard(id, title, description, themes);
+    setVisibilityEdit(false);
+  }
+
+  const deleteSoundboard = function(e) {
+    e.preventDefault();
+    const id = parseInt(e.target.getAttribute("data-id"));
+    handleDeleteSoundboard(id);
+    setVisibilityEdit(false);
   }
 
   return (
@@ -69,6 +77,7 @@ const SoundboardMenuElement = function ({soundboard, loginId, userId, currentSou
                 </div>
                 <button type="submit" className="btn btn-primary">Modifier</button>
               </form>
+              <button type="button" className="btn btn-primary delete" data-id={soundboard.id} onClick={deleteSoundboard}>Supprimer</button>
             </section>
           </Popup>
         </div>
@@ -92,6 +101,7 @@ SoundboardMenuElement.propTypes = {
   currentSoundboardId: PropTypes.number,
   tags: PropTypes.array,
   handleEditSoundboard: PropTypes.func,
+  handleDeleteSoundboard: PropTypes.func,
 };
 
 export default SoundboardMenuElement;

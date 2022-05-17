@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import Soundboard from 'src/components/Soundboard';
 import { fetchUser } from 'src/actions/user';
 import { addSound, editSound, deleteSound } from 'src/actions/sound';
-import { addRating, addSoundboard, editSoundboard} from 'src/actions/soundboard';
+import { addRating, addSoundboard, editSoundboard, deleteSoundboard } from 'src/actions/soundboard';
 
 const mapStateToProps = (state) => ({
   loading: state.user.loading && state.soundboard.loading,
@@ -24,6 +24,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   handleEditSoundboard: (id, title, description, tags) => {
     dispatch(editSoundboard(id, title, description, tags));
+  },
+  handleDeleteSoundboard: (id) => {
+    dispatch(deleteSoundboard(id));
   },
   handleAddSound: (title, description, fileData, position) => {
     dispatch(addSound(title, description, fileData, position));

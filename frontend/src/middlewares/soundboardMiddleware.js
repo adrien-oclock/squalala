@@ -5,8 +5,10 @@ import {
   ADD_RATING, 
   ADD_SOUNDBOARD, 
   EDIT_SOUNDBOARD,
+  DELETE_SOUNDBOARD,
   saveSoundboard, 
   saveSoundboards } from 'src/actions/soundboard';
+import { fetchUser } from 'src/actions/user';
 import { formatData, api } from 'src/utils';
 
 const soundboardMiddleware = (store) => (next) => (action) => {
@@ -80,6 +82,21 @@ const soundboardMiddleware = (store) => (next) => (action) => {
       api.patch(endpoint, JSON.stringify(params))
         .then((response) => {
           store.dispatch(saveSoundboard(response.data));
+        })
+        .catch((error) => {
+          console.warn(error);
+        });
+      break;
+    }
+
+    case DELETE_SOUNDBOARD: {
+      const { id } = action;
+      const { login } = store.getState();
+      let endpoint = 'soundboards/' + id;
+
+      api.delete(endpoint)
+        .then((response) => {
+          store.dispatch(fetchUser(login.id, null));
         })
         .catch((error) => {
           console.warn(error);

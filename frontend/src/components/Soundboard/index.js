@@ -107,7 +107,8 @@ const Soundboard = function (props) {
         userId={parseInt(id)} 
         currentSoundboardId={soundboardId} 
         tags={props.tags} 
-        handleEditSoundboard={props.handleEditSoundboard} />
+        handleEditSoundboard={props.handleEditSoundboard}
+        handleDeleteSoundboard={props.handleDeleteSoundboard} />
       </section>
       <section id="soundboard">
         {props.soundboard && soundElements()}

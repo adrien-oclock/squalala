@@ -5,6 +5,7 @@ export const SAVE_SOUNDBOARDS = 'SAVE_SOUNDBOARDS';
 export const ADD_RATING = 'ADD_RATING';
 export const ADD_SOUNDBOARD = 'ADD_SOUNDBOARD';
 export const EDIT_SOUNDBOARD = 'EDIT_SOUNDBOARD';
+export const DELETE_SOUNDBOARD = 'DELETE_SOUNDBOARD';
 
 export const fetchSoundboard = (id) => ({
   type: FETCH_SOUNDBOARD,
@@ -42,6 +43,11 @@ export const editSoundboard = (id, title, description, tags) => ({
   title: title,
   description: description,
   tags: tags,
+});
+
+export const deleteSoundboard = (id) => ({
+  type: DELETE_SOUNDBOARD,
+  id: id,
 });
 
 export const addRating = (rating, soundboardId) => ({
