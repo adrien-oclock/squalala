@@ -127,11 +127,11 @@ class SoundsController extends AbstractController
         $base64String = $data->file;
         $base64Image = $base64FileExtractor->extractBase64String($base64String);
         $soundFile = new UploadBase64File($base64Image, $title);
-        $fileManager->upload($soundFile, $title);
+        $filename = $fileManager->upload($soundFile, $title);
 
         $reponseAsArray = [
             'message' => 'Sound upploadé',
-            'title' => $title
+            'title' => $filename
         ];
 
         return $this->json($reponseAsArray, Response::HTTP_CREATED);
