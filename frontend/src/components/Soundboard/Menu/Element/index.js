@@ -53,7 +53,7 @@ const SoundboardMenuElement = function ({soundboard, loginId, userId, currentSou
       <NavLink to={`/profile/${userId}?soundboard=${soundboard.id}`}>{soundboard.title}</NavLink>
       {editor &&
         <div className="editSoundboard">
-          <i className="fa fa-plus" onClick={() => setVisibilityEdit(!visibilityEdit)} aria-hidden="true" />
+          <i className="fa fa-pencil" onClick={() => setVisibilityEdit(!visibilityEdit)} aria-hidden="true" />
           <Popup onClose={popupCloseHandler} show={visibilityEdit}>
             <section>
               <h3>Modifier la soundboard</h3>
