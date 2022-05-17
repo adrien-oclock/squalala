@@ -20,7 +20,12 @@ const CardSound = function ({
   const [visibilityAdd, setVisibilityAdd] = useState(false);
   const [visibilityEdit, setVisibilityEdit] = useState(false);
   const url = file ? getSoundUrl(file) : null;
-  const [audio] = url ? useState(new Audio(url)) : useState(false);
+  const [audio, setAudio] = useState(false);
+
+  useEffect(() => {
+    setAudio(new Audio(url));
+  }, [url]);
+
   const playFile = () => {
     if (audio) {
       audio.currentTime = 0;

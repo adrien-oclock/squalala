@@ -118,6 +118,7 @@ const userMiddleware = (store) => (next) => (action) => {
 
     case FETCH_USER: {
       const { userId, soundboardId } = action;
+
       api.get('users/' + userId)
         .then((response) => {
           const data = formatData(response.data);
