@@ -1,29 +1,21 @@
 import { connect } from 'react-redux';
 import Home from 'src/components/Home';
-import SliderArrows from 'src/components/Slider-arrows';
+import { fetchSoundboardsLasts, fetchSoundboardsTrending } from '../../actions/soundboard';
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    settings: {
-      infinite: true,
-      fade: true,
-      speed: 500,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      adaptiveHeight: true,
-      nextArrow: <SliderArrows />,
-      prevArrow: <SliderArrows />,
-    },
-    themes : [
-      { id: 1, name: 'toto' },
-      { id: 2, name: 'titi' },
-      { id: 3, name: 'tata' }
-    ]
-  };
-};
+const mapStateToProps = (state) => ({
+  loading: state.soundboard.loadingLasts && state.soundboard.loadingTrending,
+  listLasts: state.soundboard.listLasts,
+  listTrending: state.soundboard.listTrending,
+  tags: state.tag.list,
+});
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {};
-};
+const mapDispatchToProps = (dispatch) => ({
+  loadSoundboardsLasts: () => {
+    dispatch(fetchSoundboardsLasts());
+  },
+  loadSoundboardsTrending: () => {
+    dispatch(fetchSoundboardsTrending());
+  }
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

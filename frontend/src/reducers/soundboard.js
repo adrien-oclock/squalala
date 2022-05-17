@@ -4,12 +4,21 @@ import {
   SAVE_SOUNDBOARD, 
   FETCH_SOUNDBOARD,
   SAVE_SOUNDBOARDS, 
-  FETCH_SOUNDBOARDS } from 'src/actions/soundboard';
+  FETCH_SOUNDBOARDS,
+  FETCH_SOUNDBOARDS_LASTS,
+  FETCH_SOUNDBOARDS_TRENDING,
+  SAVE_SOUNDBOARDS_LASTS,
+  SAVE_SOUNDBOARDS_TRENDING
+ } from 'src/actions/soundboard';
 
 export const initialState = {
   list: [],
+  listLasts: [],
+  listTrending: [],
   item: null,
   loading: true,
+  loadingTrending: true,
+  loadingLasts: true,
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -41,6 +50,20 @@ const reducer = (state = initialState, action = {}) => {
         loading: false
       };
 
+    case SAVE_SOUNDBOARDS_LASTS:
+      return {
+        ...state,
+        listLasts: action.soundboards,
+        loadingLasts: false
+      };
+
+    case SAVE_SOUNDBOARDS_TRENDING:
+      return {
+        ...state,
+        listTrending: action.soundboards,
+        loadingTrending: false
+      };
+
     case FETCH_SOUNDBOARD:
       return {
         ...state,
@@ -51,6 +74,18 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         loading: true
+      };
+
+    case FETCH_SOUNDBOARDS_LASTS:
+      return {
+        ...state,
+        loading_lasts: true
+      };
+
+    case FETCH_SOUNDBOARDS_TRENDING:
+      return {
+        ...state,
+        loading_trending: true
       };
 
     default:

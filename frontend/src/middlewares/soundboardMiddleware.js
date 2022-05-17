@@ -1,13 +1,18 @@
 import axios from 'axios';
 import { 
   FETCH_SOUNDBOARD,
-  FETCH_SOUNDBOARDS, 
+  FETCH_SOUNDBOARDS,
+  FETCH_SOUNDBOARDS_LASTS,
+  FETCH_SOUNDBOARDS_TRENDING, 
   ADD_RATING, 
   ADD_SOUNDBOARD, 
   EDIT_SOUNDBOARD,
   DELETE_SOUNDBOARD,
   saveSoundboard, 
-  saveSoundboards } from 'src/actions/soundboard';
+  saveSoundboards,
+  saveSoundboardsLasts,
+  saveSoundboardsTrending,
+ } from 'src/actions/soundboard';
 import { formatData, api } from 'src/utils';
 
 const soundboardMiddleware = (store) => (next) => (action) => {
@@ -41,6 +46,36 @@ const soundboardMiddleware = (store) => (next) => (action) => {
       }})
         .then((response) => {
           store.dispatch(saveSoundboards(formatData(response.data)));
+        })
+        .catch((error) => {
+          console.warn(error);
+        });
+      break;
+    }
+
+    case FETCH_SOUNDBOARDS_LASTS: {
+      let endpoint = 'soundboards';
+
+      api.get(endpoint, {params: {
+        limit: 5,
+      }})
+        .then((response) => {
+          store.dispatch(saveSoundboardsLasts(formatData(response.data)));
+        })
+        .catch((error) => {
+          console.warn(error);
+        });
+      break;
+    }
+
+    case FETCH_SOUNDBOARDS_TRENDING: {
+      let endpoint = 'soundboards/likes';
+
+      api.get(endpoint, {params: {
+        limit: 5,
+      }})
+        .then((response) => {
+          store.dispatch(saveSoundboardsTrending(formatData(response.data)));
         })
         .catch((error) => {
           console.warn(error);

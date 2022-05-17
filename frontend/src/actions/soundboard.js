@@ -6,6 +6,10 @@ export const ADD_RATING = 'ADD_RATING';
 export const ADD_SOUNDBOARD = 'ADD_SOUNDBOARD';
 export const EDIT_SOUNDBOARD = 'EDIT_SOUNDBOARD';
 export const DELETE_SOUNDBOARD = 'DELETE_SOUNDBOARD';
+export const FETCH_SOUNDBOARDS_LASTS = 'FETCH_SOUNDBOARDS_LASTS';
+export const SAVE_SOUNDBOARDS_LASTS = 'SAVE_SOUNDBOARDS_LASTS';
+export const FETCH_SOUNDBOARDS_TRENDING = 'FETCH_SOUNDBOARDS_TRENDING';
+export const SAVE_SOUNDBOARDS_TRENDING = 'SAVE_SOUNDBOARDS_TRENDING';
 
 export const fetchSoundboard = (id) => ({
   type: FETCH_SOUNDBOARD,
@@ -25,8 +29,26 @@ export const fetchSoundboards = (search, tags, sortBy, order) => ({
   order: order,
 });
 
+export const fetchSoundboardsLasts = () => ({
+  type: FETCH_SOUNDBOARDS_LASTS,
+});
+
+export const fetchSoundboardsTrending = () => ({
+  type: FETCH_SOUNDBOARDS_TRENDING,
+});
+
 export const saveSoundboards = (soundboards) => ({
   type: SAVE_SOUNDBOARDS,
+  soundboards: soundboards,
+});
+
+export const saveSoundboardsLasts = (soundboards) => ({
+  type: SAVE_SOUNDBOARDS_LASTS,
+  soundboards: soundboards,
+});
+
+export const saveSoundboardsTrending = (soundboards) => ({
+  type: SAVE_SOUNDBOARDS_TRENDING,
   soundboards: soundboards,
 });
 
