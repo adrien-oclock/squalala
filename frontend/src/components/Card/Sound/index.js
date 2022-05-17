@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Popup from '../../Popup';
-
+import { getSoundUrl } from 'src/utils';
 import './styles.scss';
 
 const CardSound = function ({
   title, 
   text, 
+  file, 
   rating,
   score, 
   id, 
@@ -18,6 +19,14 @@ const CardSound = function ({
 }) {
   const [visibilityAdd, setVisibilityAdd] = useState(false);
   const [visibilityEdit, setVisibilityEdit] = useState(false);
+  const url = file ? getSoundUrl(file) : null;
+  const [audio] = url ? useState(new Audio(url)) : useState(false);
+  const playFile = () => {
+    if (audio) {
+      audio.currentTime = 0;
+      audio.play();
+    }
+  }
 
   const popupCloseHandler = (e) => {
     setVisibilityAdd(e);
@@ -58,7 +67,7 @@ const CardSound = function ({
         &&
         <i onClick={toggleFlip} className={`fa fa-${flip ? 'minus' : 'plus'}-circle tool right ${flip ? 'flipped' : ''}`} aria-hidden="true" />}
         {editTool()}
-        <div className={`cardContent ${flip ? '' : 'visible'}`}>
+        <div className={`cardContent ${flip ? '' : 'visible'}`} onClick={playFile}>
           <p className="title">{title}</p>
         </div>
         {text
@@ -75,6 +84,10 @@ const CardSound = function ({
               <div className="inputContainer">
                 <textarea name="description" id={`edit-description-${id}`} defaultValue={text} autoComplete="off" required />
                 <label htmlFor={`edit-description-${id}`}>Description</label>
+              </div>
+              <div className="inputContainer">
+                <input type="file" name="file" id={`edit-file-${id}`} />
+                <label htmlFor={`edit-file-${id}`}>Fichier</label>
               </div>
               <button type="submit" className="btn btn-primary">Modifier</button>
             </form>
@@ -164,6 +177,7 @@ const CardSound = function ({
 CardSound.defaultProps = {
   id: null,
   title: null,
+  file: null,
   edit: false,
   rating: null,
   score: null,
@@ -174,6 +188,7 @@ CardSound.propTypes = {
   id: PropTypes.number,
   title: PropTypes.string,
   text: PropTypes.string,
+  file: PropTypes.string,
   rating: PropTypes.number,
   score: PropTypes.number,
   edit: PropTypes.bool,

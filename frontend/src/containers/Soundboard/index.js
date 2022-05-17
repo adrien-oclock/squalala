@@ -25,8 +25,8 @@ const mapDispatchToProps = (dispatch) => ({
   handleAddSound: (title, description, fileData, position) => {
     dispatch(addSound(title, description, fileData, position));
   },
-  handleEditSound: (id, title, description, filename, position) => {
-    dispatch(editSound(id, title, description, filename, position));
+  handleEditSound: (id, title, description, fileData, position) => {
+    dispatch(editSound(id, title, description, fileData, position));
   },
   handleDeleteSound: (id) => {
     dispatch(deleteSound(id));

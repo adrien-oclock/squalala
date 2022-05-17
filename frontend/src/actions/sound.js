@@ -10,12 +10,12 @@ export const addSound = (title, description, fileData, position) => ({
   position: position,
 });
 
-export const editSound = (id, title, description, filename, position) => ({
+export const editSound = (id, title, description, fileData, position) => ({
   type: EDIT_SOUND,
   id: id,
   title: title,
   description: description,
-  filename: filename,
+  fileData: fileData,
   position: position,
 });
 
