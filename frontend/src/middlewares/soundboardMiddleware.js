@@ -4,6 +4,7 @@ import {
   FETCH_SOUNDBOARDS, 
   ADD_RATING, 
   ADD_SOUNDBOARD, 
+  EDIT_SOUNDBOARD,
   saveSoundboard, 
   saveSoundboards } from 'src/actions/soundboard';
 import { formatData, api } from 'src/utils';
@@ -58,6 +59,25 @@ const soundboardMiddleware = (store) => (next) => (action) => {
       };
 
       api.post(endpoint, JSON.stringify(params))
+        .then((response) => {
+          store.dispatch(saveSoundboard(response.data));
+        })
+        .catch((error) => {
+          console.warn(error);
+        });
+      break;
+    }
+
+    case EDIT_SOUNDBOARD: {
+      const { id, title, description, tags } = action;
+      let endpoint = 'soundboards/' + id;
+      const params = {
+        title: title,
+        description: description,
+        tags: tags,
+      };
+
+      api.patch(endpoint, JSON.stringify(params))
         .then((response) => {
           store.dispatch(saveSoundboard(response.data));
         })

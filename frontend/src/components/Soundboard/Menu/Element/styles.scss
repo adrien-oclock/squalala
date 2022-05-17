@@ -1,0 +1,13 @@
+@use '../../../../styles/vars';
+
+.soundboardMenuElement {
+  display: flex;
+
+  i {
+    margin-left: 1em;
+
+    &:hover {
+      color: vars.$dark-color;
+    }
+  }
+}

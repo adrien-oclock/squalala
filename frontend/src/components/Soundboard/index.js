@@ -1,9 +1,9 @@
 /* eslint-disable max-len */
 import { useEffect, useState } from 'react';
-import { useParams, useSearchParams, useLocation, NavLink } from 'react-router-dom';
+import { useParams, useSearchParams, useLocation } from 'react-router-dom';
 import { getRating, getBase64 } from 'src/utils';
 import CardSound from '../Card/Sound';
-import Popup from '../Popup';
+import SoundboardMenu from './Menu';
 
 import './styles.scss';
 
@@ -11,13 +11,8 @@ const Soundboard = function (props) {
   const { id } = useParams();
   const [searchParams] = useSearchParams();
   const location = useLocation();
-  const [visibilityAdd, setVisibilityAdd] = useState(false);
   const [score, setScore] = useState(null);
   const soundboardId = searchParams.get('soundboard') ? parseInt(searchParams.get('soundboard')) : null;
-
-  const popupCloseHandler = (e) => {
-    setVisibilityAdd(e);
-  };
 
   useEffect(() => {
     props.loadUser(id, soundboardId);
@@ -68,18 +63,6 @@ const Soundboard = function (props) {
     props.handleDeleteSound(id);
   };
 
-  const soundboardElements = function() {
-    return (
-      <>
-        {props.user.soundboard.map((soundboard) => (
-          <li key={soundboard.id} className={`btn ${soundboard.id === soundboardId ? 'btn-primary' : 'btn-secondary'}`}>
-            <NavLink to={`/profile/${props.user.id}?soundboard=${soundboard.id}`}>{soundboard.title}</NavLink>
-          </li>
-        ))}
-      </>
-    );
-  }
-
   const soundElements = function() {
     if (props.soundboard.sounds.length > 0) {
       return (
@@ -114,59 +97,17 @@ const Soundboard = function (props) {
     }
   }
 
-  const addSounboard = function(e) {
-    e.preventDefault();
-    const title = e.target.title.value;
-    const description = e.target.description.value;
-    const themes = [];
-
-    const checkBoxes = e.target.getElementsByClassName('checkboxTheme');
-    for (const item of checkBoxes) {
-      if (item.checked) {
-        themes.push(parseInt(item.value));
-      }
-    }
-    props.handleAddSoundboard(title, description, themes);
-  }
-
   return (
     <div className="profile">
       <section id="author">
         <h4>{props.user.username}</h4>
-        <nav>
-          <ul>
-            {props.user.soundboard && soundboardElements()}
-            {id == props.currentUser.id && 
-              <li className="btn btn-secondary">
-                <i className="fa fa-plus" onClick={() => setVisibilityAdd(!visibilityAdd)} aria-hidden="true" />
-                <Popup onClose={popupCloseHandler} show={visibilityAdd}>
-                  <section>
-                    <h3>Ajouter une soundboard</h3>
-                    <form className="formContainer" onSubmit={addSounboard}>
-                      <div className="inputContainer">
-                        <input type="text" name="title" id="soundboard-add-title" autoComplete="off" required />
-                        <label htmlFor="soundboard-add-title">Titre</label>
-                      </div>
-                      <ul id="checkboxes">
-                        {props.tags.map((tag) => (
-                          <li key={`theme-${tag.id}`}>
-                            <input type="checkbox" className="checkboxTheme" name="theme[]" value={tag.id} id={`theme-${tag.id}`} />
-                            <label htmlFor={`theme-${tag.id}`}>{tag.title}</label>
-                          </li>
-                        ))}
-                      </ul>
-                      <div className="inputContainer">
-                        <textarea name="description" id="soundboard-add-description" autoComplete="off" required />
-                        <label htmlFor="soundboard-add-description">Description</label>
-                      </div>
-                      <button type="submit" className="btn btn-primary">Ajouter</button>
-                    </form>
-                  </section>
-                </Popup>
-              </li>
-            }
-          </ul>
-        </nav>
+        <SoundboardMenu 
+        soundboards={props.user.soundboard} 
+        loginId={parseInt(props.currentUser.id)} 
+        userId={parseInt(id)} 
+        currentSoundboardId={soundboardId} 
+        tags={props.tags} 
+        handleEditSoundboard={props.handleEditSoundboard} />
       </section>
       <section id="soundboard">
         {props.soundboard && soundElements()}

@@ -1,5 +1,6 @@
 import { 
   ADD_SOUNDBOARD,
+  EDIT_SOUNDBOARD,
   SAVE_SOUNDBOARD, 
   FETCH_SOUNDBOARD,
   SAVE_SOUNDBOARDS, 
@@ -15,6 +16,12 @@ const reducer = (state = initialState, action = {}) => {
   switch (action.type) {
     
     case ADD_SOUNDBOARD:
+      return {
+        ...state,
+        loading: true
+      };
+
+    case EDIT_SOUNDBOARD:
       return {
         ...state,
         loading: true
