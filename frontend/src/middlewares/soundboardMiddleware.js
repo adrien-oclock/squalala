@@ -8,7 +8,6 @@ import {
   DELETE_SOUNDBOARD,
   saveSoundboard, 
   saveSoundboards } from 'src/actions/soundboard';
-import { fetchUser } from 'src/actions/user';
 import { formatData, api } from 'src/utils';
 
 const soundboardMiddleware = (store) => (next) => (action) => {
@@ -96,7 +95,7 @@ const soundboardMiddleware = (store) => (next) => (action) => {
 
       api.delete(endpoint)
         .then((response) => {
-          store.dispatch(fetchUser(login.id, null));
+          store.dispatch(saveSoundboard(null));
         })
         .catch((error) => {
           console.warn(error);
