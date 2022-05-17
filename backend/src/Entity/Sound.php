@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\SoundRepository;
+use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping\PreUpdate;
@@ -145,5 +146,21 @@ class Sound extends Core
         $this->filename = $filename;
 
         return $this;
+    }
+
+    /**
+     * Ceci est du code à exécuter après la suppression
+     * 
+     * @ORM\PostRemove
+     *
+     * @return void
+     */
+    public function deleteFile(LifecycleEventArgs $args) {
+        $entity = $args->getObject();
+        $filename = $entity->getFilename();
+        $filePath = __DIR__ . '/../../public/uploads/sounds/' . $filename;
+        if (file_exists($filePath)) {
+            unlink($filePath);
+        }
     }
 }
