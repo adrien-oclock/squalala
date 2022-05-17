@@ -87,7 +87,7 @@ class LikesController extends AbstractController
             'score' => $like->getScore(),
         ];
 
-        return $this->json($reponseAsArray, Response::HTTP_CREATED);
+        return $this->json($reponseAsArray, Response::HTTP_ACCEPTED);
     }
 
     /**

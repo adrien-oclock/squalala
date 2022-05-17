@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\SoundRepository;
 use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping\PreUpdate;
@@ -146,6 +147,25 @@ class Sound extends Core
         $this->filename = $filename;
 
         return $this;
+    }
+
+    /**
+     * Ceci est du code à exécuter juste avant la modification
+     * 
+     * @ORM\PreUpdate
+     *
+     * @return void
+     */
+    public function renameFile(PreUpdateEventArgs $args) {
+        $change = $args->getEntityChangeSet();
+        if (isset($change['filename'])) {
+            $oldFilename = $change['filename'][0];
+            $filePath = __DIR__ . '/../../public/uploads/sounds/' . $oldFilename;
+    
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+        }
     }
 
     /**
