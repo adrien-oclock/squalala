@@ -14,6 +14,7 @@ import {
   saveSoundboardsTrending,
  } from 'src/actions/soundboard';
 import { formatData, api } from 'src/utils';
+import { logOut } from 'src/actions/user';
 
 const soundboardMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
@@ -27,6 +28,9 @@ const soundboardMiddleware = (store) => (next) => (action) => {
           store.dispatch(saveSoundboard(response.data));
         })
         .catch((error) => {
+          if (error.response.status == 401) {
+            store.dispatch(logOut());
+          }
           console.warn(error);
         });
       break;
@@ -48,6 +52,9 @@ const soundboardMiddleware = (store) => (next) => (action) => {
           store.dispatch(saveSoundboards(formatData(response.data)));
         })
         .catch((error) => {
+          if (error.response.status == 401) {
+            store.dispatch(logOut());
+          }
           console.warn(error);
         });
       break;
@@ -63,6 +70,9 @@ const soundboardMiddleware = (store) => (next) => (action) => {
           store.dispatch(saveSoundboardsLasts(formatData(response.data)));
         })
         .catch((error) => {
+          if (error.response.status === 401) {
+            store.dispatch(logOut());
+          }
           console.warn(error);
         });
       break;
@@ -78,6 +88,9 @@ const soundboardMiddleware = (store) => (next) => (action) => {
           store.dispatch(saveSoundboardsTrending(formatData(response.data)));
         })
         .catch((error) => {
+          if (error.response.status == 401) {
+            store.dispatch(logOut());
+          }
           console.warn(error);
         });
       break;
@@ -99,6 +112,9 @@ const soundboardMiddleware = (store) => (next) => (action) => {
           store.dispatch(saveSoundboard(response.data));
         })
         .catch((error) => {
+          if (error.response.status == 401) {
+            store.dispatch(logOut());
+          }
           console.warn(error);
         });
       break;
@@ -118,6 +134,9 @@ const soundboardMiddleware = (store) => (next) => (action) => {
           store.dispatch(saveSoundboard(response.data));
         })
         .catch((error) => {
+          if (error.response.status == 401) {
+            store.dispatch(logOut());
+          }
           console.warn(error);
         });
       break;
@@ -125,7 +144,6 @@ const soundboardMiddleware = (store) => (next) => (action) => {
 
     case DELETE_SOUNDBOARD: {
       const { id } = action;
-      const { login } = store.getState();
       let endpoint = 'soundboards/' + id;
 
       api.delete(endpoint)
@@ -133,6 +151,9 @@ const soundboardMiddleware = (store) => (next) => (action) => {
           store.dispatch(saveSoundboard(null));
         })
         .catch((error) => {
+          if (error.response.status == 401) {
+            store.dispatch(logOut());
+          }
           console.warn(error);
         });
       break;
@@ -153,6 +174,9 @@ const soundboardMiddleware = (store) => (next) => (action) => {
           console.log('Mettre à jour le score total');
         })
         .catch((error) => {
+          if (error.response.status == 401) {
+            store.dispatch(logOut());
+          }
           console.warn(error);
         });
       break;

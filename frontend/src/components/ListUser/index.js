@@ -18,7 +18,7 @@ const ListUser = function (props) {
 
   useEffect(() => {
     props.loadUsers(search, sortBy, order);
-  }, [search, sortBy, order]);
+  }, [search, sortBy, order, props.isLogged]);
 
   const sortUsers = (e) => {
     const clickedSort = e.target.dataset.sort;
