@@ -71,8 +71,7 @@ class SoundboardRepository extends ServiceEntityRepository
         }
 
         return $qb->groupBy('s')
-        ->getQuery()
-        ->getResult();
+        ->getQuery();
     }
 
     /**

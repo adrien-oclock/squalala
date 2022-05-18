@@ -5,6 +5,7 @@ namespace App\Controller\Api\V1;
 use App\Entity\Soundboard;
 use App\Repository\SoundboardRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,15 +22,27 @@ class SoundboardsController extends AbstractController
     /**
      * @Route("/likes/{order}", name="browse_by_likes", methods={"GET"}, defaults={"order"="desc"})
      */
-    public function browseByLikes(string $order, SoundboardRepository $soundboardRepository, Request $request): Response
+    public function browseByLikes(string $order, SoundboardRepository $soundboardRepository, Request $request, PaginatorInterface $paginator): Response
     {
+        $page = $request->query->getInt('page', 1);
         $search = $request->query->get('search');
-        $limit = $request->query->get('limit');
+        $limit = $request->query->get('limit', 10);
         $tags = $request->query->get('tag');
-        $allSoundboards = $soundboardRepository->findAllWithLikes($order, 'like', $search, $tags, $limit);
+        $soundboardsQuery = $soundboardRepository->findAllWithLikes($order, 'like', $search, $tags, $limit);
+
+        $soundboards = $paginator->paginate(
+            $soundboardsQuery,
+            $page,
+            $limit,
+        );
+
+        $data = [
+            'list' => $soundboards,
+            'pagination' => $soundboards->getPaginationData()
+        ];
 
         $displayGroups = ['api_soundboard_browse', 'api_sound_browse', 'api_tag_browse', 'api_like_browse', 'api_user_browse', 'api_user_detail_browse'];
-        return $this->json($allSoundboards, Response::HTTP_OK, [], ['groups' => $displayGroups]);
+        return $this->json($data, Response::HTTP_OK, [], ['groups' => $displayGroups]);
     }
 
     /**
@@ -50,15 +63,27 @@ class SoundboardsController extends AbstractController
     /**
      * @Route("/{order}", name="browse", methods={"GET"}, defaults={"order"="desc"})
      */
-    public function browse(string $order, SoundboardRepository $soundboardRepository, Request $request): Response
+    public function browse(string $order, SoundboardRepository $soundboardRepository, Request $request, PaginatorInterface $paginator): Response
     {
+        $page = $request->query->getInt('page', 1);
         $search = $request->query->get('search');
-        $limit = $request->query->get('limit');
+        $limit = $request->query->get('limit', 10);
         $tags = $request->query->get('tag');
-        $allSoundboards = $soundboardRepository->findAllWithLikes($order, 'date', $search, $tags, $limit);
+        $soundboardsQuery = $soundboardRepository->findAllWithLikes($order, 'date', $search, $tags, $limit);
+
+        $soundboards = $paginator->paginate(
+            $soundboardsQuery,
+            $page,
+            $limit,
+        );
+
+        $data = [
+            'list' => $soundboards,
+            'pagination' => $soundboards->getPaginationData()
+        ];
 
         $displayGroups = ['api_soundboard_browse', 'api_sound_browse', 'api_tag_browse', 'api_like_browse', 'api_user_browse', 'api_user_detail_browse'];
-        return $this->json($allSoundboards, Response::HTTP_OK, [], ['groups' => $displayGroups]);
+        return $this->json($data, Response::HTTP_OK, [], ['groups' => $displayGroups]);
     }
     
     /**
