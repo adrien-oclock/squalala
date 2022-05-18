@@ -7,6 +7,7 @@ use App\Form\SoundType;
 use App\Repository\SoundRepository;
 use App\Service\File;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,10 +26,17 @@ class SoundController extends AbstractController
     /**
      * @Route("/", name="browse", methods={"GET"})
      */
-    public function browse(SoundRepository $soundRepository): Response
+    public function browse(SoundRepository $soundRepository, Request $request, PaginatorInterface $paginator): Response
     {
+        $soundsQuery = $soundRepository->findAllQuery();
+        $sounds = $paginator->paginate(
+            $soundsQuery,
+            $request->query->getInt('page', 1),
+            10,
+        );
+
         return $this->render('backoffice/sound/browse.html.twig', [
-            'sound_list' => $soundRepository->findAll()
+            'sound_list' => $sounds
         ]);
     }
 

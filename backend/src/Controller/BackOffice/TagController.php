@@ -6,6 +6,7 @@ use App\Entity\Tag;
 use App\Form\TagType;
 use App\Repository\TagRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,10 +24,16 @@ class TagController extends AbstractController
     /**
      * @Route("/", name="browse", methods={"GET"})
      */
-    public function browse(TagRepository $tagRepository): Response
+    public function browse(TagRepository $tagRepository, Request $request, PaginatorInterface $paginator): Response
     {
+        $tagsQuery = $tagRepository->findAllQuery();
+        $tags = $paginator->paginate(
+            $tagsQuery,
+            $request->query->getInt('page', 1),
+            10,
+        );
         return $this->render('backoffice/tag/browse.html.twig', [
-            'tag_list' => $tagRepository->findAll()
+            'tag_list' => $tags
         ]);
     }
 
