@@ -6,8 +6,9 @@ import { logInFromStorage } from 'src/actions/user';
 import { fetchTags } from 'src/actions/tag';
 
 const mapStateToProps = (state) => ({
-  loading: state.tag.loading,
+  loading: state.tag.loading && state.login.loading_storage,
   tags: state.tag.list,
+  isLogged: state.login.logged,
 });
 
 const mapDispatchToProps = (dispatch) => ({

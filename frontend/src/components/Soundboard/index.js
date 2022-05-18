@@ -16,7 +16,7 @@ const Soundboard = function (props) {
 
   useEffect(() => {
     props.loadUser(id, soundboardId);
-  }, [location, JSON.stringify(props.soundboard)]);
+  }, [location, JSON.stringify(props.soundboard), props.isLogged]);
 
   if (props.loading || (props.user && props.user.id != id)) {
     return 'Chargement';

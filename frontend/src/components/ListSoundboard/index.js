@@ -18,7 +18,7 @@ const ListSoundboard = function (props) {
 
   useEffect(() => {
     props.loadSoundboards(search, tags, sortBy, order);
-  }, [search, tags.length, sortBy, order]);
+  }, [search, tags.length, sortBy, order, props.isLogged]);
 
   const sortSoundboards = (e) => {
     const clickedSort = e.target.dataset.sort;

@@ -7,10 +7,12 @@ import {
   LOG_OUT,
   REGISTER,
  } from '../actions/user';
+ import { api } from 'src/utils';
 
 export const initialState = {
   logged: false, 
   loading: false,
+  loading_storage: true,
   matching_password: true,
   reg_email: '',
   reg_username: '',
@@ -48,6 +50,7 @@ const reducer = (state = initialState, action = {}) => {
         logged: action.isLogged,
         token: action.token,
         loading: false,
+        loading_storage: false,
       };
 
     case LOG_IN:
@@ -55,8 +58,17 @@ const reducer = (state = initialState, action = {}) => {
         ...state,
         loading: true,
       };
+    
+    case LOG_IN_FROM_STORAGE:
+      return {
+        ...state,
+        loading_storage: true,
+      };
 
     case LOG_OUT:
+      localStorage.removeItem('user');
+      api.defaults.headers.common.Authorization = null;
+
       return {
         ...state,
         logged: false,

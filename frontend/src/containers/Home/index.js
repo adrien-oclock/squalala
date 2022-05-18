@@ -7,6 +7,7 @@ const mapStateToProps = (state) => ({
   listLasts: state.soundboard.listLasts,
   listTrending: state.soundboard.listTrending,
   tags: state.tag.list,
+  isLogged: state.login.logged,
 });
 
 const mapDispatchToProps = (dispatch) => ({

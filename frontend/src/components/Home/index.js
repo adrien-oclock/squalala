@@ -20,7 +20,7 @@ const Home = function (props) {
   useEffect(() => {
     props.loadSoundboardsLasts();
     props.loadSoundboardsTrending();
-  }, []);
+  }, [props.isLogged]);
 
   if (props.loading) {
     return 'Chargement';

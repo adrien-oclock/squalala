@@ -5,6 +5,7 @@ import { fetchUsers } from 'src/actions/user';
 const mapStateToProps = (state) => ({
   loading: state.user.loading,
   users: state.user.list,
+  isLogged: state.login.logged,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -10,10 +10,10 @@ import {
   saveUserData, 
   saveUser, 
   saveUsers,
+  logOut,
 } from 'src/actions/user';
 import { formatData, api, getSoundboardById } from 'src/utils';
 import { saveSoundboard } from '../actions/soundboard';
-import { getRating } from '../actions/user';
 
 const userMiddleware = (store) => (next) => (action) => {
   // console.log('on a intercepté une action dans le middleware: ', action);
@@ -111,11 +111,6 @@ const userMiddleware = (store) => (next) => (action) => {
       break;
     }
 
-    case LOG_OUT: {
-      localStorage.removeItem('user');
-      api.defaults.headers.common.Authorization = null;
-    }
-
     case FETCH_USER: {
       const { userId, soundboardId } = action;
 
@@ -130,6 +125,9 @@ const userMiddleware = (store) => (next) => (action) => {
           store.dispatch(saveSoundboard(soundboard));
         })
         .catch((error) => {
+          if (error.response.status == 401) {
+            store.dispatch(logOut());
+          }
           console.warn(error);
         });
       break;
@@ -150,6 +148,9 @@ const userMiddleware = (store) => (next) => (action) => {
           store.dispatch(saveUsers(formatData(response.data)));
         })
         .catch((error) => {
+          if (error.response.status == 401) {
+            store.dispatch(logOut());
+          }
           console.warn(error);
         });
       break;

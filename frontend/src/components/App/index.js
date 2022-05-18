@@ -12,15 +12,17 @@ import './styles.scss';
 
 // == Composant
 const App = function(props) {
-  // useEffect(() => {
-  //   props.connectUser();
-  // }, []);
 
   // Only on init
   useEffect(() => {
     props.loadTags();
+    props.connectUser();
   }, []);
   
+  useEffect(() => {
+    props.connectUser();
+  }, [props.isLogged]);
+
   if (props.loading) {
     return 'Chargement';
   }
