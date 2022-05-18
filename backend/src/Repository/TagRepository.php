@@ -23,6 +23,14 @@ class TagRepository extends ServiceEntityRepository
         parent::__construct($registry, Tag::class);
     }
 
+    public function findAllQuery(string $order = 'DESC') {
+        return $this->createQueryBuilder('t')
+        ->addOrderBy('t.createdAt', $order)
+        ->addOrderBy('t.title', 'ASC')
+        ->getQuery()
+        ;
+    }
+
     /**
      * @throws ORMException
      * @throws OptimisticLockException

@@ -34,6 +34,14 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         ]);
     }
 
+    public function findAllQuery(string $order = 'DESC') {
+        return $this->createQueryBuilder('u')
+        ->addOrderBy('u.createdAt', $order)
+        ->addOrderBy('u.username', 'ASC')
+        ->getQuery()
+        ;
+    }
+
     public function findWithLikes(int $id)
     {
         return $this->createQueryBuilder('u')
@@ -69,8 +77,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         }
 
         return $qb->groupBy('u')
-        ->getQuery()
-        ->getResult();
+        ->getQuery();
     }
 
     /**

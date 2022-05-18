@@ -23,6 +23,14 @@ class SoundRepository extends ServiceEntityRepository
         parent::__construct($registry, Sound::class);
     }
 
+    public function findAllQuery(string $order = 'DESC') {
+        return $this->createQueryBuilder('s')
+        ->addOrderBy('s.createdAt', $order)
+        ->addOrderBy('s.title', 'ASC')
+        ->getQuery()
+        ;
+    }
+    
     /**
      * @throws ORMException
      * @throws OptimisticLockException

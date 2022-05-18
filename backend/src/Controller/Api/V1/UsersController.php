@@ -5,6 +5,7 @@ namespace App\Controller\Api\V1;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,13 +23,25 @@ class UsersController extends AbstractController
     /**
      * @Route("/likes/{order}", name="browse_by_likes", methods={"GET"}, defaults={"order"="desc"})
      */
-    public function browseByLikes(string $order, UserRepository $userRepository, Request $request): Response
+    public function browseByLikes(string $order, UserRepository $userRepository, Request $request, PaginatorInterface $paginator): Response
     {
+        $page = $request->query->getInt('page', 1);
         $search = $request->query->get('search');
-        $allUsers = $userRepository->findAllWithLikes($order, 'like', $search);
+        $usersQuery = $userRepository->findAllWithLikes($order, 'like', $search);
+
+        $users = $paginator->paginate(
+            $usersQuery,
+            $page,
+            10,
+        );
+
+        $data = [
+            'list' => $users,
+            'pagination' => $users->getPaginationData()
+        ];
+
         $displayGroups = ['api_user_detail_browse', 'api_sound_browse', 'api_tag_browse', 'api_like_browse', 'api_soundboard_browse', 'api_like_user_browse', 'api_soundboard_user_browse'];
-        
-        return $this->json($allUsers, Response::HTTP_OK, [], ['groups' => $displayGroups]);
+        return $this->json($data, Response::HTTP_OK, [], ['groups' => $displayGroups]);
     }
 
     /**
@@ -49,13 +62,25 @@ class UsersController extends AbstractController
     /**
      * @Route("/{order}", name="browse", methods={"GET"}, defaults={"order"="desc"})
      */
-    public function browse(string $order, UserRepository $userRepository, Request $request): Response
+    public function browse(string $order, UserRepository $userRepository, Request $request, PaginatorInterface $paginator): Response
     {
+        $page = $request->query->getInt('page', 1);
         $search = $request->query->get('search');
-        $allUsers = $userRepository->findAllWithLikes($order, 'date', $search);
+        $usersQuery = $userRepository->findAllWithLikes($order, 'date', $search);
+
+        $users = $paginator->paginate(
+            $usersQuery,
+            $page,
+            10,
+        );
+
+        $data = [
+            'list' => $users,
+            'pagination' => $users->getPaginationData()
+        ];
 
         $displayGroups = ['api_user_detail_browse', 'api_sound_browse', 'api_tag_browse', 'api_like_browse', 'api_soundboard_browse', 'api_like_user_browse', 'api_soundboard_user_browse'];
-        return $this->json($allUsers, Response::HTTP_OK, [], ['groups' => $displayGroups]);
+        return $this->json($data, Response::HTTP_OK, [], ['groups' => $displayGroups]);
     }
     
     /**
