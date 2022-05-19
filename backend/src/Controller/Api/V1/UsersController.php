@@ -32,7 +32,7 @@ class UsersController extends AbstractController
         $users = $paginator->paginate(
             $usersQuery,
             $page,
-            10,
+            9,
         );
 
         $data = [
@@ -71,7 +71,7 @@ class UsersController extends AbstractController
         $users = $paginator->paginate(
             $usersQuery,
             $page,
-            10,
+            9,
         );
 
         $data = [
