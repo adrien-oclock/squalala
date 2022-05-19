@@ -5,12 +5,13 @@ import { fetchUsers } from 'src/actions/user';
 const mapStateToProps = (state) => ({
   loading: state.user.loading,
   users: state.user.list,
+  pagination: state.user.pagination,
   isLogged: state.login.logged,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  loadUsers: (search, sortBy, order) => {
-    dispatch(fetchUsers(search, sortBy, order));
+  loadUsers: (search, sortBy, order, page) => {
+    dispatch(fetchUsers(search, sortBy, order, page));
   },
 });
 

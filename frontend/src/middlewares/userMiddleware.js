@@ -2,7 +2,6 @@ import axios from 'axios';
 import { 
   LOG_IN, 
   LOG_IN_FROM_STORAGE,
-  LOG_OUT, 
   REGISTER, 
   FETCH_USER, 
   FETCH_USERS, 
@@ -134,7 +133,7 @@ const userMiddleware = (store) => (next) => (action) => {
     }
 
     case FETCH_USERS: {
-      const { search, sortBy, order } = action;
+      const { search, sortBy, order, page } = action;
       let endpoint = 'users';
       if (sortBy === 'like') {
         endpoint += '/likes'
@@ -143,9 +142,10 @@ const userMiddleware = (store) => (next) => (action) => {
 
       api.get(endpoint, {params: {
         search: search,
+        page: page
       }})
         .then((response) => {
-          store.dispatch(saveUsers(formatData(response.data)));
+          store.dispatch(saveUsers(formatData(response.data.list), response.data.pagination));
         })
         .catch((error) => {
           if (error.response.status == 401) {

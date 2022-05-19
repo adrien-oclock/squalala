@@ -21,12 +21,13 @@ export const saveSoundboard = (soundboard) => ({
   soundboard: soundboard,
 });
 
-export const fetchSoundboards = (search, tags, sortBy, order) => ({
+export const fetchSoundboards = (search, tags, sortBy, order, page) => ({
   type: FETCH_SOUNDBOARDS,
   search: search,
   tags: tags,
   sortBy: sortBy,
   order: order,
+  page: page,
 });
 
 export const fetchSoundboardsLasts = () => ({
@@ -37,9 +38,10 @@ export const fetchSoundboardsTrending = () => ({
   type: FETCH_SOUNDBOARDS_TRENDING,
 });
 
-export const saveSoundboards = (soundboards) => ({
+export const saveSoundboards = (soundboards, pagination) => ({
   type: SAVE_SOUNDBOARDS,
   soundboards: soundboards,
+  pagination: pagination,
 });
 
 export const saveSoundboardsLasts = (soundboards) => ({

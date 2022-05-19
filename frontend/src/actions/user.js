@@ -55,14 +55,16 @@ export const saveUser = (user) => ({
   user: user,
 });
 
-export const fetchUsers = (search, sortBy, order) => ({
+export const fetchUsers = (search, sortBy, order, page) => ({
   type: FETCH_USERS,
   search: search,
   sortBy: sortBy,
   order: order,
+  page: page,
 });
 
-export const saveUsers = (users) => ({
+export const saveUsers = (users, pagination) => ({
   type: SAVE_USERS,
   users: users,
+  pagination: pagination,
 });

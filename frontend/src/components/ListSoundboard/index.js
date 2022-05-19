@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 
 import CardSoundboard from '../Card/Soundboard';
+import Pagination from '../Pagination';
 
 import './styles.scss';
 
@@ -15,10 +16,11 @@ const ListSoundboard = function (props) {
   const [sortBy, setSortBy] = useState('date');
   const [order, setOrder] = useState('desc');
   const [tags, setTags] = useState([]);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
-    props.loadSoundboards(search, tags, sortBy, order);
-  }, [search, tags.length, sortBy, order, props.isLogged]);
+    props.loadSoundboards(search, tags, sortBy, order, page);
+  }, [search, tags.length, sortBy, order, page, props.isLogged]);
 
   const sortSoundboards = (e) => {
     const clickedSort = e.target.dataset.sort;
@@ -97,6 +99,10 @@ const ListSoundboard = function (props) {
     return tags.includes(value);
   }
 
+  const changePage = (page) => {
+    setPage(page);
+  }
+
   if (props.loading) {
     return 'Chargement';
   }
@@ -143,6 +149,18 @@ const ListSoundboard = function (props) {
           url={`/profile/${soundboard.user.id}?soundboard=${soundboard.id}`}
            />
         ))}
+      </section>
+      <section id="pagination">
+        <Pagination 
+          pageCount={props.pagination.pageCount}
+          pagesInRange={props.pagination.pagesInRange}
+          first={props.pagination.first}
+          last={props.pagination.last}
+          previous={props.pagination.previous}
+          next={props.pagination.next}
+          current={props.pagination.current}
+          handleChangePage={changePage}
+        />
       </section>
     </div>
   );
