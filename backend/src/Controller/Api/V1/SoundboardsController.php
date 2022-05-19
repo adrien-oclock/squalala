@@ -26,7 +26,7 @@ class SoundboardsController extends AbstractController
     {
         $page = $request->query->getInt('page', 1);
         $search = $request->query->get('search');
-        $limit = $request->query->get('limit', 10);
+        $limit = $request->query->get('limit', 9);
         $tags = $request->query->get('tag');
         $soundboardsQuery = $soundboardRepository->findAllWithLikes($order, 'like', $search, $tags, $limit);
 
@@ -67,7 +67,7 @@ class SoundboardsController extends AbstractController
     {
         $page = $request->query->getInt('page', 1);
         $search = $request->query->get('search');
-        $limit = $request->query->get('limit', 10);
+        $limit = $request->query->get('limit', 9);
         $tags = $request->query->get('tag');
         $soundboardsQuery = $soundboardRepository->findAllWithLikes($order, 'date', $search, $tags, $limit);
 
