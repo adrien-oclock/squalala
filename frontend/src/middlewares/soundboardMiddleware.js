@@ -37,7 +37,7 @@ const soundboardMiddleware = (store) => (next) => (action) => {
     }
 
     case FETCH_SOUNDBOARDS: {
-      const { search, tags, sortBy, order } = action;
+      const { search, tags, sortBy, order, page } = action;
       let endpoint = 'soundboards';
       if (sortBy === 'like') {
         endpoint += '/likes'
@@ -46,10 +46,11 @@ const soundboardMiddleware = (store) => (next) => (action) => {
 
       api.get(endpoint, {params: {
         search: search,
-        tag: tags
+        tag: tags,
+        page: page
       }})
         .then((response) => {
-          store.dispatch(saveSoundboards(formatData(response.data)));
+          store.dispatch(saveSoundboards(formatData(response.data.list), response.data.pagination));
         })
         .catch((error) => {
           if (error.response.status == 401) {
@@ -67,7 +68,7 @@ const soundboardMiddleware = (store) => (next) => (action) => {
         limit: 5,
       }})
         .then((response) => {
-          store.dispatch(saveSoundboardsLasts(formatData(response.data)));
+          store.dispatch(saveSoundboardsLasts(formatData(response.data.list)));
         })
         .catch((error) => {
           if (error.response.status === 401) {
@@ -85,7 +86,7 @@ const soundboardMiddleware = (store) => (next) => (action) => {
         limit: 5,
       }})
         .then((response) => {
-          store.dispatch(saveSoundboardsTrending(formatData(response.data)));
+          store.dispatch(saveSoundboardsTrending(formatData(response.data.list)));
         })
         .catch((error) => {
           if (error.response.status == 401) {

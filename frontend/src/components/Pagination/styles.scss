@@ -1,0 +1,18 @@
+@use '../../styles/vars';
+
+.pagination {
+  display: flex;
+  font-size: large;
+  margin: 2em auto;
+
+  .page-item {
+    width: 2em;
+    height: 1em;
+
+    &:hover,
+    &.active {
+      color: vars.$primary-color;
+    }
+
+  }
+}

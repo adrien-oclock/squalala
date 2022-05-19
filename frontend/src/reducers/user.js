@@ -9,6 +9,7 @@ export const initialState = {
   loading: true,
   list: [],
   item: null,
+  pagination: null,
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -36,6 +37,7 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         list: action.users,
+        pagination: action.pagination,
         loading: false
       };
 

@@ -2,8 +2,8 @@
 import { useEffect, useState } from 'react';
 
 import CardSoundboard from '../Card/Soundboard';
+import Pagination from '../Pagination';
 import { formatDate } from 'src/utils';
-
 import './styles.scss';
 
 const ListUser = function (props) {
@@ -15,10 +15,11 @@ const ListUser = function (props) {
   const [search, setSearch] = useState('');
   const [sortBy, setSortBy] = useState('date');
   const [order, setOrder] = useState('desc');
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
-    props.loadUsers(search, sortBy, order);
-  }, [search, sortBy, order, props.isLogged]);
+    props.loadUsers(search, sortBy, order, page);
+  }, [search, sortBy, order, page, props.isLogged]);
 
   const sortUsers = (e) => {
     const clickedSort = e.target.dataset.sort;
@@ -76,6 +77,10 @@ const ListUser = function (props) {
     setSearch(e.target.search.value);
   };
 
+  const changePage = (page) => {
+    setPage(page);
+  }
+
   if (props.loading) {
     return 'Chargement';
   }
@@ -112,6 +117,18 @@ const ListUser = function (props) {
           url={`/profile/${user.id}`}
            />
         ))}
+      </section>
+      <section id="pagination">
+        <Pagination 
+          pageCount={props.pagination.pageCount}
+          pagesInRange={props.pagination.pagesInRange}
+          first={props.pagination.first}
+          last={props.pagination.last}
+          previous={props.pagination.previous}
+          next={props.pagination.next}
+          current={props.pagination.current}
+          handleChangePage={changePage}
+        />
       </section>
     </div>
   );

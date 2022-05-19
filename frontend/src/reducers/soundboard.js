@@ -19,6 +19,7 @@ export const initialState = {
   loading: true,
   loadingTrending: true,
   loadingLasts: true,
+  pagination: null,
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -47,6 +48,7 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         list: action.soundboards,
+        pagination: action.pagination,
         loading: false
       };
 
