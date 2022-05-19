@@ -2,6 +2,8 @@
 import { useEffect, useState } from 'react';
 import { useParams, useSearchParams, useLocation } from 'react-router-dom';
 import { getRating, getBase64 } from 'src/utils';
+import CardAdd from '../Card/Add';
+import CardRate from '../Card/Rate';
 import CardSound from '../Card/Sound';
 import SoundboardMenu from './Menu';
 
@@ -89,11 +91,11 @@ const Soundboard = function (props) {
   const soundAction = function() {
     if (props.currentUser.id) {
       if (id == props.currentUser.id) {
-        return <CardSound key="sound-add" add handleAddSound={addHandler} />
+        return <CardAdd key="sound-add" handleAddSound={addHandler} />
       }
 
       const rating = getRating(props.soundboard);
-      return <CardSound key="sound-rate" rating={rating} score={score} triggerRating={setNewRating} />
+      return <CardRate key="sound-rate" rating={rating} score={score} triggerRating={setNewRating} />
     }
   }
 

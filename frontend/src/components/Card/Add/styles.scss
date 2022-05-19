@@ -1,0 +1,22 @@
+@use '../../../styles/vars';
+
+#soundboard {
+  .cardContainer {
+    &.add {
+      display: table;
+  
+      i {
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+        font-size: xxx-large;
+        cursor: pointer;
+  
+        &:hover {
+          color: vars.$primary-color;
+          transition: .3s;
+        }
+      }
+    }
+  }
+}
