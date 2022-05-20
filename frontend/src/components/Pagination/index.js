@@ -79,6 +79,8 @@ const Pagination = function ({
       </nav>
     );
   }
+
+  return (<></>);
 };
 
 Pagination.defaultProps = {

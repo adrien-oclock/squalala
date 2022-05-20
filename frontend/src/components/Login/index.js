@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { useEffect, useState } from 'react';
+import Loader from '../Loader';
 import Popup from '../Popup';
 import './styles.scss';
 
@@ -48,7 +49,7 @@ const Login = (props) => {
       <button className="btn btn-primary" onClick={() => setVisibility(!visibility)} type="button">Connexion</button>
       <Popup onClose={popupCloseHandler} show={visibility}>
         {props.loading
-          ? <section id="loading">CHARGEMENT</section>
+          ? <Loader />
           : <>
             <section id="register-form">
               <h3>Inscription</h3>

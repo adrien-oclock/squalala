@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import './styles.scss';
 
 const CardSoundboard = function ({
-  title, subtitle, info, text, themes, rating, url,
+  title, subtitle, info, text, themes, activeThemes, rating, url,
 }) {
   const stars = [];
   if (rating) {
@@ -35,7 +35,7 @@ const CardSoundboard = function ({
         && (
         <ul className="theme">
           {themes.map((theme) => (
-            <li key={theme.id}><a className="btn btn-secondary" href="#">{theme.title}</a></li>
+            <li key={theme.id} className={`btn btn-secondary ${activeThemes.includes(theme.id) ? "active" : ""}`}><a href="#">{theme.title}</a></li>
           ))}
         </ul>
         )}
@@ -54,6 +54,7 @@ CardSoundboard.defaultProps = {
   rating: null,
   info: null,
   text: null,
+  activeThemes: [],
 };
 
 CardSoundboard.propTypes = {
@@ -67,6 +68,7 @@ CardSoundboard.propTypes = {
       title: PropTypes.string.isRequired,
     }),
   ),
+  activeThemes: PropTypes.array,
   rating: PropTypes.number,
 };
 

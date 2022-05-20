@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import CardSoundboard from '../Card/Soundboard';
 import SliderArrows from 'src/components/Slider-arrows';
+import Loader from '../Loader';
 
 import './styles.scss';
 
@@ -23,7 +24,7 @@ const Home = function (props) {
   }, [props.isLogged]);
 
   if (props.loading) {
-    return 'Chargement';
+    return <Loader />;
   }
 
   return (
