@@ -17,6 +17,7 @@ export const initialState = {
   listTrending: [],
   item: null,
   loading: true,
+  loadingList: true,
   loadingTrending: true,
   loadingLasts: true,
   pagination: null,
@@ -49,7 +50,7 @@ const reducer = (state = initialState, action = {}) => {
         ...state,
         list: action.soundboards,
         pagination: action.pagination,
-        loading: false
+        loadingList: false
       };
 
     case SAVE_SOUNDBOARDS_LASTS:
@@ -69,7 +70,7 @@ const reducer = (state = initialState, action = {}) => {
     case FETCH_SOUNDBOARD:
       return {
         ...state,
-        loading: true
+        loadingList: true
       };
 
     case FETCH_SOUNDBOARDS:

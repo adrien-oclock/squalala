@@ -3,7 +3,7 @@ import ListSounboard from 'src/components/ListSoundboard';
 import { fetchSoundboards } from 'src/actions/soundboard';
 
 const mapStateToProps = (state) => ({
-  loading: state.soundboard.loading,
+  loading: state.soundboard.loadingList,
   soundboards: state.soundboard.list,
   pagination: state.soundboard.pagination,
   tags: state.tag.list,
