@@ -13,8 +13,8 @@ import {
   saveSoundboardsLasts,
   saveSoundboardsTrending,
  } from 'src/actions/soundboard';
-import { formatData, api } from 'src/utils';
-import { logOut } from 'src/actions/user';
+import { getSoundboardById, formatData, api } from 'src/utils';
+import { saveUser, logOut } from 'src/actions/user';
 
 const soundboardMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
@@ -171,8 +171,23 @@ const soundboardMiddleware = (store) => (next) => (action) => {
       };
 
       api.post(endpoint, JSON.stringify(params))
-        .then((response) => {
-          console.log('Mettre à jour le score total');
+        .then(() => {
+          api.get('users/' + id)
+            .then((response) => {
+              const data = formatData(response.data);
+              store.dispatch(saveUser(data[0]));
+            })
+            .then(() => {
+              const { item } = store.getState().user;
+              const soundboard = getSoundboardById(item.soundboard, soundboardId);
+              store.dispatch(saveSoundboard(soundboard));
+            })
+            .catch((error) => {
+              if (error.response.status == 401) {
+                store.dispatch(logOut());
+              }
+              console.warn(error);
+            });
         })
         .catch((error) => {
           if (error.response.status == 401) {
