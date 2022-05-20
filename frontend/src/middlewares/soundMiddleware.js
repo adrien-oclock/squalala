@@ -1,7 +1,6 @@
-import axios from 'axios';
 import { ADD_SOUND, EDIT_SOUND, DELETE_SOUND } from 'src/actions/sound';
 import { fetchSoundboard } from 'src/actions/soundboard';
-import { formatData, api } from 'src/utils';
+import { api } from 'src/utils';
 
 const soundMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
@@ -22,7 +21,7 @@ const soundMiddleware = (store) => (next) => (action) => {
           };
 
           api.post(endpoint, JSON.stringify(params))
-          .then((response) => {
+          .then(() => {
             store.dispatch(fetchSoundboard(soundboard.item.id));
           })
           .catch((error) => {
@@ -52,8 +51,7 @@ const soundMiddleware = (store) => (next) => (action) => {
           params.filename = response.data.title;
 
           api.patch(endpoint + '/' + id, JSON.stringify(params))
-          .then((response) => {
-            console.log('Son modifié')
+          .then(() => {
             store.dispatch(fetchSoundboard(soundboard.item.id));
           })
           .catch((error) => {
@@ -65,8 +63,7 @@ const soundMiddleware = (store) => (next) => (action) => {
         });
       } else {
         api.patch(endpoint + '/' + id, JSON.stringify(params))
-        .then((response) => {
-          console.log('Son modifié')
+        .then(() => {
           store.dispatch(fetchSoundboard(soundboard.item.id));
         })
         .catch((error) => {
@@ -83,8 +80,7 @@ const soundMiddleware = (store) => (next) => (action) => {
       let endpoint = 'sounds/' + id;
 
       api.delete(endpoint)
-        .then((response) => {
-          console.log('Son supprimé')
+        .then(() => {
           store.dispatch(fetchSoundboard(soundboard.item.id));
         })
         .catch((error) => {
