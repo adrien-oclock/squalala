@@ -7,9 +7,9 @@
  $easing: cubic-bezier(.55,0,.1,1);
  $clock-color: vars.$primary-color;
  $clock-width: 4rem;
- $clock-radius: calc(var($clock-width) / 2);
- $clock-minute-length: calc(var($clock-width) * 0.4);
- $clock-hour-length: calc(var($clock-width) * 0.2);
+ $clock-radius: calc($clock-width / 2);
+ $clock-minute-length: calc($clock-width * 0.4);
+ $clock-hour-length: calc($clock-width * 0.2);
  $clock-thickness: 0.2rem;
 
 /**

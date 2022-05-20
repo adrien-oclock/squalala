@@ -16,6 +16,7 @@ const CardSound = function ({
   const [visibilityEdit, setVisibilityEdit] = useState(false);
   const url = file ? getSoundUrl(file) : null;
   const [audio, setAudio] = useState(false);
+  const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
     setAudio(new Audio(url));
@@ -23,8 +24,15 @@ const CardSound = function ({
 
   const playFile = () => {
     if (audio) {
+      setPlaying(true);
       audio.currentTime = 0;
       audio.play();
+    }
+  }
+
+  if (audio) {
+    audio.onended = () => {
+      setPlaying(false);
     }
   }
 
@@ -54,13 +62,13 @@ const CardSound = function ({
   }
 
   return (
-    <div className="cardContainer">
+    <div className="cardContainer sound">
       {text
       &&
       <i onClick={toggleFlip} className={`fa fa-${flip ? 'minus' : 'plus'}-circle tool right ${flip ? 'flipped' : ''}`} aria-hidden="true" />}
       {editTool()}
       <div className={`cardContent ${flip ? '' : 'visible'}`} onClick={playFile}>
-        <p className="title">{title}</p>
+        <p className={`title ${playing ? 'active' : ''}`}>{title}</p>
       </div>
       {text
       && <div className={`verso ${flip ? 'visible' : ''}`}><p className="text">{text}</p></div>}

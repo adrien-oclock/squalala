@@ -56,7 +56,7 @@ const SoundboardMenu = function ({soundboards, loginId, userId, currentSoundboar
         {soundboards && soundboardElements()}
         {editor && 
           <li className="btn btn-secondary">
-            <i className="fa fa-plus" onClick={() => setVisibilityAdd(!visibilityAdd)} aria-hidden="true" />
+            <i className="fa fa-plus" aria-hidden="true" onClick={() => setVisibilityAdd(!visibilityAdd)} />
             <Popup onClose={popupCloseHandler} show={visibilityAdd}>
             <section>
               <h3>Ajouter une soundboard</h3>
@@ -65,14 +65,17 @@ const SoundboardMenu = function ({soundboards, loginId, userId, currentSoundboar
                   <input type="text" name="title" id="soundboard-add-title" autoComplete="off" required />
                   <label htmlFor="soundboard-add-title">Titre</label>
                 </div>
-                <ul id="checkboxes">
-                  {tags.map((tag) => (
-                    <li key={`theme-${tag.id}`}>
-                      <input type="checkbox" className="checkboxTheme" name="theme[]" value={tag.id} id={`theme-${tag.id}`} />
-                      <label htmlFor={`theme-${tag.id}`}>{tag.title}</label>
-                    </li>
-                  ))}
-                </ul>
+                <div className="tagContainer">
+                  <p>Themes</p>
+                  <ul id="checkboxes" className="soundThemes">
+                    {tags.map((tag) => (
+                      <li key={`theme-${tag.id}`}>
+                        <input type="checkbox" className="checkboxTheme" name="theme[]" value={tag.id} id={`theme-${tag.id}`} />
+                        <label htmlFor={`theme-${tag.id}`}>{tag.title}</label>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
                 <div className="inputContainer">
                   <textarea name="description" id="soundboard-add-description" autoComplete="off" required />
                   <label htmlFor="soundboard-add-description">Description</label>

@@ -63,14 +63,17 @@ const SoundboardMenuElement = function ({soundboard, loginId, userId, currentSou
                   <input type="text" name="title" id={`soundboard-edit-title-${soundboard.id}`} autoComplete="off" defaultValue={soundboard.title} />
                   <label htmlFor={`soundboard-edit-title-${soundboard.id}`}>Titre</label>
                 </div>
-                <ul id="checkboxes">
-                  {tags.map((tag) => (
-                    <li key={`theme-${tag.id}`}>
-                      <input type="checkbox" className="checkboxTheme" name="theme[]" value={tag.id} id={`theme-${tag.id}`} defaultChecked={handleChecked(tag.id)} />
-                      <label htmlFor={`theme-${tag.id}`}>{tag.title}</label>
-                    </li>
-                  ))}
-                </ul>
+                <div className="tagContainer">
+                  <p>Themes</p>
+                  <ul id="checkboxes" className="soundThemes">
+                    {tags.map((tag) => (
+                      <li key={`theme-${tag.id}`}>
+                        <input type="checkbox" className="checkboxTheme" name="theme[]" value={tag.id} id={`theme-${tag.id}`} defaultChecked={handleChecked(tag.id)} />
+                        <label htmlFor={`theme-${tag.id}`}>{tag.title}</label>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
                 <div className="inputContainer">
                   <textarea name="description" id={`soundboard-edit-description-${soundboard.id}`} autoComplete="off" defaultValue={soundboard.description} />
                   <label htmlFor={`soundboard-edit-description-${soundboard.id}`}>Description</label>
