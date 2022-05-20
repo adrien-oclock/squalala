@@ -13,7 +13,6 @@ const Soundboard = function (props) {
   const { id } = useParams();
   const [searchParams] = useSearchParams();
   const location = useLocation();
-  const [score, setScore] = useState(null);
   const soundboardId = searchParams.get('soundboard') ? parseInt(searchParams.get('soundboard')) : null;
 
   useEffect(() => {
@@ -84,8 +83,7 @@ const Soundboard = function (props) {
 
   const setNewRating = function(newRating) {
     newRating = parseInt(newRating);
-    props.handleRating(newRating, soundboardId);
-    setScore(newRating);
+    props.handleRating(newRating, props.soundboard.id);
   }
 
   const soundAction = function() {
@@ -95,7 +93,7 @@ const Soundboard = function (props) {
       }
 
       const rating = getRating(props.soundboard);
-      return <CardRate key="sound-rate" rating={rating} score={score} triggerRating={setNewRating} />
+      return <CardRate key="sound-rate" rating={rating} triggerRating={setNewRating} soundboardId={props.soundboard.id} userId={props.currentUser.id} />
     }
   }
 

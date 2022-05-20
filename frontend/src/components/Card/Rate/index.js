@@ -1,20 +1,20 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { api } from 'src/utils';
 import './styles.scss';
 
 const CardRate = function ({
   rating,
-  score, 
-  triggerRating, 
+  triggerRating,
+  soundboardId,
+  userId,
 }) {
+  const [score, setScore] = useState(null);
   const [stars, setStars] = useState([]);
 
   const ratingHandler = (e) => {
     const newRating = e.target.value;
-
     triggerRating(newRating);
-    // eslint-disable-next-line no-use-before-define
-    setRating(newRating);
   };
 
   const setRating = (checkedValue) => {
@@ -39,10 +39,21 @@ const CardRate = function ({
     setStars(newStars);
   };
 
-  // Only on initial render
   useEffect(() => {
     setRating(rating);
-  }, []);
+    api.get('likes/' + userId + '/' + soundboardId)
+        .then((response) => {
+          setScore(response.data.score);
+        })
+        .catch((error) => {
+          if (error.response.status == 422) {
+            setScore(null);
+          }
+          else {
+            console.warn(error);
+          }
+        });
+  }, [soundboardId]);
 
   return (
     <div className="cardContainer rate">
