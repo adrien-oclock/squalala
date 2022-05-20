@@ -3,7 +3,7 @@ import ListUser from 'src/components/ListUser';
 import { fetchUsers } from 'src/actions/user';
 
 const mapStateToProps = (state) => ({
-  loading: state.user.loading,
+  loading: state.user.loadingList,
   users: state.user.list,
   pagination: state.user.pagination,
   isLogged: state.login.logged,

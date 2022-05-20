@@ -7,6 +7,7 @@ import {
 
 export const initialState = {
   loading: true,
+  loadingList: true,
   list: [],
   item: null,
   pagination: null,
@@ -30,7 +31,7 @@ const reducer = (state = initialState, action = {}) => {
     case FETCH_USERS:
       return {
         ...state,
-        loading: true
+        loadingList: true
       };
 
     case SAVE_USERS:
@@ -38,7 +39,7 @@ const reducer = (state = initialState, action = {}) => {
         ...state,
         list: action.users,
         pagination: action.pagination,
-        loading: false
+        loadingList: false
       };
 
     default:
