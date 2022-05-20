@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 
 import CardSoundboard from '../Card/Soundboard';
 import Pagination from '../Pagination';
+import Loader from '../Loader';
 import { formatDate } from 'src/utils';
 import './styles.scss';
 
@@ -82,7 +83,7 @@ const ListUser = function (props) {
   }
 
   if (props.loading) {
-    return 'Chargement';
+    return <Loader />;
   }
 
   return (

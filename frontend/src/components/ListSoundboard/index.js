@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 
 import CardSoundboard from '../Card/Soundboard';
 import Pagination from '../Pagination';
+import Loader from '../Loader';
 
 import './styles.scss';
 
@@ -104,7 +105,7 @@ const ListSoundboard = function (props) {
   }
 
   if (props.loading) {
-    return 'Chargement';
+    return <Loader />;
   }
 
   return (
@@ -137,18 +138,23 @@ const ListSoundboard = function (props) {
         </div>
       </form>
       <section id="list">
-        {props.soundboards.map((soundboard) => (
-          <CardSoundboard 
-          key={soundboard.id} 
-          title={soundboard.title} 
-          subtitle={soundboard.user.username} 
-          info={`Nombres de sons : ${soundboard.sounds.length}`} 
-          themes={soundboard.tags} 
-          rating={soundboard.rating} 
-          text={soundboard.description}
-          url={`/profile/${soundboard.user.id}?soundboard=${soundboard.id}`}
-           />
-        ))}
+        {props.soundboards.length > 0
+          ? props.soundboards.map((soundboard) => (
+            <CardSoundboard 
+            key={soundboard.id} 
+            title={soundboard.title} 
+            subtitle={soundboard.user.username} 
+            info={`Nombres de sons : ${soundboard.sounds.length}`} 
+            themes={soundboard.tags} 
+            activeThemes={tags}
+            rating={soundboard.rating} 
+            text={soundboard.description}
+            url={`/profile/${soundboard.user.id}?soundboard=${soundboard.id}`}
+            />
+          ))
+          : <p>Aucun résultat ne correspond à votre recherche</p>
+        }
+        
       </section>
       <section id="pagination">
         <Pagination 

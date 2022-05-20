@@ -6,6 +6,7 @@ import CardAdd from '../Card/Add';
 import CardRate from '../Card/Rate';
 import CardSound from '../Card/Sound';
 import SoundboardMenu from './Menu';
+import Loader from '../Loader';
 
 import './styles.scss';
 
@@ -20,7 +21,7 @@ const Soundboard = function (props) {
   }, [location, JSON.stringify(props.soundboard), props.isLogged]);
 
   if (props.loading || (props.user && props.user.id != id)) {
-    return 'Chargement';
+    return <Loader />;
   }
 
   const addHandler = (e) => {

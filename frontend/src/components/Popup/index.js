@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
 import './styles.scss';
 
 const Popup = (props) => {
@@ -32,11 +31,6 @@ const Popup = (props) => {
 
   const container = document.getElementById('root');
   return ReactDOM.createPortal(view(), container);
-};
-
-Popup.propTypes = {
-  show: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
 };
 
 export default Popup;

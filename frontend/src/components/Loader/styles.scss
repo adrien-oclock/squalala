@@ -1,0 +1,77 @@
+@use '../../styles/vars';
+
+/**
+ * Variables
+ */
+ $speed: 0.6s;
+ $easing: cubic-bezier(.55,0,.1,1);
+ $clock-color: vars.$primary-color;
+ $clock-width: 4rem;
+ $clock-radius: calc(var($clock-width) / 2);
+ $clock-minute-length: calc(var($clock-width) * 0.4);
+ $clock-hour-length: calc(var($clock-width) * 0.2);
+ $clock-thickness: 0.2rem;
+
+/**
+ * Overlay
+ * $ only show for tablet and up
+ */
+ @media only screen and (min-width: 40em) {
+  
+  .loading-overlay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10;
+    background-color: rgba(#000, 0.6);
+    opacity: 1;
+    visibility: visible;
+    backface-visibility: hidden;
+    transition: opacity $speed $easing, visibility $speed $easing;
+  }
+} // media query
+
+.clock-loader {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: $clock-width;
+  height: $clock-width;
+  border: 3px solid $clock-color;
+  border-radius: 50%;
+
+  &::before,
+  &::after {
+    position: absolute;
+    content: "";
+    top: calc($clock-radius * 0.25);
+    width: $clock-thickness;
+    background: $clock-color;
+    border-radius: 10px;
+    transform-origin: center calc(100% - calc($clock-thickness / 2));
+    animation: spin infinite linear;
+  }
+
+  &::before {
+    height: $clock-minute-length;
+    animation-duration: 2s;
+  }
+
+  &::after {
+    top: calc($clock-radius * 0.25 + $clock-hour-length);
+    height: $clock-hour-length;
+    animation-duration: 15s;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(1turn);
+  }
+}

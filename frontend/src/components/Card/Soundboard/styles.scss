@@ -64,6 +64,11 @@
   text-align: center;
   transform: translate(0, -100%);
 
+  .text {
+    margin: auto 2em;
+    width: 100%;
+  }
+  
   &.visible{
     display: flex;
     align-items: center;
@@ -77,9 +82,27 @@
 }
 
 .theme {
-  display: flex;
   width: 80%;
-  justify-content: space-evenly;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-bottom: -1em;
+
+  li {
+    margin-bottom: 1em;
+
+    &.btn {
+      padding: calc(0.438rem - 1px) calc(0.75rem - 1px);
+    }
+
+    &.active {
+      background-color: vars.$primary-color;
+
+      a {
+        color: vars.$background-color;
+      }
+    }
+  }
 }
 
 .rating {

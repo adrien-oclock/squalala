@@ -7,6 +7,7 @@ import Error from '../Error';
 import ListSoundboard from 'src/containers/ListSoundboard';
 import ListUser from 'src/containers/ListUser';
 import Soundboard from 'src/containers/Soundboard';
+import Loader from '../Loader';
 
 import './styles.scss';
 
@@ -24,7 +25,7 @@ const App = function(props) {
   }, [props.isLogged]);
 
   if (props.loading) {
-    return 'Chargement';
+    return <Loader />;
   }
 
   return (
