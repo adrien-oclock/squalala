@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { 
   FETCH_SOUNDBOARD,
   FETCH_SOUNDBOARDS,
@@ -148,7 +147,7 @@ const soundboardMiddleware = (store) => (next) => (action) => {
       let endpoint = 'soundboards/' + id;
 
       api.delete(endpoint)
-        .then((response) => {
+        .then(() => {
           store.dispatch(saveSoundboard(null));
         })
         .catch((error) => {

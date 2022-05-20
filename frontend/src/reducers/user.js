@@ -3,7 +3,7 @@ import {
   FETCH_USER,
   SAVE_USERS, 
   FETCH_USERS,
- } from '../actions/user';
+ } from 'src/actions/user';
 
 export const initialState = {
   loading: true,

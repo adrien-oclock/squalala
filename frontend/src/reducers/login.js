@@ -6,7 +6,7 @@ import {
   LOG_IN_FROM_STORAGE,
   LOG_OUT,
   REGISTER,
- } from '../actions/user';
+ } from 'src/actions/user';
  import { api } from 'src/utils';
 
 export const initialState = {

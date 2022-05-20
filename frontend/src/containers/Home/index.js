@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import Home from 'src/components/Home';
-import { fetchSoundboardsLasts, fetchSoundboardsTrending } from '../../actions/soundboard';
+import { fetchSoundboardsLasts, fetchSoundboardsTrending } from 'src/actions/soundboard';
 
 const mapStateToProps = (state) => ({
   loading: state.soundboard.loadingLasts && state.soundboard.loadingTrending,

@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { 
   LOG_IN, 
   LOG_IN_FROM_STORAGE,
@@ -15,7 +14,6 @@ import { formatData, api, getSoundboardById } from 'src/utils';
 import { saveSoundboard } from '../actions/soundboard';
 
 const userMiddleware = (store) => (next) => (action) => {
-  // console.log('on a intercepté une action dans le middleware: ', action);
 
   switch (action.type) {
     case REGISTER: {
@@ -29,7 +27,7 @@ const userMiddleware = (store) => (next) => (action) => {
           password: reg_password,
         },
       )
-        .then((response) => {
+        .then(() => {
 
           store.dispatch(saveUserData(
             reg_username,
