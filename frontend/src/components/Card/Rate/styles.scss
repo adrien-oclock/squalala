@@ -1,0 +1,52 @@
+@use '../../../styles/vars';
+
+#soundboard {
+  .cardContainer {
+
+    &.rate ul {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+  
+      li {
+        display: inline;
+        position: relative;
+        width: 15%;
+        text-align: center;
+  
+        input[type="radio"] {
+          display: absolute;
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          opacity: 0;
+          top: 0;
+          left: 0;
+          z-index: -1;
+        }
+
+        label i {
+          display: inline-block;
+          color: vars.$text-color;
+          content: '\2606';
+          border-radius: .3rem;
+          white-space: nowrap;
+          cursor: pointer;
+          -webkit-touch-callout: none;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+          -webkit-tap-highlight-color: transparent;
+          transition: all .2s;
+
+          &.fill {
+            color: vars.$primary-color;
+          }
+        }
+      }
+    }
+  }
+}
