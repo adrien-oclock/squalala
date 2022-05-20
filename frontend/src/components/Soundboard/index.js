@@ -75,11 +75,14 @@ const Soundboard = function (props) {
         </>
       );
     }
-    return (
-      <p>
-        Aucun son disponible
-      </p>
-    );
+
+    if (id != props.currentUser.id) {
+      return (
+        <p>
+          Aucun son disponible
+        </p>
+      );
+    }
   }
 
   const setNewRating = function(newRating) {
@@ -93,8 +96,10 @@ const Soundboard = function (props) {
         return <CardAdd key="sound-add" handleAddSound={addHandler} />
       }
 
-      const rating = getRating(props.soundboard);
-      return <CardRate key="sound-rate" rating={rating} triggerRating={setNewRating} soundboardId={props.soundboard.id} userId={props.currentUser.id} />
+      if (props.soundboard.sounds.length > 0) {
+        const rating = getRating(props.soundboard);
+        return <CardRate key="sound-rate" rating={rating} triggerRating={setNewRating} soundboardId={props.soundboard.id} userId={props.currentUser.id} />
+      }
     }
   }
 
