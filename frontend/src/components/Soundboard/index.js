@@ -7,6 +7,7 @@ import CardRate from '../Card/Rate';
 import CardSound from '../Card/Sound';
 import SoundboardMenu from './Menu';
 import Loader from '../Loader';
+import Error from '../Error';
 
 import './styles.scss';
 
@@ -22,6 +23,11 @@ const Soundboard = function (props) {
 
   if (props.loading || (props.user && props.user.id != id)) {
     return <Loader />;
+  }
+
+  console.log(props.user);
+  if (props.user === null || (props.soundboard === null && soundboardId)) {
+    return <Error />;
   }
 
   const addHandler = (e) => {

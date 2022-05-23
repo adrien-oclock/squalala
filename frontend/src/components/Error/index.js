@@ -1,11 +1,13 @@
 import React from 'react';
 
 import './styles.scss';
+import gif from './squalala.gif';
 
 const Error = () => (
-  <section>
-    <h2>Page introuvable</h2>
-    <p>Nous sommes désolé, une erreur s'est produite.</p>
+  <section id="not-found">
+    <img src={gif} alt="Squalala" />
+    <h2>Squalala</h2>
+    <p>Nous sommes partis.</p>
   </section>
 );
 
