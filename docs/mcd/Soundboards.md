@@ -3,4 +3,4 @@
 **aime** (<ins>_email_</ins>, <ins>_code_sb_</ins>, note)  
 **soundboard** (<ins>code_sb</ins>, titre_sb, description_sb)  
 **décrit** (<ins>_code_e_</ins>, <ins>_code_sb_</ins>)  
-**son** (<ins>code_s</ins>, titre_s, description_s, ordre, _code_sb_)
+**son** (<ins>code_s</ins>, titre_s, description_s, nom_fichier, ordre, _code_sb_)

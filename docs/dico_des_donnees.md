@@ -18,6 +18,7 @@
 |title|VARCHAR(128)|NOT NULL|Le titre du son|
 |description|TINYTEXT|DEFAULT NULL|La description du son|
 |order|INT|NOT NULL, UNSIGNED|L'ordre du son dans la soundboard|
+|filename|VARCHAR(256)|NOT NULL|Le nom du fichier physique du son|
 |soundboard_id|INT|PRIMARY KEY, NOT NULL|L'identifiant de la soundboard|
 |created_at|DATETIME|NOT NULL, DEFAULT CURRENT_TIMESTAMP|La date de création du son|
 |updated_at|DATETIME|NOT NULL, DEFAULT CURRENT_TIMESTAMP|La date de dernière modification du son|
