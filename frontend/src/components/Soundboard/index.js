@@ -25,7 +25,6 @@ const Soundboard = function (props) {
     return <Loader />;
   }
 
-  console.log(props.user);
   if (props.user === null || (props.soundboard === null && soundboardId)) {
     return <Error />;
   }

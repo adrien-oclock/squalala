@@ -126,8 +126,8 @@ const userMiddleware = (store) => (next) => (action) => {
             if (error.response.status == 401) {
               store.dispatch(logOut());
             }
-            else if (error.response.status == 404) {
-              store.dispatch(null);
+            else if (error.response.status == 422) {
+              store.dispatch(saveUser(null));
               store.dispatch(saveSoundboard(null));
             }
           }
