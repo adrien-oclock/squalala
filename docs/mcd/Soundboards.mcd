@@ -6,6 +6,6 @@ aime, 0N utilisateur, 0N soundboard : note
 soundboard : code_sb, titre_sb, description_sb
 décrit, 0N étiquette, 0N soundboard
 
-son : code_s, titre_s, description_s, ordre
+son : code_s, titre_s, description_s, nom_fichier, ordre
 compose, 11 son, 1N soundboard
 :
