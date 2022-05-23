@@ -117,13 +117,19 @@ const userMiddleware = (store) => (next) => (action) => {
           store.dispatch(saveUser(data[0]));
         })
         .then(() => {
-          const { item } = store.getState().user;
-          const soundboard = getSoundboardById(item.soundboard, soundboardId);
+          const { user } = store.getState();
+          const soundboard = getSoundboardById(user.item.soundboard, soundboardId);
           store.dispatch(saveSoundboard(soundboard));
         })
         .catch((error) => {
-          if (error.response.status == 401) {
-            store.dispatch(logOut());
+          if (error.response) {
+            if (error.response.status == 401) {
+              store.dispatch(logOut());
+            }
+            else if (error.response.status == 404) {
+              store.dispatch(null);
+              store.dispatch(saveSoundboard(null));
+            }
           }
           console.warn(error);
         });
